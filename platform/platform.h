@@ -17,7 +17,7 @@
 
 /*============================ INCLUDES ======================================*/
 #include "perf_counter.h"
-#include "RTE_Components.h"
+
 #include "led_port.h"
 #include "serial.h"
 #include "Board_GLCD.h"

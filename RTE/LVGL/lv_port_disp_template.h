@@ -4,6 +4,7 @@
  */
 
  /*Copy this file as "lv_port_disp.h" and set this value to "1" to enable content*/
+#if 0
 
 #ifndef LV_PORT_DISP_TEMPL_H
 #define LV_PORT_DISP_TEMPL_H
@@ -15,15 +16,11 @@ extern "C" {
 /*********************
  *      INCLUDES
  *********************/
-#include "app_cfg.h"
-#include "GLCD_Config.h"
-#include "lvgl.h"
+#include "lvgl/lvgl.h"
 
 /*********************
  *      DEFINES
  *********************/
-
-
 
 /**********************
  *      TYPEDEFS
@@ -32,7 +29,6 @@ extern "C" {
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
-extern void lv_port_disp_init(void);
 
 /**********************
  *      MACROS
@@ -44,3 +40,4 @@ extern void lv_port_disp_init(void);
 
 #endif /*LV_PORT_DISP_TEMPL_H*/
 
+#endif /*Disable/Enable content*/
