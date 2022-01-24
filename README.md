@@ -32,20 +32,20 @@ A LVGL porting for Cortex-M55 running on an [Arm official FPGA prototyping devel
 ### How to run the simulation
 
 1. Download the [Corstone-300-FVP](https://developer.arm.com/tools-and-software/open-source-software/arm-platforms-software/arm-ecosystem-fvps) and install it.
-2. Open project in MDK
-3. Select the '**Cortex-M55_FVP**'
+2. Open the project in MDK
+3. Select the '**Cortex-M55_FVP**' configuration.
 
 ![](./documents/pictures/configuration_selection) 
 
-4. Open 'Options for Target' window and select the 'Debug' panel
+4. Open the 'Options for Target' window and select the 'Debug' panel
 
 ![](./documents/pictures/debug_panel)
 
-5.  Press 'Settings' button on the right corner
+5.  Press the 'Settings' button on the right corner
 
 ![](./documents/pictures/Model_Settings)
 
-6.  Click the '...' button on the top-right corner, browse to the folder where Corstone-300-FVP is installed and and select the executable file, i.e. FVP_Corstone_SSE-300_EThos-U55.exe. 
+6.  Click the '...' button on the top-right corner, browse to the folder where Corstone-300-FVP is installed and select the executable file, i.e. FVP_Corstone_SSE-300_EThos-U55.exe. 
 
 ![](./documents/pictures/FVP)
 
@@ -59,8 +59,8 @@ C:\Program Files\ARM\FVP_Corstone_SSE-300\models\Win64_VC2017\FVP_Corstone_SSE-3
 
 ![](./documents/pictures/select_cpu0)
 
-8.  Click the OK button to close the 'Models Armv8-M Target Driver Setup' window.
-9. Compile and Debug. You should be able to see the LVGL benchmark running on the FVP window as shown below:
+8. Click the OK button to close the 'Models Armv8-M Target Driver Setup' window.
+9. Compile and Debug. You should be able to see the LVGL benchmark running on a FVP window as shown below:
 
 ![](./documents/pictures/fvp_demo) 
 
@@ -70,13 +70,13 @@ C:\Program Files\ARM\FVP_Corstone_SSE-300\models\Win64_VC2017\FVP_Corstone_SSE-3
 
 2. **NO** performance data generated from FVP is trustworthy. FVP is simply **NOT** designed for performance evaluation. 
 
-   For example, the -O0 optimization might looks like running as fast as -Ofast and -Ofast+LTO (Link-Time-Optimization) runs very slow.  In fact, in the real hardware, -Ofast+LTO > -Ofast >> -O0. 
+   For example, the '-O0' optimization might run as fast as -Ofast, in contrast, the '-Ofast+LTO (Link-Time-Optimization)' runs very slow.  In fact, in the real hardware, -Ofast+LTO > -Ofast >> -O0. 
 
 
 
 ### How to Run on MPS3
 
-1. Open project in MDK
+1. Open the project in MDK
 2. Select the '**Cortex-M55_MPS3**' configuration
 3. Compile and Debug
 
@@ -84,7 +84,7 @@ C:\Program Files\ARM\FVP_Corstone_SSE-300\models\Win64_VC2017\FVP_Corstone_SSE-3
 
 ## LVGL Porting Exercise 
 
-For people to learn and practice how to port LVGL to a LCD-Ready MDK project using LVGL cmsis-pack, a dedicated branch called "***lvgl_porting_exercise***" has been introduced. It contains a clean project which provides:
+For people who want to learn and practice porting LVGL to a LCD-Ready MDK project using the [LVGL cmsis-pack](https://github.com/lvgl/lvgl/tree/master/env_support/cmsis-pack), a dedicated branch called "***lvgl_porting_exercise***" is introduced, which contains a clean project and provides:
 
 - Low-level LCD APIs
 
