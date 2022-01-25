@@ -134,7 +134,7 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
             <Capability>0</Capability>
-            <DriverSelection>4101</DriverSelection>
+            <DriverSelection>4102</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2V8M.DLL</Flash2>
@@ -313,7 +313,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>5</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1124,7 +1124,7 @@
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
-      <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Demo:Widgets" Cvendor="LVGL" Cversion="8.1.1" condition="LVGL-Essential">
+      <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Benchmark" Cvendor="LVGL" Cversion="8.1.1" condition="LVGL-Essential">
         <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="0.8.4"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>

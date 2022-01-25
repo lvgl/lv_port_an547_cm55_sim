@@ -21,9 +21,9 @@
 /* Keil.ARM Compiler::Compiler:I/O:STDOUT:User:1.2.0 */
 #define RTE_Compiler_IO_STDOUT          /* Compiler I/O: STDOUT */
           #define RTE_Compiler_IO_STDOUT_User     /* Compiler I/O: STDOUT User */
-/* LVGL.LVGL::LVGL:lvgl:Demo:Widgets:8.1.1 */
-/*! \brief enable demo:widgets support */
-#define LV_USE_DEMO_WIDGETS         1
+/* LVGL.LVGL::LVGL:lvgl:Benchmark:8.1.1 */
+/*! \brief enable demo:bencharmk */
+#define LV_USE_DEMO_BENCHMARK         1
 /* LVGL.LVGL::LVGL:lvgl:Essential:8.1.1 */
 /*! \brief Enable LVGL */
 #define RTE_GRAPHICS_LVGL

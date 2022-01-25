@@ -786,16 +786,36 @@ int32_t GLCD_DrawBitmap (uint32_t x, uint32_t y, uint32_t width, uint32_t height
     y = (y + Scroll) % GLCD_HEIGHT;
     #endif
 
-    GLCD_SetWindow(x, y, width, height);
+    
 
-    wr_cmd(0x22);
-    wr_dat_start();
+    if (x + width > GLCD_WIDTH) {
+        uint32_t stride = width;
+        width = GLCD_WIDTH - x;
+        height = (GLCD_HEIGHT - y) > height ? height : (GLCD_HEIGHT - y);
+        
+        GLCD_SetWindow(x, y, width, height);
+        wr_cmd(0x22);
+        wr_dat_start();
+        
+        for (y = 0; y < height; y++) {
+            const uint16_t *phwPix = ptr_bmp;
+            for (x = 0; x < width; x++) {
+                wr_dat_only(*phwPix++);
+            }
+            ptr_bmp += stride;
+        }
+    } else {
+        GLCD_SetWindow(x, y, width, height);
 
-    uint32_t i = width * height;
-    do {
-        wr_dat_only(*ptr_bmp++);
-    } while(--i);
-
+        wr_cmd(0x22);
+        wr_dat_start();
+        
+        
+        uint32_t i = width * height;
+        do {
+            wr_dat_only(*ptr_bmp++);
+        } while(--i);
+    }
     wr_dat_stop();
 
     return 0;

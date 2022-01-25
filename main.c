@@ -18,6 +18,7 @@
 /*============================ INCLUDES ======================================*/
 #include "app_cfg.h"
 #include "platform.h"
+#include "cmsis_compiler.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +27,7 @@
 #include <stdarg.h>
 
 #include "lv_port_disp_template.h"
+#include "lv_port_indev_template.h"
 
 #if LV_USE_DEMO_BENCHMARK
 #   include "lv_demo_benchmark.h"
@@ -43,11 +45,14 @@
 /*============================ PROTOTYPES ====================================*/
 /*============================ IMPLEMENTATION ================================*/
 
+static 
+volatile bool s_bTimerEvent = false;
+
 void SysTick_Handler(void)
 {
     //! every 5ms 
+    s_bTimerEvent = true;
     
-    lv_timer_handler();
     
     /*! \note please do not put following code here
      *!
@@ -76,6 +81,7 @@ int main(void)
     
     lv_init();
     lv_port_disp_init();
+    lv_port_indev_init();
     
 #if LV_USE_DEMO_BENCHMARK
     lv_demo_benchmark();
@@ -86,6 +92,17 @@ int main(void)
 #endif
     
     while(1) {
+        
+        bool bFlag;
+        
+        __IRQ_SAFE {
+            bFlag = s_bTimerEvent;
+            s_bTimerEvent = false;
+        }
+        
+        if (bFlag) {
+            lv_timer_handler();
+        }
         
     }
     

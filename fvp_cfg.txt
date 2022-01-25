@@ -1689,7 +1689,7 @@ mps3_board.uart5.shutdown_tag=                        # (string, run-time ) defa
 mps3_board.uart5.unbuffered_output=0                  # (bool  , init-time) default = '0'      : Unbuffered output
 mps3_board.usb_stub.enable_atomic_ops=0               # (bool  , init-time) default = '0'      : Supports Atomic Operations
 mps3_board.usb_stub.size=4294967296                   # (int   , init-time) default = '0x100000000' : Memory Size
-mps3_board.visualisation.disable-visualisation=1      # (bool  , init-time) default = '0'      : Enable/disable visualisation
+mps3_board.visualisation.disable-visualisation=0      # (bool  , init-time) default = '0'      : Enable/disable visualisation
 mps3_board.visualisation.idler.delay_ms=50            # (int   , init-time) default = '0x32'   : Determines the period, in milliseconds of real time, between gui_callback() calls.
 mps3_board.visualisation.rate_limit-enable=1          # (bool  , init-time) default = '1'      : Rate limit simulation.
 mps3_board.visualisation.window_title=CLCD %cpu%      # (string, init-time) default = 'CLCD %cpu%' : Window title (%cpu% is replaced by cpu_name)
