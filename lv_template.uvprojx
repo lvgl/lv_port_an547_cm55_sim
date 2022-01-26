@@ -313,7 +313,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>5</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -427,6 +427,11 @@
               <FileName>GLCD_Fonts.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\platform\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>Touch_V2M-MPS3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\platform\Touch_V2M-MPS3.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -899,6 +904,11 @@
               <FileName>GLCD_Fonts.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\platform\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>Touch_V2M-MPS3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\platform\Touch_V2M-MPS3.c</FilePath>
             </File>
           </Files>
         </Group>

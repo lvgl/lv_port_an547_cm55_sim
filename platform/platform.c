@@ -45,6 +45,10 @@
 #endif
 
 /*============================ MACROS ========================================*/
+#ifndef MIN
+#define MIN(__A, __B)        ((__A) < (__B) ? (__A) : (__B))
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -69,14 +73,29 @@ void app_platform_init(void)
     
     serial_init();
     
-    GLCD_Initialize();                          /* Initialize the GLCD            */
-
+    GLCD_Initialize();                          /* Initialize the GLCD      */
+    
     /* display initial screen */
     GLCD_SetFont(&GLCD_Font_6x8);
     GLCD_SetBackgroundColor(GLCD_COLOR_BLACK);
     GLCD_ClearScreen();
     //GLCD_SetBackgroundColor(GLCD_COLOR_BLUE);
     GLCD_SetForegroundColor(GLCD_COLOR_GREEN);
+}
+
+
+int lcd_printf(int16_t x, int16_t y, const char *format, ...)
+{
+    int real_size;
+    static char s_chBuffer[64];
+    __va_list ap;
+    va_start(ap, format);
+        real_size = vsnprintf(s_chBuffer, sizeof(s_chBuffer)-1, format, ap);
+    va_end(ap);
+    real_size = MIN(sizeof(s_chBuffer)-1, real_size);
+    s_chBuffer[real_size] = '\0';
+    GLCD_DrawString(y, x, s_chBuffer);
+    return real_size;
 }
 
 /*

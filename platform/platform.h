@@ -22,6 +22,7 @@
 #include "serial.h"
 #include "Board_GLCD.h"
 #include "GLCD_Config.h"
+#include "Board_Touch.h"
 
 /*============================ MACROS ========================================*/
 #ifndef UNUSED_PARAM
@@ -45,6 +46,9 @@ extern GLCD_FONT GLCD_Font_16x24;
 
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
+        
+extern
+int lcd_printf(int16_t x, int16_t y, const char *format, ...);
 
 
 
