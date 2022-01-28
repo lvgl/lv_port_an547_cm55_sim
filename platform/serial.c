@@ -35,14 +35,6 @@ void serial_print(char *str)
 
 
 
-/* Redirects armclang printf to UART */
-int fputc(int ch, FILE *f)
-{
-    if (Driver_USART0.Send(&ch, 1) == ARM_DRIVER_OK) {
-        return ch;
-    }
-    return EOF;
-}
 
 /* Redirects gcc printf to UART0 */
 int _write(int fd, char *str, int len)
@@ -55,9 +47,21 @@ int _write(int fd, char *str, int len)
 
 int stdout_putchar(int ch)
 {
+    if ('\n' == ch) {
+        int temp = '\r';
+        while(Driver_USART0.Send(&temp, 1) != ARM_DRIVER_OK);
+    }
+    
     if (Driver_USART0.Send(&ch, 1) == ARM_DRIVER_OK) {
         return ch;
     }
     
     return -1;
+}
+
+
+/* Redirects armclang printf to UART */
+int fputc(int ch, FILE *f)
+{
+    return stdout_putchar(ch);
 }
