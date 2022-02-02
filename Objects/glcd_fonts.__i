@@ -1,0 +1,20 @@
+-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m55 -mfloat-abi=hard -c
+-fno-rtti -funsigned-char -fshort-enums -fshort-wchar
+-mlittle-endian -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ./platform -I .
+-I./RTE/Device/SSE-300-MPS3
+-I./RTE/LVGL
+-I./RTE/_Cortex-M55_FVP
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/CMSIS/5.8.0/CMSIS/Core/Include
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/CMSIS/5.8.0/CMSIS/Driver/Include
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/Board/Device_Definition
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/Board/Platform
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/CMSIS_Driver
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/CMSIS_Driver/Config
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/CMSIS_Driver/Include
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/Device/Include
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/Native_Driver
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/GorgonMeducer/perf_counter/1.8.1/lib
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.0
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.0/demos/benchmark
+-D__UVISION_VERSION="536" -D_RTE_ -D_RTE_ -D__PERF_COUNTER__  -include "./RTE/LVGL/lv_conf_cmsis.h" -include "Pre_Include_Global.h"
+-o ./objects/glcd_fonts.o -MD "platform/GLCD_Fonts.c"

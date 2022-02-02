@@ -93,17 +93,18 @@ int main(void)
     
     while(1) {
         
-        bool bFlag;
+#define lv_run_timer_handler_in_period(__ms)                                    \
+        do {                                                                    \
+            static uint32_t last_tick = 0;                                      \
+            uint32_t curr_tick = lv_tick_get();                                 \
+                                                                                \
+            if ((curr_tick - last_tick) >= (__ms)) {                            \
+                last_tick = curr_tick;                                          \
+                lv_timer_handler();                                             \
+            }                                                                   \
+        } while(0)
         
-        __IRQ_SAFE {
-            bFlag = s_bTimerEvent;
-            s_bTimerEvent = false;
-        }
-        
-        if (bFlag) {
-            lv_timer_handler();
-        }
-        
+        lv_run_timer_handler_in_period(5);
     }
     
 }

@@ -10,7 +10,7 @@
 #ifndef PRE_INCLUDE_GLOBAL_H
 #define PRE_INCLUDE_GLOBAL_H
 
-/* LVGL.LVGL::LVGL:lvgl:Essential:8.1.1 */
+/* LVGL.LVGL::LVGL:lvgl:Essential:8.2.0 */
 /*! \brief use lv_config_cmsis.h which will be pre-included */
 #define LV_CONF_SKIP
 
