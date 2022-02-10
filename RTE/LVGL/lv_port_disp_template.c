@@ -12,6 +12,7 @@
 #include "lvgl.h"
 #include "Board_GLCD.h"
 #include "perf_counter.h"
+#include "lv_gpu_arm2d.h"
 
 /*********************
  *      DEFINES
@@ -48,7 +49,10 @@ void lv_port_disp_init(void)
      * Initialize your display
      * -----------------------*/
     disp_init();
-
+#if LV_USE_GPU_ARM2D
+    lv_draw_arm2d_init();
+#endif
+    
     /*-----------------------------
      * Create a buffer for drawing
      *----------------------------*/
@@ -102,12 +106,17 @@ void lv_port_disp_init(void)
     disp_drv.draw_buf = &draw_buf_dsc_1;
 
     /*Required for Example 3)*/
-    //disp_drv.full_refresh = 1
+    disp_drv.full_refresh = 1;
 
     /* Fill a memory array with a color if you have GPU.
      * Note that, in lv_conf.h you can enable GPUs that has built-in support in LVGL.
      * But if you have a different GPU you can use with this callback.*/
     //disp_drv.gpu_fill_cb = gpu_fill;
+#if LV_USE_GPU_ARM2D
+    disp_drv.draw_ctx_init = lv_draw_arm2d_ctx_init;
+    disp_drv.draw_ctx_deinit = lv_draw_arm2d_ctx_init;
+    disp_drv.draw_ctx_size = sizeof(lv_draw_arm2d_ctx_t);
+#endif
 
     /*Finally register the driver*/
     lv_disp_drv_register(&disp_drv);
