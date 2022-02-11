@@ -25,12 +25,11 @@
  *  STATIC PROTOTYPES
  **********************/
 
-static bool lv_draw_arm2d_fill_colour(
-                                     const arm_2d_tile_t *target_tile,
-                                     const arm_2d_region_t *region,
-                                     lv_color_t color,
-                                     lv_opa_t opa,
-                                     const arm_2d_tile_t *mask_tile);
+static bool lv_draw_arm2d_fill_colour(  const arm_2d_tile_t *target_tile,
+                                        const arm_2d_region_t *region,
+                                        lv_color_t color,
+                                        lv_opa_t opa,
+                                        const arm_2d_tile_t *mask_tile);
 
 
 static bool lv_draw_arm2d_tile_copy(const arm_2d_tile_t *target_tile,
@@ -286,11 +285,10 @@ static bool lv_draw_arm2d_tile_copy(const arm_2d_tile_t *target_tile,
     
     if(NULL == mask_tile) {
         if(opa >= LV_OPA_MAX) {
-            return false;
-            result = arm_2d_rgb16_tile_copy( target_tile,
-                                    source_tile,
-                                    region,
-                                    ARM_2D_CP_MODE_COPY);
+            result = arm_2d_rgb16_tile_copy(source_tile,
+                                            target_tile,
+                                            region,
+                                            ARM_2D_CP_MODE_COPY);
         }
 #if LV_COLOR_SCREEN_TRANSP
         else {
@@ -298,11 +296,10 @@ static bool lv_draw_arm2d_tile_copy(const arm_2d_tile_t *target_tile,
         }
 #else
         else {
-            return false;
-            result = arm_2d_rgb565_alpha_blending(   target_tile,
-                                            source_tile,
-                                            region,
-                                            opa);
+            result = arm_2d_rgb565_alpha_blending(  source_tile,
+                                                    target_tile,
+                                                    region,
+                                                    opa);
         }
 #endif
     }
