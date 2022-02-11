@@ -39,10 +39,6 @@ void lv_draw_arm2d_ctx_init(struct _lv_disp_drv_t * drv, lv_draw_ctx_t * draw_ct
 
 void lv_draw_arm2d_ctx_deinit(struct _lv_disp_drv_t * drv, lv_draw_ctx_t * draw_ctx);
 
-void lv_draw_arm2d_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend_dsc_t * dsc);
-
-void lv_gpu_arm2d_wait_cb(lv_draw_ctx_t * draw_ctx);
-
 /**********************
  *      MACROS
  **********************/
