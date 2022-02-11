@@ -58,7 +58,7 @@
           <ListingPath>.\Listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
-          <CreateBatchFile>0</CreateBatchFile>
+          <CreateBatchFile>1</CreateBatchFile>
           <BeforeCompile>
             <RunUserProg1>0</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
@@ -1242,7 +1242,7 @@
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
-      <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Benchmark" Cvendor="LVGL" Cversion="8.2.0" condition="LVGL-Essential">
+      <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Demo:Widgets" Cvendor="LVGL" Cversion="8.2.0" condition="LVGL-Essential">
         <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.1-alpha"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>

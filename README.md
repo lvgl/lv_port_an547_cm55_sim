@@ -11,7 +11,11 @@ A LVGL porting for Cortex-M55 running on an [Arm official FPGA prototyping devel
 
 ## Features
 
-- LVGL 8.1.x  (CMSIS-Pack)
+- LVGL 8.2.0  (CMSIS-Pack)
+- [**New**] Arm-2D (Helium) acceleration is added !!!
+  - see `lv_gpu_arm2d.c` and `lv_gpu_arm2d.h`
+  - Attach acceleration in `lv_port_disp_template.c`
+
 - 320 * 240 RGB565 LCD Display connected with an Integrated Color LCD parallel interface. 
 - Default System Clock: 32MHz (50MHz Max)
 - CPU: Cortex-M55 with Helium
@@ -161,6 +165,7 @@ int32_t  GLCD_DrawBitmap (uint32_t x, uint32_t y,
 
 - LVGL used in this project is under MIT license.
 - This project template is under Apache 2.0 license.
+- Arm-2D used in this project is under Apache 2.0 license.
 
 
 
