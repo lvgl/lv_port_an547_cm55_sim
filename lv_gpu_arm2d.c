@@ -169,8 +169,6 @@ static void lv_draw_arm2d_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend
 
         const lv_color_t * src_buf = dsc->src_buf;
         if(src_buf) {
-            
-            
             source_tile_orig = (arm_2d_tile_t ){
                 .tRegion = {
                     .tSize = {
@@ -227,22 +225,26 @@ static bool lv_draw_arm2d_fill_colour(  const arm_2d_tile_t *target_tile,
                                         lv_opa_t opa,
                                         const arm_2d_tile_t *mask_tile)
 {
-
+    arm_fsm_rt_t result = (arm_fsm_rt_t)ARM_2D_ERR_NONE;
 
     if (NULL == mask_tile) {
         if(opa >= LV_OPA_MAX) {
-            arm_2d_rgb16_fill_colour( target_tile, region, color.full);
+            result = arm_2d_rgb16_fill_colour( target_tile, region, color.full);
         } 
         else {
-            arm_2d_rgb565_fill_colour_with_alpha(
+#if LV_COLOR_SCREEN_TRANSP
+            return false;
+#else
+            result = arm_2d_rgb565_fill_colour_with_alpha(
                                             target_tile,
                                             region,
                                             (arm_2d_color_rgb565_t){color.full},
                                             opa);
+#endif
         }
     }
     else {
-        arm_fsm_rt_t result; 
+         
         if(opa >= LV_OPA_MAX) {
             result = arm_2d_rgb565_fill_colour_with_mask(
                                             target_tile,
@@ -251,18 +253,22 @@ static bool lv_draw_arm2d_fill_colour(  const arm_2d_tile_t *target_tile,
                                             (arm_2d_color_rgb565_t){color.full});
         } 
         else {
+#if LV_COLOR_SCREEN_TRANSP
+            return false;
+#else
             result = arm_2d_rgb565_fill_colour_with_mask_and_opacity(
                                             target_tile,
                                             region,
                                             mask_tile,
                                             (arm_2d_color_rgb565_t){color.full},
                                             opa);
+#endif
         }
-        
-        if (result < 0) {
-            /* error detected */
-            return false;
-        }
+    }
+    
+    if (result < 0) {
+        /* error detected */
+        return false;
     }
 
     return true;
@@ -276,33 +282,50 @@ static bool lv_draw_arm2d_tile_copy(const arm_2d_tile_t *target_tile,
                                     lv_opa_t opa,
                                     arm_2d_tile_t *mask_tile)
 {
+    arm_fsm_rt_t result = (arm_fsm_rt_t)ARM_2D_ERR_NONE;
+    
     if(NULL == mask_tile) {
         if(opa >= LV_OPA_MAX) {
-            arm_2d_rgb16_tile_copy( target_tile,
+            return false;
+            result = arm_2d_rgb16_tile_copy( target_tile,
                                     source_tile,
                                     region,
                                     ARM_2D_CP_MODE_COPY);
         }
+#if LV_COLOR_SCREEN_TRANSP
         else {
-            arm_2d_rgb565_alpha_blending(   target_tile,
+            return false;  /* not supported */
+        }
+#else
+        else {
+            return false;
+            result = arm_2d_rgb565_alpha_blending(   target_tile,
                                             source_tile,
                                             region,
                                             opa);
         }
+#endif
     }
     else {
-        arm_fsm_rt_t result = (arm_fsm_rt_t)ARM_2D_ERR_NONE; 
+#if LV_COLOR_SCREEN_TRANSP
+        return false;       /* not support */
+#else
+        
         if(opa >= LV_OPA_MAX) {
             result = arm_2d_rgb565_tile_copy_with_src_mask( source_tile,
                                                             mask_tile,
                                                             target_tile,
                                                             region,
                                                             ARM_2D_CP_MODE_COPY);
-        }
-        if (result < 0) {
-            /* error detected */
+        } else {
             return false;
         }
+#endif
+    }
+    
+    if (result < 0) {
+        /* error detected */
+        return false;
     }
 
     return true;
