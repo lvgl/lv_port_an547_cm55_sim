@@ -16,6 +16,31 @@
  *      DEFINES
  *********************/
 
+#if LV_COLOR_DEPTH == 16
+#define arm_2d_fill_colour              arm_2d_rgb16_fill_colour
+#define arm_2d_fill_colour_with_alpha   arm_2d_rgb565_fill_colour_with_alpha
+#define arm_2d_fill_colour_with_mask    arm_2d_rgb565_fill_colour_with_mask
+#define arm_2d_fill_colour_with_mask_and_opacity                                \
+            arm_2d_rgb565_fill_colour_with_mask_and_opacity
+#define arm_2d_tile_copy                arm_2d_rgb16_tile_copy
+#define arm_2d_alpha_blending           arm_2d_rgb565_alpha_blending
+#define arm_2d_tile_copy_with_src_mask  arm_2d_rgb565_tile_copy_with_src_mask
+#define arm_2d_color_t                  arm_2d_color_rgb565_t
+
+#elif LV_COLOR_DEPTH == 32
+#define arm_2d_fill_colour              arm_2d_rgb32_fill_colour
+#define arm_2d_fill_colour_with_alpha   arm_2d_cccn888_fill_colour_with_alpha
+#define arm_2d_fill_colour_with_mask    arm_2d_cccn888_fill_colour_with_mask
+#define arm_2d_fill_colour_with_mask_and_opacity                                \
+            arm_2d_cccn888_fill_colour_with_mask_and_opacity
+#define arm_2d_tile_copy                arm_2d_rgb32_tile_copy
+#define arm_2d_alpha_blending           arm_2d_cccn888_alpha_blending
+#define arm_2d_tile_copy_with_src_mask  arm_2d_cccn888_tile_copy_with_src_mask
+#define arm_2d_color_t                  arm_2d_color_cccn888_t
+
+#else
+#error The specified LV_COLOR_DEPTH is not supported by this version of lv_gpu_arm2d.c. 
+#endif
 
 /**********************
  *      TYPEDEFS
@@ -228,16 +253,20 @@ static bool lv_draw_arm2d_fill_colour(  const arm_2d_tile_t *target_tile,
 
     if (NULL == mask_tile) {
         if(opa >= LV_OPA_MAX) {
-            result = arm_2d_rgb16_fill_colour( target_tile, region, color.full);
+            result = arm_2d_fill_colour( target_tile, region, color.full);
         } 
         else {
 #if LV_COLOR_SCREEN_TRANSP
             return false;
 #else
-            result = arm_2d_rgb565_fill_colour_with_alpha(
+            result = arm_2d_fill_colour_with_alpha(
                                             target_tile,
                                             region,
-                                            (arm_2d_color_rgb565_t){color.full},
+#if LV_COLOR_DEPTH == 32
+                                            (arm_2d_color_rgb888_t){color.full},
+#else
+                                            (arm_2d_color_t){color.full},
+#endif
                                             opa);
 #endif
         }
@@ -245,21 +274,25 @@ static bool lv_draw_arm2d_fill_colour(  const arm_2d_tile_t *target_tile,
     else {
          
         if(opa >= LV_OPA_MAX) {
-            result = arm_2d_rgb565_fill_colour_with_mask(
+            result = arm_2d_fill_colour_with_mask(
                                             target_tile,
                                             region,
                                             mask_tile,
-                                            (arm_2d_color_rgb565_t){color.full});
+                                            (arm_2d_color_t){color.full});
         } 
         else {
 #if LV_COLOR_SCREEN_TRANSP
             return false;
 #else
-            result = arm_2d_rgb565_fill_colour_with_mask_and_opacity(
+            result = arm_2d_fill_colour_with_mask_and_opacity(
                                             target_tile,
                                             region,
                                             mask_tile,
-                                            (arm_2d_color_rgb565_t){color.full},
+#if LV_COLOR_DEPTH == 32
+                                            (arm_2d_color_rgb888_t){color.full},
+#else
+                                            (arm_2d_color_t){color.full},
+#endif
                                             opa);
 #endif
         }
@@ -285,10 +318,10 @@ static bool lv_draw_arm2d_tile_copy(const arm_2d_tile_t *target_tile,
     
     if(NULL == mask_tile) {
         if(opa >= LV_OPA_MAX) {
-            result = arm_2d_rgb16_tile_copy(source_tile,
-                                            target_tile,
-                                            region,
-                                            ARM_2D_CP_MODE_COPY);
+            result = arm_2d_tile_copy(  source_tile,
+                                        target_tile,
+                                        region,
+                                        ARM_2D_CP_MODE_COPY);
         }
 #if LV_COLOR_SCREEN_TRANSP
         else {
@@ -296,10 +329,10 @@ static bool lv_draw_arm2d_tile_copy(const arm_2d_tile_t *target_tile,
         }
 #else
         else {
-            result = arm_2d_rgb565_alpha_blending(  source_tile,
-                                                    target_tile,
-                                                    region,
-                                                    opa);
+            result = arm_2d_alpha_blending( source_tile,
+                                            target_tile,
+                                            region,
+                                            opa);
         }
 #endif
     }
@@ -309,11 +342,11 @@ static bool lv_draw_arm2d_tile_copy(const arm_2d_tile_t *target_tile,
 #else
         
         if(opa >= LV_OPA_MAX) {
-            result = arm_2d_rgb565_tile_copy_with_src_mask( source_tile,
-                                                            mask_tile,
-                                                            target_tile,
-                                                            region,
-                                                            ARM_2D_CP_MODE_COPY);
+            result = arm_2d_tile_copy_with_src_mask(source_tile,
+                                                    mask_tile,
+                                                    target_tile,
+                                                    region,
+                                                    ARM_2D_CP_MODE_COPY);
         } else {
             return false;
         }
