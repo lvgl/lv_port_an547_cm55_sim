@@ -16,8 +16,8 @@
 -IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/CMSIS_Driver/Include
 -IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/Device/Include
 -IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/Native_Driver
--IC:/Users/gabriel/AppData/Local/Arm/Packs/GorgonMeducer/perf_counter/1.8.1/lib
--IC:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.1-alpha
--IC:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.1-alpha/demos/widgets
--D__UVISION_VERSION="536" -D_RTE_ -D_RTE_ -D__PERF_COUNTER__ -DLV_USE_GPU_ARM2D="1"  -include "./RTE/LVGL/lv_conf_cmsis.h" -include "Pre_Include_Global.h"
--o ./objects/lv_textarea.o -MD "C:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.1-alpha/src/widgets/lv_textarea.c"
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/GorgonMeducer/perf_counter/1.9.0/lib
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.1-alpha2
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.1-alpha2/demos/widgets
+-D__UVISION_VERSION="536" -D_RTE_ -D_RTE_ -DLV_USE_GPU_ARM2D="1"  -include "./RTE/LVGL/lv_conf_cmsis.h" -include "Pre_Include_Global.h"
+-o ./objects/lv_textarea.o -MD "C:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.1-alpha2/src/widgets/lv_textarea.c"

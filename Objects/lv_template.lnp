@@ -1,4 +1,4 @@
---cpu=Cortex-M55 --fpu=FPv5_D16
+--cpu=Cortex-M55 --fpu=FPv5_D16 --lto
 ".\objects\led_port.o"
 ".\objects\serial.o"
 ".\objects\platform.o"
@@ -50,6 +50,10 @@
 ".\objects\device_definition.o"
 ".\objects\startup_fvp_sse300_mps3.o"
 ".\objects\system_sse300mps3.o"
+".\objects\lv_cmsis_pack.o"
+".\objects\lv_port_disp_template.o"
+".\objects\lv_port_fs_template.o"
+".\objects\lv_port_indev_template.o"
 ".\objects\img_clothes.o"
 ".\objects\img_demo_widgets_avatar.o"
 ".\objects\img_lvgl_logo.o"
@@ -186,10 +190,6 @@
 ".\objects\lv_switch.o"
 ".\objects\lv_table.o"
 ".\objects\lv_textarea.o"
-".\objects\lv_cmsis_pack.o"
-".\objects\lv_port_disp_template.o"
-".\objects\lv_port_fs_template.o"
-".\objects\lv_port_indev_template.o"
 ".\objects\arm_mps3_io_drv.o"
 ".\objects\audio_i2s_mps3_drv.o"
 ".\objects\gpio_cmsdk_drv.o"
@@ -203,7 +203,7 @@
 ".\objects\systimer_armv8-m_timeout.o"
 ".\objects\syswdog_armv8-m_drv.o"
 ".\objects\uart_cmsdk_drv.o"
-"C:\Users\gabriel\AppData\Local\Arm\Packs\GorgonMeducer\perf_counter\1.8.1\lib\perf_counter.lib"
+"C:\Users\gabriel\AppData\Local\Arm\Packs\GorgonMeducer\perf_counter\1.9.0\lib\perf_counter.lib"
 --strict --scatter ".\RTE\Device\SSE-300-MPS3\fvp_sse300_mps3_s.sct"
 --diag_suppress=6314 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
