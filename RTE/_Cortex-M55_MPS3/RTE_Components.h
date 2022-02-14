@@ -18,14 +18,14 @@
 
 /* ARM::CMSIS Driver:USART:1.0.0 */
 #define RTE_Drivers_USART
-/* GorgonMeducer.Performance Counter::Utilities:perf_counter:Core:Library:1.9.0 */
+/* GorgonMeducer.Performance Counter::Utilities:perf_counter:Core:Library:1.9.1 */
 #define __PERF_COUNTER__
 /* Keil.ARM Compiler::Compiler:I/O:STDOUT:User:1.2.0 */
 #define RTE_Compiler_IO_STDOUT          /* Compiler I/O: STDOUT */
           #define RTE_Compiler_IO_STDOUT_User     /* Compiler I/O: STDOUT User */
-/* LVGL.LVGL::LVGL:lvgl:Demo:Widgets:8.2.0 */
-/*! \brief enable demo:widgets support */
-#define LV_USE_DEMO_WIDGETS         1
+/* LVGL.LVGL::LVGL:lvgl:Benchmark:8.2.0 */
+/*! \brief enable demo:bencharmk */
+#define LV_USE_DEMO_BENCHMARK         1
 /* LVGL.LVGL::LVGL:lvgl:Essential:8.2.0 */
 /*! \brief Enable LVGL */
 #define RTE_GRAPHICS_LVGL

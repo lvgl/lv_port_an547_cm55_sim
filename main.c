@@ -109,7 +109,7 @@ int main(void)
     
     while(1) {
         
-        lv_timer_handler_run_in_period(5);
+        lv_timer_handler_run_in_period(1);
     }
     
 }

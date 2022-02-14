@@ -18,7 +18,7 @@
 
 /* ARM::CMSIS Driver:USART:1.0.0 */
 #define RTE_Drivers_USART
-/* GorgonMeducer.Performance Counter::Utilities:perf_counter:Core:Library:1.9.0 */
+/* GorgonMeducer.Performance Counter::Utilities:perf_counter:Core:Library:1.9.1 */
 #define __PERF_COUNTER__
 /* Keil.ARM Compiler::Compiler:I/O:STDOUT:User:1.2.0 */
 #define RTE_Compiler_IO_STDOUT          /* Compiler I/O: STDOUT */

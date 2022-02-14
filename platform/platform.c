@@ -61,7 +61,7 @@ __WEAK
 bool device_specific_init(void)
 {
     //! every 5ms
-    SysTick_Config(SystemCoreClock / 200);
+    SysTick_Config(SystemCoreClock / 1000);
     
     return false;
 }
