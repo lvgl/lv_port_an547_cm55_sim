@@ -127,61 +127,7 @@ static void lv_draw_arm2d_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend
     static arm_2d_tile_t mask_tile;
     static arm_2d_region_t target_region;
     
-    target_tile = (arm_2d_tile_t ){
-        .tRegion = {
-            .tSize = {
-                .iWidth = lv_area_get_width(draw_ctx->buf_area),
-                .iHeight = lv_area_get_height(draw_ctx->buf_area),
-            },
-        },
-        .tInfo.bIsRoot = true,
-        .phwBuffer = (uint16_t*)draw_ctx->buf,
-    };
-    
-    target_region = (arm_2d_region_t){
-        .tLocation = {
-            .iX = blend_area.x1 - draw_ctx->buf_area->x1,
-            .iY = blend_area.y1 - draw_ctx->buf_area->y1,
-        },
-        .tSize = {
-            .iWidth = lv_area_get_width(&blend_area),
-            .iHeight = lv_area_get_height(&blend_area),
-        },
-    };
 
-    if (NULL != mask) {
-        mask_tile_orig = (arm_2d_tile_t){
-            .tRegion = {
-                .tSize = {
-                    .iWidth = lv_area_get_width(dsc->mask_area),
-                    .iHeight = lv_area_get_height(dsc->mask_area),
-                },
-            },
-            .tInfo = {
-                .bIsRoot = true,
-                .bHasEnforcedColour = true,
-                .tColourInfo = {
-                    .chScheme = ARM_2D_COLOUR_8BIT,
-                },
-            },
-            .pchBuffer = (uint8_t *)mask,
-        };
-        
-        arm_2d_tile_generate_child( 
-            &mask_tile_orig,
-            (arm_2d_region_t []) {
-                {
-                    .tLocation = {
-                        .iX = dsc->mask_area->x1 - blend_area.x1,
-                        .iY = dsc->mask_area->y1 - blend_area.y1,
-                    },
-                    .tSize = mask_tile_orig.tRegion.tSize,
-                }
-            },
-            &mask_tile,
-            false);
-        mask_tile.tInfo.bDerivedResource = true;
-    }
 
     bool is_accelerated = false;
 
@@ -190,6 +136,63 @@ static void lv_draw_arm2d_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend
 
         lv_color_t * dest_buf = draw_ctx->buf;
         
+          
+        target_tile = (arm_2d_tile_t ){
+            .tRegion = {
+                .tSize = {
+                    .iWidth = lv_area_get_width(draw_ctx->buf_area),
+                    .iHeight = lv_area_get_height(draw_ctx->buf_area),
+                },
+            },
+            .tInfo.bIsRoot = true,
+            .phwBuffer = (uint16_t*)draw_ctx->buf,
+        };
+        
+        target_region = (arm_2d_region_t){
+            .tLocation = {
+                .iX = blend_area.x1 - draw_ctx->buf_area->x1,
+                .iY = blend_area.y1 - draw_ctx->buf_area->y1,
+            },
+            .tSize = {
+                .iWidth = lv_area_get_width(&blend_area),
+                .iHeight = lv_area_get_height(&blend_area),
+            },
+        };
+
+        if (NULL != mask) {
+            mask_tile_orig = (arm_2d_tile_t){
+                .tRegion = {
+                    .tSize = {
+                        .iWidth = lv_area_get_width(dsc->mask_area),
+                        .iHeight = lv_area_get_height(dsc->mask_area),
+                    },
+                },
+                .tInfo = {
+                    .bIsRoot = true,
+                    .bHasEnforcedColour = true,
+                    .tColourInfo = {
+                        .chScheme = ARM_2D_COLOUR_8BIT,
+                    },
+                },
+                .pchBuffer = (uint8_t *)mask,
+            };
+            
+            arm_2d_tile_generate_child( 
+                &mask_tile_orig,
+                (arm_2d_region_t []) {
+                    {
+                        .tLocation = {
+                            .iX = dsc->mask_area->x1 - blend_area.x1,
+                            .iY = dsc->mask_area->y1 - blend_area.y1,
+                        },
+                        .tSize = mask_tile_orig.tRegion.tSize,
+                    }
+                },
+                &mask_tile,
+                false);
+            mask_tile.tInfo.bDerivedResource = true;
+        }
+          
 
         const lv_color_t * src_buf = dsc->src_buf;
         if(src_buf) {
