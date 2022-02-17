@@ -15,6 +15,7 @@ A LVGL porting for Cortex-M55 running on an [Arm official FPGA prototyping devel
 - [**New**] Arm-2D (Helium) acceleration is added !!!
   - see `lv_gpu_arm2d.c` and `lv_gpu_arm2d.h`
   - Attach acceleration in `lv_port_disp_template.c`
+  - [Arm-2D CMSIS-Pack](https://github.com/ARM-software/EndpointAI/tree/main-arm-2d-developing/Kernels/Research/Arm-2D/cmsis-pack)
 
 - 320 * 240 RGB565 LCD Display connected with an Integrated Color LCD parallel interface. 
 - Default System Clock: 32MHz (50MHz Max)
