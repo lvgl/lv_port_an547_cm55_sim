@@ -1164,21 +1164,21 @@
         </targetInfos>
       </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="Arm" Cversion="0.9.10" condition="Arm-2D-CORE">
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/EndpointAI/main-arm-2d-developing/Kernels/Research/Arm-2D/cmsis-pack/" vendor="Arm" version="1.0.0"/>
+        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/EndpointAI/main-arm-2d-developing/Kernels/Research/Arm-2D/cmsis-pack/" vendor="Arm" version="1.0.0-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="Arm" Cversion="0.9.10" condition="CMSIS-CORE">
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/EndpointAI/main-arm-2d-developing/Kernels/Research/Arm-2D/cmsis-pack/" vendor="Arm" version="1.0.0"/>
+        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/EndpointAI/main-arm-2d-developing/Kernels/Research/Arm-2D/cmsis-pack/" vendor="Arm" version="1.0.0-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
-      <component Cbundle="Performance Counter" Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Library" Cvendor="GorgonMeducer" Cversion="1.9.1" condition="CMSIS-CORE">
-        <package name="perf_counter" schemaVersion="1.4" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="1.9.1"/>
+      <component Cbundle="Performance Counter" Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Library" Cvendor="GorgonMeducer" Cversion="1.9.2" condition="CMSIS-CORE">
+        <package name="perf_counter" schemaVersion="1.4" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="1.9.2"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1221,10 +1221,10 @@
       </component>
     </components>
     <files>
-      <file attr="config" category="preIncludeLocal" name="Library\Include\template\arm_2d_cfg.h" version="0.0.0">
+      <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_cfg.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="Arm" Cversion="0.9.10" condition="CMSIS-CORE"/>
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/EndpointAI/main-arm-2d-developing/Kernels/Research/Arm-2D/cmsis-pack/" vendor="Arm" version="1.0.0"/>
+        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/EndpointAI/main-arm-2d-developing/Kernels/Research/Arm-2D/cmsis-pack/" vendor="Arm" version="1.0.0-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>

@@ -16,19 +16,18 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_CFG_H__
-#define __ARM_2D_CFG_H__
+#ifndef __ARM_2D_USER_CFG_H__
+#define __ARM_2D_USER_CFG_H__
 
 /*============================ INCLUDES ======================================*/
+
+#include "RTE_Components.h"
 
 #ifdef   __cplusplus
 extern "C" {
 #endif
 
 /*============================ MACROS ========================================*/
-
-#define __OVERRIDE_WEAK
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 
@@ -41,7 +40,7 @@ extern "C" {
 // <i> Note that if you don't have any hardware accelerator, disable this feature can reduce code size and gain a small performance uplift.
 // <i> This feature is enabled by default.
 #ifndef __ARM_2D_HAS_ASYNC__
-#   define __ARM_2D_HAS_ASYNC__                                     1
+#   define __ARM_2D_HAS_ASYNC__                                     0
 #endif
 
 // <q>Enable anti-alias support for all rotation operations.

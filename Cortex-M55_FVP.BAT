@@ -1,4 +1,4 @@
-SET PATH=C:\Keil_v5\ARM\Arm Compiler 6.17\Bin;C:\Program Files\Parallels\Parallels Tools\Applications;C:\Program Files\Python39\Scripts\;C:\Program Files\Python39\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Windows\SysWOW64\WindowsPowerShell\v1.0\;C:\Program Files (x86)\TortoiseSVN\bin;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files\LLVM\bin;C:\Program Files\CMake\bin;C;C:\Program Files (x86)\Git\cmd;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2021.10\bin;C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2020-q4-major\bin;C:\Users\gabriel\AppData\Local\Microsoft\WindowsApps;C:\Users\gabriel\AppData\Local\GitHubDesktop\bin;C:\Users\gabriel\.dotnet\tools
+SET PATH=C:\Keil_v5\ARM\Arm Compiler 6.17\Bin;C:\Program Files\Parallels\Parallels Tools\Applications;C:\Program Files\Python39\Scripts\;C:\Program Files\Python39\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Windows\SysWOW64\WindowsPowerShell\v1.0\;C:\Program Files (x86)\TortoiseSVN\bin;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files\LLVM\bin;C:\Program Files\CMake\bin;C;C:\Program Files (x86)\Git\cmd;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files\PuTTY\;C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2021.10\bin;C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2020-q4-major\bin;C:\Users\gabriel\AppData\Local\Microsoft\WindowsApps;C:\Users\gabriel\AppData\Local\GitHubDesktop\bin;C:\Users\gabriel\.dotnet\tools
 SET CPU_TYPE=SSE-300-MPS3
 SET CPU_VENDOR=ARM
 SET UV2_TARGET=Cortex-M55_FVP
@@ -54,14 +54,15 @@ SET CPU_CLOCK=0x017D7840
 "C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\device_definition.__i"
 "C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\startup_fvp_sse300_mps3.__i"
 "C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\system_sse300mps3.__i"
-"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_cmsis_pack.__i"
-"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_port_disp_template.__i"
-"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_port_fs_template.__i"
-"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_port_indev_template.__i"
-"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\img_clothes.__i"
-"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\img_demo_widgets_avatar.__i"
-"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\img_lvgl_logo.__i"
-"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_demo_widgets.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\img_benchmark_cogwheel_alpha16.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\img_benchmark_cogwheel_argb.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\img_benchmark_cogwheel_chroma_keyed.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\img_benchmark_cogwheel_indexed16.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\img_benchmark_cogwheel_rgb.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_font_bechmark_montserrat_12_compr_az.c.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_font_bechmark_montserrat_16_compr_az.c.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_font_bechmark_montserrat_28_compr_az.c.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_demo_benchmark.__i"
 "C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_disp.__i"
 "C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_event.__i"
 "C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_group.__i"
@@ -194,6 +195,10 @@ SET CPU_CLOCK=0x017D7840
 "C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_switch.__i"
 "C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_table.__i"
 "C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_textarea.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_cmsis_pack.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_port_disp_template.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_port_fs_template.__i"
+"C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\lv_port_indev_template.__i"
 "C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\arm_mps3_io_drv.__i"
 "C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\audio_i2s_mps3_drv.__i"
 "C:\Keil_v5\ARM\Arm Compiler 6.17\Bin\ArmClang.exe" @".\objects\gpio_cmsdk_drv.__i"

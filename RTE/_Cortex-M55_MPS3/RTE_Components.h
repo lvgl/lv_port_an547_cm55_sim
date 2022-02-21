@@ -18,6 +18,8 @@
 
 /* ARM::CMSIS Driver:USART:1.0.0 */
 #define RTE_Drivers_USART
+/* Arm::Acceleration:Arm-2D:Core:0.9.10 */
+#define __RTE_ACCELERATION_ARM_2D__
 /* GorgonMeducer.Performance Counter::Utilities:perf_counter:Core:Library:1.9.2 */
 #define __PERF_COUNTER__
 /* Keil.ARM Compiler::Compiler:I/O:STDOUT:User:1.2.0 */

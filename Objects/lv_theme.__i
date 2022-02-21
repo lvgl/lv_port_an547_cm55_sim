@@ -4,7 +4,7 @@
 -I./RTE/Device/SSE-300-MPS3
 -I./RTE/LVGL
 -I./RTE/_Cortex-M55_FVP
--IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/Arm-2D/1.0.0/Library/Include
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/Arm-2D/1.0.0-alpha1/Library/Include
 -IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/CMSIS/5.8.0/CMSIS/Core/Include
 -IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/CMSIS/5.8.0/CMSIS/DSP/Include
 -IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/CMSIS/5.8.0/CMSIS/DSP/PrivateInclude
@@ -16,8 +16,8 @@
 -IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/CMSIS_Driver/Include
 -IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/Device/Include
 -IC:/Users/gabriel/AppData/Local/Arm/Packs/ARM/V2M_MPS3_SSE_300_BSP/1.2.0/Native_Driver
--IC:/Users/gabriel/AppData/Local/Arm/Packs/GorgonMeducer/perf_counter/1.9.0/lib
--IC:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.1-alpha2
--IC:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.1-alpha2/demos/widgets
--D__UVISION_VERSION="536" -D_RTE_ -D_RTE_ -DLV_USE_GPU_ARM2D="1"  -include "./RTE/LVGL/lv_conf_cmsis.h" -include "Pre_Include_Global.h"
--o ./objects/lv_theme.o -MD "C:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.1-alpha2/src/core/lv_theme.c"
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/GorgonMeducer/perf_counter/1.9.2/lib
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.1-alpha3
+-IC:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.1-alpha3/demos/benchmark
+-D__UVISION_VERSION="536" -D_RTE_ -D_RTE_ -DLV_USE_GPU_ARM2D="1"  -include "./RTE/Acceleration/arm_2d_cfg.h" -include "./RTE/LVGL/lv_conf_cmsis.h" -include "Pre_Include_Global.h"
+-o ./objects/lv_theme.o -MD "C:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/1.0.1-alpha3/src/core/lv_theme.c"

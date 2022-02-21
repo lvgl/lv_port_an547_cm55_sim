@@ -265,11 +265,7 @@ static bool lv_draw_arm2d_fill_colour(  const arm_2d_tile_t *target_tile,
             result = arm_2d_fill_colour_with_alpha(
                                             target_tile,
                                             region,
-#if LV_COLOR_DEPTH == 32
-                                            (arm_2d_color_rgb888_t){color.full},
-#else
                                             (arm_2d_color_t){color.full},
-#endif
                                             opa);
 #endif
         }
@@ -291,11 +287,7 @@ static bool lv_draw_arm2d_fill_colour(  const arm_2d_tile_t *target_tile,
                                             target_tile,
                                             region,
                                             mask_tile,
-#if LV_COLOR_DEPTH == 32
-                                            (arm_2d_color_rgb888_t){color.full},
-#else
                                             (arm_2d_color_t){color.full},
-#endif
                                             opa);
 #endif
         }
