@@ -29,6 +29,12 @@
 
 /* arm-2d direct mode apis */
 #define __arm_2d_impl_colour_filling    __arm_2d_impl_rgb16_colour_filling
+#define __arm_2d_impl_colour_filling_with_opacity                               \
+            __arm_2d_impl_rgb565_colour_filling_with_opacity
+#define __arm_2d_impl_colour_filling_mask                                       \
+            __arm_2d_impl_rgb565_colour_filling_mask
+#define __arm_2d_impl_colour_filling_mask_opacity                               \
+            __arm_2d_impl_rgb565_colour_filling_mask_opacity
 #define color_int                       uint16_t
 
 #elif LV_COLOR_DEPTH == 32
@@ -44,6 +50,12 @@
 
 /* arm-2d direct mode apis */
 #define __arm_2d_impl_colour_filling    __arm_2d_impl_rgb32_colour_filling
+#define __arm_2d_impl_colour_filling_with_opacity                               \
+            __arm_2d_impl_cccn888_colour_filling_with_opacity
+#define __arm_2d_impl_colour_filling_mask                                       \
+            __arm_2d_impl_cccn888_colour_filling_mask
+#define __arm_2d_impl_colour_filling_mask_opacity                               \
+            __arm_2d_impl_cccn888_colour_filling_mask_opacity
 #define color_int                       uint32_t
 
 #else
@@ -80,6 +92,33 @@ void __arm_2d_impl_colour_filling(  color_int *__RESTRICT pTarget,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     color_int Colour);
+
+extern
+void __arm_2d_impl_colour_filling_with_opacity(  
+                                    color_int *__RESTRICT pTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    color_int Colour,
+                                    uint_fast8_t chRatio);
+
+extern
+void __arm_2d_impl_colour_filling_mask(   
+                            color_int *__RESTRICT pTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            color_int Colour);
+
+extern
+void __arm_2d_impl_colour_filling_mask_opacity(   
+                            color_int *__RESTRICT pTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            color_int Colour,
+                            uint8_t chOpacity);
 
 LV_ATTRIBUTE_FAST_MEM
 static bool arm_2d_fill_normal( lv_color_t * dest_buf,
@@ -526,152 +565,55 @@ static bool arm_2d_fill_normal( lv_color_t * dest_buf,
     lv_disp_t * disp = _lv_refr_get_disp_refreshing();
     int32_t w = lv_area_get_width(dest_area);
     int32_t h = lv_area_get_height(dest_area);
-
+    arm_2d_size_t target_size = {.iWidth = w, .iHeight = h,};
     int32_t x;
     int32_t y;
 
     /*No mask*/
     if(mask == NULL) {
         if(opa >= LV_OPA_MAX) {
-            /*
-            for(y = 0; y < h; y++) {
-                lv_color_fill(dest_buf, color, w);
-                dest_buf += dest_stride;
-            }*/
-            __arm_2d_impl_colour_filling(   (color_int *)dest_buf, 
-                                            dest_stride, 
-                                            (arm_2d_size_t[]) { {
-                                                .iWidth = w,
-                                                .iHeight = h,
-                                            }},
+            __arm_2d_impl_colour_filling(   (color_int *)dest_buf,
+                                            dest_stride,
+                                            &target_size,
                                             color.full);
         }
         /*Has opacity*/
         else {
-            lv_color_t last_dest_color = lv_color_black();
-            lv_color_t last_res_color = lv_color_mix(color, last_dest_color, opa);
-
-            uint16_t color_premult[3];
-            lv_color_premult(color, opa, color_premult);
-            lv_opa_t opa_inv = 255 - opa;
-
-            for(y = 0; y < h; y++) {
-                for(x = 0; x < w; x++) {
-                    if(last_dest_color.full != dest_buf[x].full) {
-                        last_dest_color = dest_buf[x];
-
-#if LV_COLOR_SCREEN_TRANSP
-                        if(disp->driver->screen_transp) {
-                            lv_color_mix_with_alpha(dest_buf[x], dest_buf[x].ch.alpha, color, opa, &last_res_color,
-                                                    &last_res_color.ch.alpha);
-                        }
-                        else
-#else
-                        LV_UNUSED(disp);
-#endif
-                        {
-                            last_res_color = lv_color_mix_premult(color_premult, dest_buf[x], opa_inv);
-                        }
-                    }
-                    dest_buf[x] = last_res_color;
-                }
-                dest_buf += dest_stride;
-            }
+        #if LV_COLOR_SCREEN_TRANSP
+            return false;
+        #else
+            __arm_2d_impl_colour_filling_with_opacity(  (color_int *)dest_buf,
+                                                        dest_stride,
+                                                        &target_size,
+                                                        color.full,
+                                                        (uint8_t)opa);
+        #endif
         }
     }
     /*Masked*/
     else {
-#if LV_COLOR_DEPTH == 16
-        uint32_t c32 = color.full + ((uint32_t)color.full << 16);
-#endif
         /*Only the mask matters*/
         if(opa >= LV_OPA_MAX) {
-            int32_t x_end4 = w - 4;
-            for(y = 0; y < h; y++) {
-                for(x = 0; x < w && ((lv_uintptr_t)(mask) & 0x3); x++) {
-                    FILL_NORMAL_MASK_PX(color)
-                }
-
-                for(; x <= x_end4; x += 4) {
-                    uint32_t mask32 = *((uint32_t *)mask);
-                    if(mask32 == 0xFFFFFFFF) {
-#if LV_COLOR_DEPTH == 16
-                        if((lv_uintptr_t)dest_buf & 0x3) {
-                            *(dest_buf + 0) = color;
-                            uint32_t * d = (uint32_t *)(dest_buf + 1);
-                            *d = c32;
-                            *(dest_buf + 3) = color;
-                        }
-                        else {
-                            uint32_t * d = (uint32_t *)dest_buf;
-                            *d = c32;
-                            *(d + 1) = c32;
-                        }
-#else
-                        dest_buf[0] = color;
-                        dest_buf[1] = color;
-                        dest_buf[2] = color;
-                        dest_buf[3] = color;
-#endif
-                        dest_buf += 4;
-                        mask += 4;
-                    }
-                    else if(mask32) {
-                        FILL_NORMAL_MASK_PX(color)
-                        FILL_NORMAL_MASK_PX(color)
-                        FILL_NORMAL_MASK_PX(color)
-                        FILL_NORMAL_MASK_PX(color)
-                    }
-                    else {
-                        mask += 4;
-                        dest_buf += 4;
-                    }
-                }
-
-                for(; x < w ; x++) {
-                    FILL_NORMAL_MASK_PX(color)
-                }
-                dest_buf += (dest_stride - w);
-                mask += (mask_stride - w);
-            }
+            __arm_2d_impl_colour_filling_mask(  (color_int *)dest_buf,
+                                                dest_stride,
+                                                (uint8_t *)mask,
+                                                mask_stride,
+                                                &target_size,
+                                                color.full);
         }
         /*With opacity*/
         else {
-            /*Buffer the result color to avoid recalculating the same color*/
-            lv_color_t last_dest_color;
-            lv_color_t last_res_color;
-            lv_opa_t last_mask = LV_OPA_TRANSP;
-            last_dest_color.full = dest_buf[0].full;
-            last_res_color.full = dest_buf[0].full;
-            lv_opa_t opa_tmp = LV_OPA_TRANSP;
-
-            for(y = 0; y < h; y++) {
-                for(x = 0; x < w; x++) {
-                    if(*mask) {
-                        if(*mask != last_mask) opa_tmp = *mask == LV_OPA_COVER ? opa :
-                                                             (uint32_t)((uint32_t)(*mask) * opa) >> 8;
-                        if(*mask != last_mask || last_dest_color.full != dest_buf[x].full) {
-#if LV_COLOR_SCREEN_TRANSP
-                            if(disp->driver->screen_transp) {
-                                lv_color_mix_with_alpha(dest_buf[x], dest_buf[x].ch.alpha, color, opa_tmp, &last_res_color,
-                                                        &last_res_color.ch.alpha);
-                            }
-                            else
-#endif
-                            {
-                                if(opa_tmp == LV_OPA_COVER) last_res_color = color;
-                                else last_res_color = lv_color_mix(color, dest_buf[x], opa_tmp);
-                            }
-                            last_mask = *mask;
-                            last_dest_color.full = dest_buf[x].full;
-                        }
-                        dest_buf[x] = last_res_color;
-                    }
-                    mask++;
-                }
-                dest_buf += dest_stride;
-                mask += (mask_stride - w);
-            }
+        #if LV_COLOR_SCREEN_TRANSP
+            return false;
+        #else
+            __arm_2d_impl_colour_filling_mask_opacity(  (color_int *)dest_buf,
+                                                        dest_stride,
+                                                        (uint8_t *)mask,
+                                                        mask_stride,
+                                                        &target_size,
+                                                        color.full,
+                                                        (uint8_t)opa);
+        #endif
         }
     }
     
