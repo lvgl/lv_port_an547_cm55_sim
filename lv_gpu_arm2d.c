@@ -27,6 +27,10 @@
 #define arm_2d_tile_copy_with_src_mask  arm_2d_rgb565_tile_copy_with_src_mask
 #define arm_2d_color_t                  arm_2d_color_rgb565_t
 
+/* arm-2d direct mode apis */
+#define __arm_2d_impl_colour_filling    __arm_2d_impl_rgb16_colour_filling
+#define color_int                       uint16_t
+
 #elif LV_COLOR_DEPTH == 32
 #define arm_2d_fill_colour              arm_2d_rgb32_fill_colour
 #define arm_2d_fill_colour_with_alpha   arm_2d_cccn888_fill_colour_with_alpha
@@ -37,6 +41,10 @@
 #define arm_2d_alpha_blending           arm_2d_cccn888_alpha_blending
 #define arm_2d_tile_copy_with_src_mask  arm_2d_cccn888_tile_copy_with_src_mask
 #define arm_2d_color_t                  arm_2d_color_cccn888_t
+
+/* arm-2d direct mode apis */
+#define __arm_2d_impl_colour_filling    __arm_2d_impl_rgb32_colour_filling
+#define color_int                       uint32_t
 
 #else
 #error The specified LV_COLOR_DEPTH is not supported by this version of lv_gpu_arm2d.c. 
@@ -65,8 +73,16 @@ static bool lv_draw_arm2d_tile_copy(const arm_2d_tile_t *target_tile,
                                     lv_opa_t opa,
                                     arm_2d_tile_t *mask_tile);
 #else
+
+/* arm-2d direct mode APIs */
+extern
+void __arm_2d_impl_colour_filling(  color_int *__RESTRICT pTarget,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    color_int Colour);
+
 LV_ATTRIBUTE_FAST_MEM
-static void arm_2d_fill_normal( lv_color_t * dest_buf,
+static bool arm_2d_fill_normal( lv_color_t * dest_buf,
                                 const lv_area_t * dest_area,
                                 lv_coord_t dest_stride,
                                 lv_color_t color,
@@ -433,13 +449,13 @@ void lv_draw_arm2d_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend_dsc_t 
 
         if(dsc->src_buf == NULL) {
             if(dsc->blend_mode == LV_BLEND_MODE_NORMAL) {
-                arm_2d_fill_normal( dest_buf, 
-                                    &blend_area, 
-                                    dest_stride, 
-                                    dsc->color, 
-                                    dsc->opa, 
-                                    mask, 
-                                    mask_stride);
+                is_accelerated = arm_2d_fill_normal(dest_buf, 
+                                                    &blend_area, 
+                                                    dest_stride, 
+                                                    dsc->color, 
+                                                    dsc->opa, 
+                                                    mask, 
+                                                    mask_stride);
             }
     #if LV_DRAW_COMPLEX
             else {
@@ -460,7 +476,7 @@ void lv_draw_arm2d_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend_dsc_t 
     #endif
         }
 
-        is_accelerated = true;
+        //is_accelerated = true;
     } while(0);
 
     if (!is_accelerated) lv_draw_sw_blend_basic(draw_ctx, dsc);
@@ -499,7 +515,7 @@ void lv_draw_arm2d_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend_dsc_t 
     mask_tmp_x++;
 
 LV_ATTRIBUTE_FAST_MEM 
-static void arm_2d_fill_normal( lv_color_t * dest_buf,
+static bool arm_2d_fill_normal( lv_color_t * dest_buf,
                                 const lv_area_t * dest_area,
                                 lv_coord_t dest_stride,
                                 lv_color_t color,
@@ -517,24 +533,18 @@ static void arm_2d_fill_normal( lv_color_t * dest_buf,
     /*No mask*/
     if(mask == NULL) {
         if(opa >= LV_OPA_MAX) {
-        
-            extern
-            void __arm_2d_impl_rgb16_colour_filling( uint16_t *__RESTRICT pTarget,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint16_t Colour);
             /*
             for(y = 0; y < h; y++) {
                 lv_color_fill(dest_buf, color, w);
                 dest_buf += dest_stride;
             }*/
-            __arm_2d_impl_rgb16_colour_filling( (uint16_t *)dest_buf, 
-                                                dest_stride, 
-                                                (arm_2d_size_t[]) { {
-                                                    .iWidth = w,
-                                                    .iHeight = h,
-                                                }},
-                                                color.full);
+            __arm_2d_impl_colour_filling(   (color_int *)dest_buf, 
+                                            dest_stride, 
+                                            (arm_2d_size_t[]) { {
+                                                .iWidth = w,
+                                                .iHeight = h,
+                                            }},
+                                            color.full);
         }
         /*Has opacity*/
         else {
@@ -664,6 +674,8 @@ static void arm_2d_fill_normal( lv_color_t * dest_buf,
             }
         }
     }
+    
+    return true;
 }
 
 static void lv_gpu_arm2d_wait_cb(lv_draw_ctx_t * draw_ctx)

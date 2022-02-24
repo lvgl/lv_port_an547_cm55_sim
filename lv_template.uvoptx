@@ -346,56 +346,7 @@
           <Name>UL2V8M(-S0 -C0 -P0 -FD01000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint>
-        <Bp>
-          <Number>0</Number>
-          <Type>0</Type>
-          <LineNumber>278</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\lv_gpu_arm2d.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>1075</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>268482170</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>C:\Users\gabriel\AppData\Local\Arm\Packs\ARM\Arm-2D\1.0.0-alpha1\Library\Source\arm_2d_alpha_blending.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\lv_template\C:/Users/gabriel/AppData/Local/Arm/Packs/ARM/Arm-2D/1.0.0-alpha1/Library/Source/arm_2d_alpha_blending.c\1075</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>1159</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>268460432</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>C:\Users\gabriel\AppData\Local\Arm\Packs\ARM\Arm-2D\1.0.0-alpha1\Library\Source\arm_2d_alpha_blending.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\lv_template\C:/Users/gabriel/AppData/Local/Arm/Packs/ARM/Arm-2D/1.0.0-alpha1/Library/Source/arm_2d_alpha_blending.c\1159</Expression>
-        </Bp>
-      </Breakpoint>
+      <Breakpoint/>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
