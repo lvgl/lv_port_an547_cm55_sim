@@ -14,6 +14,10 @@
 #include "perf_counter.h"
 #include "lv_gpu_arm2d.h"
 
+#if defined(__RTE_ACCELERATION_ARM_2D__)
+#include "arm_2d.h"
+#endif
+
 /*********************
  *      DEFINES
  *********************/
@@ -112,10 +116,12 @@ void lv_port_disp_init(void)
      * Note that, in lv_conf.h you can enable GPUs that has built-in support in LVGL.
      * But if you have a different GPU you can use with this callback.*/
     //disp_drv.gpu_fill_cb = gpu_fill;
+#if 0
 #if LV_USE_GPU_ARM2D
     disp_drv.draw_ctx_init = lv_draw_arm2d_ctx_init;
     disp_drv.draw_ctx_deinit = lv_draw_arm2d_ctx_init;
     disp_drv.draw_ctx_size = sizeof(lv_draw_arm2d_ctx_t);
+#endif
 #endif
 
     /*Finally register the driver*/
@@ -159,6 +165,28 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         }
     }
 #else
+
+#if defined(__RTE_ACCELERATION_ARM_2D__)
+extern
+void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize);
+
+#if LV_COLOR_DEPTH == 32
+    arm_2d_size_t size = {
+        .iWidth = area->x2 - area->x1 + 1,
+        .iHeight = area->y2 - area->y1 + 1,
+    };
+    __arm_2d_impl_cccn888_to_rgb565((uint32_t *)color_p,
+                                    size.iWidth,
+                                    (uint16_t *)color_p,
+                                    size.iWidth,
+                                    &size);
+#endif
+#endif
+
     
     GLCD_DrawBitmap(area->x1,               //!< x
                     area->y1,               //!< y
