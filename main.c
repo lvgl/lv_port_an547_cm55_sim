@@ -26,15 +26,13 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
+#include "demos/lv_demos.h"
+
 #include "lv_port_disp_template.h"
 #include "lv_port_indev_template.h"
 
-#if LV_USE_DEMO_BENCHMARK
-#   include "lv_demo_benchmark.h"
-#endif
-
-#if LV_USE_DEMO_WIDGETS
-#   include "lv_demo_widgets.h"
+#if defined(__clang__)
+#   pragma clang diagnostic ignored "-Wcompound-token-split-by-macro"
 #endif
 
 /*============================ MACROS ========================================*/
@@ -97,7 +95,7 @@ int main(void)
 #if LV_USE_DEMO_BENCHMARK
     lv_demo_benchmark();
     
-    //lv_demo_benchmark_run_scene(31);      // run scene no 31
+    //lv_demo_benchmark_run_scene(33);      // run scene no 31
 #endif
     
 #if LV_USE_DEMO_WIDGETS
