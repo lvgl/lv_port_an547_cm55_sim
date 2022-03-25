@@ -53,9 +53,6 @@ void lv_port_disp_init(void)
      * Initialize your display
      * -----------------------*/
     disp_init();
-#if LV_USE_GPU_ARM2D
-    lv_draw_arm2d_init();
-#endif
     
     /*-----------------------------
      * Create a buffer for drawing

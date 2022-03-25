@@ -216,14 +216,10 @@ static void lv_draw_arm2d_img_decoded( struct _lv_draw_ctx_t * draw_ctx,
  *   GLOBAL FUNCTIONS
  **********************/
 
-void lv_draw_arm2d_init(void)
-{
-    arm_2d_init();
-}
-
-
 void lv_draw_arm2d_ctx_init(lv_disp_drv_t * drv, lv_draw_ctx_t * draw_ctx)
 {
+    arm_2d_init();
+
     lv_draw_sw_init_ctx(drv, draw_ctx);
 
     lv_draw_arm2d_ctx_t * arm2d_draw_ctx = (lv_draw_sw_ctx_t *)draw_ctx;
