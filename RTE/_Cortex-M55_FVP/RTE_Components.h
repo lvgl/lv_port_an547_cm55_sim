@@ -18,11 +18,11 @@
 
 /* ARM::CMSIS Driver:USART:1.0.0 */
 #define RTE_Drivers_USART
-/* Arm::Acceleration:Arm-2D:Alpha-Blending:0.9.11-dev */
+/* Arm::Acceleration:Arm-2D:Alpha-Blending:1.0.0-preview */
 #define __RTE_ACCELERATION_ARM_2D_ALPHA_BLENDING__
-/* Arm::Acceleration:Arm-2D:Core:0.9.11-dev */
+/* Arm::Acceleration:Arm-2D:Core:1.0.0-preview */
 #define __RTE_ACCELERATION_ARM_2D__
-/* Arm::Acceleration:Arm-2D:Transform:0.9.11-dev */
+/* Arm::Acceleration:Arm-2D:Transform:1.0.0-preview */
 #define __RTE_ACCELERATION_ARM_2D_TRANSFORM__
 /* GorgonMeducer.Performance Counter::Utilities:perf_counter:Core:Library:1.9.4 */
 #define __PERF_COUNTER__
