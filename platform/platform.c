@@ -27,7 +27,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
-#include "cmsis.h"
+#include "SSE300MPS3.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push

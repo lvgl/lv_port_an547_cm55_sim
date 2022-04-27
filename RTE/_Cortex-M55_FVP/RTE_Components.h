@@ -38,9 +38,6 @@
 /* LVGL.LVGL::LVGL:lvgl:Extra Themes:8.3.0-dev */
 /*! \brief use extra themes, widgets and layouts */
 #define RTE_GRAPHICS_LVGL_USE_EXTRA_THEMES
-/* LVGL.LVGL::LVGL:lvgl:GPU Arm-2D:1.0.2 */
-/*! \brief enable Arm-2D support*/
-#define LV_USE_GPU_ARM2D 1
 
 
 #endif /* RTE_COMPONENTS_H */
