@@ -191,6 +191,7 @@
 ".\objects\lv_port_disp_template.o"
 ".\objects\lv_port_fs_template.o"
 ".\objects\lv_port_indev_template.o"
+".\objects\lv_gpu_arm2d_1.o"
 ".\objects\arm_mps3_io_drv.o"
 ".\objects\audio_i2s_mps3_drv.o"
 ".\objects\gpio_cmsdk_drv.o"

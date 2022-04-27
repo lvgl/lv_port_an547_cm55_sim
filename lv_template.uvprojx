@@ -901,7 +901,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>LV_USE_GPU_ARM2D=0,NDEBUG</Define>
+              <Define>NDEBUG</Define>
               <Undefine></Undefine>
               <IncludePath>.\platform;.</IncludePath>
             </VariousControls>
@@ -1344,6 +1344,13 @@
         </targetInfos>
       </component>
       <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Extra Themes" Cvendor="LVGL" Cversion="8.3.0-dev" condition="LVGL-Essential">
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+        <targetInfos>
+          <targetInfo name="Cortex-M55_FVP"/>
+          <targetInfo name="Cortex-M55_MPS3"/>
+        </targetInfos>
+      </component>
+      <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="GPU Arm-2D" Cvendor="LVGL" Cversion="1.0.3-dev" condition="LVGL-Essential">
         <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
