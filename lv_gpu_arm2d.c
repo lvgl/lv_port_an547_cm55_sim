@@ -85,6 +85,11 @@
 #define __arm_2d_impl_cl_key_copy       __arm_2d_impl_rgb16_cl_key_copy
 #define __arm_2d_impl_alpha_blending_colour_keying                              \
     __arm_2d_impl_rgb565_alpha_blending_colour_keying
+#define arm_2d_tile_transform_with_src_mask_and_opacity                         \
+    arm_2d_rgb565_tile_transform_with_src_mask_and_opacity
+#define arm_2d_tile_transform_with_opacity                                      \
+    arm_2d_rgb565_tile_transform_with_opacity
+
 #define color_int                       uint16_t
 
 #elif LV_COLOR_DEPTH == 32
@@ -113,6 +118,10 @@
 #define __arm_2d_impl_cl_key_copy       __arm_2d_impl_rgb32_cl_key_copy
 #define __arm_2d_impl_alpha_blending_colour_keying                              \
     __arm_2d_impl_cccn888_alpha_blending_colour_keying
+#define arm_2d_tile_transform_with_src_mask_and_opacity                         \
+    arm_2d_cccn888_tile_transform_with_src_mask_and_opacity
+#define arm_2d_tile_transform_with_opacity                                      \
+    arm_2d_cccn888_tile_transform_with_opacity
     
 #define color_int                       uint32_t
 
@@ -120,7 +129,7 @@
 #error The specified LV_COLOR_DEPTH is not supported by this version of lv_gpu_arm2d.c.
 #endif
 
-
+/* *INDENT-OFF* */
 #define __PREPARE_LL_ACCELERATION__()                                           \
             int32_t src_stride = lv_area_get_width(coords);                     \
                                                                                 \
@@ -250,6 +259,7 @@
                 false);                                                         \
             mask_tile.tInfo.bDerivedResource = true;                            \
         }
+/* *INDENT-ON* */
 
 /**********************
  *      TYPEDEFS
@@ -901,20 +911,47 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
             }
         }
         else if (   !mask_any
-               &&   (LV_COLOR_DEPTH == 32)
                &&   (draw_dsc->recolor_opa == LV_OPA_TRANSP)) {
                
             do {
                 /* accelerate transform without re-color */
-                lv_area_t blend_area2;
-                if(!_lv_area_intersect(&blend_area2, 
-                                       coords,
-                                       draw_ctx->clip_area)) {
-                    break;
-                }
+//                lv_area_t blend_area2;
+//                if(!_lv_area_intersect(&blend_area2, 
+//                                       coords,
+//                                       draw_ctx->clip_area)) {
+//                    break;
+//                }
 
-                __PREPARE_TARGET_TILE__(blend_area2);
-                
+                __PREPARE_TARGET_TILE__(*coords);
+            #if 0
+                static arm_2d_tile_t target_tile_origin;
+                static arm_2d_region_t target_region_origin;
+            
+                lv_color_t * dest_buf = draw_ctx->buf;
+
+                target_tile_origin = (arm_2d_tile_t) {
+                    .tRegion = {
+                        .tSize = {
+                            .iWidth = lv_area_get_width(draw_ctx->buf_area),
+                            .iHeight = lv_area_get_height(draw_ctx->buf_area),
+                        },
+                    },
+                    .tInfo.bIsRoot = true,
+                    .phwBuffer = (uint16_t *)draw_ctx->buf,
+                };
+
+                target_region_origin = (arm_2d_region_t) {
+                    .tLocation = {
+                        .iX = coords->x1 - draw_ctx->buf_area->x1,
+                        .iY = coords->y1 - draw_ctx->buf_area->y1,
+                    },
+                    .tSize = {
+                        .iWidth = lv_area_get_width(coords),
+                        .iHeight = lv_area_get_height(coords),
+                    },
+                };
+           #endif
+
                 static arm_2d_tile_t source_tile;
                 
                 source_tile = (arm_2d_tile_t) {
@@ -938,36 +975,46 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                 static arm_2d_location_t source_center, target_center;
                 source_center.iX = draw_dsc->pivot.x;
                 source_center.iY = draw_dsc->pivot.y;
-                target_center.iX = coords->x1 
-                                 + (lv_area_get_width(coords) >> 1)
-                                 - draw_ctx->buf_area->x1;
-                                 
-                target_center.iY = coords->y1 
-                                 + (lv_area_get_height(coords) >> 1)
-                                 - draw_ctx->buf_area->y1;
+//                target_center.iX = coords->x1 
+//                                 + (lv_area_get_width(coords) >> 1)
+//                                 - draw_ctx->buf_area->x1;
+//                                 
+//                target_center.iY = coords->y1 
+//                                 + (lv_area_get_height(coords) >> 1)
+//                                 - draw_ctx->buf_area->y1;
                 
-            #if 0
-                
-                arm_2d_cccn888_tile_transform_with_src_mask_and_opacity(
-                    &source_tile,
-                    &mask_tile,
-                    &target_tile,
-                    &target_region,
-                    source_center,
-                    ARM_2D_ANGLE(30),
-                    0.5f,
-                    //(color_int)LV_COLOR_CHROMA_KEY.full,
-                    blend_dsc.opa);
-                    //&target_center);
-            #else
-                arm_2d_tile_copy_with_src_mask(  &source_tile,
-                                        &mask_tile,
-                                        &target_tile,
-                                        &target_region,
-                                        ARM_2D_CP_MODE_COPY);
-            #endif
-                is_accelerated = false;
-                
+
+                if (    (LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf)
+                   ||   (LV_IMG_CF_TRUE_COLOR == cf)) {
+                    arm_2d_tile_transform_with_opacity(
+                        &source_tile,
+                        &target_tile,
+                        &target_region,
+                        source_center,
+                        ARM_2D_ANGLE((draw_dsc->angle / 10.0f)),
+                        draw_dsc->zoom / 256.0f,
+                        (color_int)LV_COLOR_CHROMA_KEY.full,
+                        blend_dsc.opa);
+                        //&target_center);
+
+                        is_accelerated = true;
+                } 
+                else if ((LV_IMG_CF_TRUE_COLOR_ALPHA == cf)
+                     && (LV_COLOR_DEPTH == 32)) {
+                    arm_2d_tile_transform_with_src_mask_and_opacity(
+                        &source_tile,
+                        &mask_tile,
+                        &target_tile,
+                        &target_region,
+                        source_center,
+                        ARM_2D_ANGLE((draw_dsc->angle / 10.0f)),
+                        draw_dsc->zoom / 256.0f,
+                        blend_dsc.opa);
+                        //&target_center);
+
+                        is_accelerated = true;
+                }
+
             } while(0);
         }
         
@@ -997,7 +1044,7 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                 }
             }
 #if LV_DRAW_COMPLEX
-            /*Apply the masks if any*/
+            /*Apply the masrecoks if any*/
             if(mask_any) {
                 lv_coord_t y;
                 lv_opa_t * mask_buf_tmp = mask_buf;
