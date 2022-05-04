@@ -93,9 +93,9 @@ int main(void)
     lv_port_indev_init();
     
 #if LV_USE_DEMO_BENCHMARK
-    lv_demo_benchmark();
+    //lv_demo_benchmark();
     
-    //lv_demo_benchmark_run_scene(33);      // run scene no 31
+    lv_demo_benchmark_run_scene(55);      // run scene no 31
 #endif
     
 #if LV_USE_DEMO_WIDGETS

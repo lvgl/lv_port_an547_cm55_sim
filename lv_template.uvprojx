@@ -184,7 +184,7 @@
             <hadXRAM>1</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>3</RvdsVP>
-            <RvdsMve>2</RvdsMve>
+            <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
@@ -313,7 +313,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>5</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -336,8 +336,8 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fdata-sections</MiscControls>
-              <Define></Define>
+              <MiscControls>-fdata-sections -Wno-undef</MiscControls>
+              <Define>LV_USE_GPU_ARM2D=1</Define>
               <Undefine></Undefine>
               <IncludePath>.\platform;.</IncludePath>
             </VariousControls>
@@ -462,75 +462,6 @@
         </Group>
         <Group>
           <GroupName>lv_gpu_arm2d</GroupName>
-          <GroupOption>
-            <CommonProperty>
-              <UseCPPCompiler>0</UseCPPCompiler>
-              <RVCTCodeConst>0</RVCTCodeConst>
-              <RVCTZI>0</RVCTZI>
-              <RVCTOtherData>0</RVCTOtherData>
-              <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>0</IncludeInBuild>
-              <AlwaysBuild>2</AlwaysBuild>
-              <GenerateAssemblyFile>2</GenerateAssemblyFile>
-              <AssembleAssemblyFile>2</AssembleAssemblyFile>
-              <PublicsOnly>2</PublicsOnly>
-              <StopOnExitCode>11</StopOnExitCode>
-              <CustomArgument></CustomArgument>
-              <IncludeLibraryModules></IncludeLibraryModules>
-              <ComprImg>1</ComprImg>
-            </CommonProperty>
-            <GroupArmAds>
-              <Cads>
-                <interw>2</interw>
-                <Optim>0</Optim>
-                <oTime>2</oTime>
-                <SplitLS>2</SplitLS>
-                <OneElfS>2</OneElfS>
-                <Strict>2</Strict>
-                <EnumInt>2</EnumInt>
-                <PlainCh>2</PlainCh>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <wLevel>0</wLevel>
-                <uThumb>2</uThumb>
-                <uSurpInc>2</uSurpInc>
-                <uC99>2</uC99>
-                <uGnu>2</uGnu>
-                <useXO>2</useXO>
-                <v6Lang>0</v6Lang>
-                <v6LangP>0</v6LangP>
-                <vShortEn>2</vShortEn>
-                <vShortWch>2</vShortWch>
-                <v6Lto>2</v6Lto>
-                <v6WtE>2</v6WtE>
-                <v6Rtti>2</v6Rtti>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Cads>
-              <Aads>
-                <interw>2</interw>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <thumb>2</thumb>
-                <SplitLS>2</SplitLS>
-                <SwStkChk>2</SwStkChk>
-                <NoWarn>2</NoWarn>
-                <uSurpInc>2</uSurpInc>
-                <useXO>2</useXO>
-                <ClangAsOpt>0</ClangAsOpt>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Aads>
-            </GroupArmAds>
-          </GroupOption>
           <Files>
             <File>
               <FileName>lv_gpu_arm2d.c</FileName>
@@ -896,12 +827,12 @@
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
-            <v6Lto>1</v6Lto>
+            <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>NDEBUG</Define>
+              <Define>NDEBUG,LV_USE_GPU_ARM2D=1</Define>
               <Undefine></Undefine>
               <IncludePath>.\platform;.</IncludePath>
             </VariousControls>
@@ -1026,75 +957,6 @@
         </Group>
         <Group>
           <GroupName>lv_gpu_arm2d</GroupName>
-          <GroupOption>
-            <CommonProperty>
-              <UseCPPCompiler>0</UseCPPCompiler>
-              <RVCTCodeConst>0</RVCTCodeConst>
-              <RVCTZI>0</RVCTZI>
-              <RVCTOtherData>0</RVCTOtherData>
-              <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>0</IncludeInBuild>
-              <AlwaysBuild>2</AlwaysBuild>
-              <GenerateAssemblyFile>2</GenerateAssemblyFile>
-              <AssembleAssemblyFile>2</AssembleAssemblyFile>
-              <PublicsOnly>2</PublicsOnly>
-              <StopOnExitCode>11</StopOnExitCode>
-              <CustomArgument></CustomArgument>
-              <IncludeLibraryModules></IncludeLibraryModules>
-              <ComprImg>1</ComprImg>
-            </CommonProperty>
-            <GroupArmAds>
-              <Cads>
-                <interw>2</interw>
-                <Optim>0</Optim>
-                <oTime>2</oTime>
-                <SplitLS>2</SplitLS>
-                <OneElfS>2</OneElfS>
-                <Strict>2</Strict>
-                <EnumInt>2</EnumInt>
-                <PlainCh>2</PlainCh>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <wLevel>0</wLevel>
-                <uThumb>2</uThumb>
-                <uSurpInc>2</uSurpInc>
-                <uC99>2</uC99>
-                <uGnu>2</uGnu>
-                <useXO>2</useXO>
-                <v6Lang>0</v6Lang>
-                <v6LangP>0</v6LangP>
-                <vShortEn>2</vShortEn>
-                <vShortWch>2</vShortWch>
-                <v6Lto>2</v6Lto>
-                <v6WtE>2</v6WtE>
-                <v6Rtti>2</v6Rtti>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Cads>
-              <Aads>
-                <interw>2</interw>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <thumb>2</thumb>
-                <SplitLS>2</SplitLS>
-                <SwStkChk>2</SwStkChk>
-                <NoWarn>2</NoWarn>
-                <uSurpInc>2</uSurpInc>
-                <useXO>2</useXO>
-                <ClangAsOpt>0</ClangAsOpt>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Aads>
-            </GroupArmAds>
-          </GroupOption>
           <Files>
             <File>
               <FileName>lv_gpu_arm2d.c</FileName>
@@ -1329,36 +1191,29 @@
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
-      <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Demo:Widgets" Cvendor="LVGL" Cversion="8.3.0-dev" condition="LVGL-Essential">
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+      <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Benchmark" Cvendor="LVGL" Cversion="8.3.0-dev" condition="LVGL-Essential">
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.4-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
       <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Essential" Cvendor="LVGL" Cversion="8.3.0-dev">
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.4-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
       <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Extra Themes" Cvendor="LVGL" Cversion="8.3.0-dev" condition="LVGL-Essential">
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
-        <targetInfos>
-          <targetInfo name="Cortex-M55_FVP"/>
-          <targetInfo name="Cortex-M55_MPS3"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="GPU Arm-2D" Cvendor="LVGL" Cversion="1.0.3-dev" condition="LVGL-Essential">
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.4-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
       <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Porting" Cvendor="LVGL" Cversion="8.3.0-dev" condition="LVGL-Essential">
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.4-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1477,7 +1332,7 @@
       <file attr="config" category="sourceC" name="lv_cmsis_pack.c" version="1.0.0">
         <instance index="0">RTE\LVGL\lv_cmsis_pack.c</instance>
         <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Essential" Cvendor="LVGL" Cversion="8.3.0-dev"/>
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.4-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1486,7 +1341,7 @@
       <file attr="config" category="preIncludeGlobal" name="lv_conf_cmsis.h" version="1.0.0">
         <instance index="0">RTE\LVGL\lv_conf_cmsis.h</instance>
         <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Essential" Cvendor="LVGL" Cversion="8.3.0-dev"/>
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.4-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1495,7 +1350,7 @@
       <file attr="config" category="sourceC" name="examples\porting\lv_port_disp_template.c" version="1.0.0">
         <instance index="0">RTE\LVGL\lv_port_disp_template.c</instance>
         <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Porting" Cvendor="LVGL" Cversion="8.3.0-dev" condition="LVGL-Essential"/>
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.4-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1504,7 +1359,7 @@
       <file attr="config" category="header" name="examples\porting\lv_port_disp_template.h" version="1.0.0">
         <instance index="0">RTE\LVGL\lv_port_disp_template.h</instance>
         <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Porting" Cvendor="LVGL" Cversion="8.3.0-dev" condition="LVGL-Essential"/>
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.4-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1513,7 +1368,7 @@
       <file attr="config" category="sourceC" name="examples\porting\lv_port_fs_template.c" version="1.0.0">
         <instance index="0">RTE\LVGL\lv_port_fs_template.c</instance>
         <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Porting" Cvendor="LVGL" Cversion="8.3.0-dev" condition="LVGL-Essential"/>
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.4-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1522,7 +1377,7 @@
       <file attr="config" category="header" name="examples\porting\lv_port_fs_template.h" version="1.0.0">
         <instance index="0">RTE\LVGL\lv_port_fs_template.h</instance>
         <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Porting" Cvendor="LVGL" Cversion="8.3.0-dev" condition="LVGL-Essential"/>
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.4-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1531,7 +1386,7 @@
       <file attr="config" category="sourceC" name="examples\porting\lv_port_indev_template.c" version="1.0.0">
         <instance index="0">RTE\LVGL\lv_port_indev_template.c</instance>
         <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Porting" Cvendor="LVGL" Cversion="8.3.0-dev" condition="LVGL-Essential"/>
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.4-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1540,7 +1395,7 @@
       <file attr="config" category="header" name="examples\porting\lv_port_indev_template.h" version="1.0.0">
         <instance index="0">RTE\LVGL\lv_port_indev_template.h</instance>
         <component Cbundle="LVGL" Cclass="LVGL" Cgroup="lvgl" Csub="Porting" Cvendor="LVGL" Cversion="8.3.0-dev" condition="LVGL-Essential"/>
-        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.3"/>
+        <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.0.4-alpha1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
