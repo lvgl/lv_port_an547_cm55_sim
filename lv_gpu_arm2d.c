@@ -54,8 +54,12 @@
 /*********************
  *      DEFINES
  *********************/
-#undef __ARM_2D_HAS_HW_ACC__
-#define __ARM_2D_HAS_HW_ACC__   0
+#if (   !defined(__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__)                  \
+    ||  !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__)                          \
+&&  LV_COLOR_DEPTH == 32                                                        \
+&&  !defined(__ARM_2D_LVGL_CFG_NO_WARNING__)
+    #warning Please set macro __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__ to 1 to get more acceleration opportunities. Or you can define macro __ARM_2D_LVGL_CFG_NO_WARNING__ to suppress this warning.
+#endif
 
 #define MAX_BUF_SIZE (uint32_t) lv_disp_get_hor_res(_lv_refr_get_disp_refreshing())
 
@@ -1002,6 +1006,8 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
 
                         is_accelerated = true;
                 } 
+            #if defined(__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__)          \
+            &&  __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
                 else if ((LV_IMG_CF_TRUE_COLOR_ALPHA == cf)
                      && (LV_COLOR_DEPTH == 32)) {
                     arm_2d_tile_transform_with_src_mask_and_opacity(
@@ -1017,6 +1023,7 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
 
                         is_accelerated = true;
                 }
+            #endif
 
             } while(0);
         }
