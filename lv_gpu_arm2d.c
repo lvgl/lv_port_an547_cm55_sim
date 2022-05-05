@@ -911,8 +911,12 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
             }
         }
         else if (   !mask_any
+            #if defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)
+                && (draw_dsc->antialias == 1)
+            #else
+                && (draw_dsc->antialias == 0)
+            #endif
                &&   (draw_dsc->recolor_opa == LV_OPA_TRANSP)) {
-               
             do {
                 /* accelerate transform without re-color */
 //                lv_area_t blend_area2;
