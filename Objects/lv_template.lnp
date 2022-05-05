@@ -1,4 +1,4 @@
---cpu=Cortex-M55.no_mve --fpu=FPv5_D16
+--cpu=Cortex-M55.no_mve --fpu=FPv5_D16 --lto
 ".\objects\led_port.o"
 ".\objects\serial.o"
 ".\objects\platform.o"
@@ -7,13 +7,13 @@
 ".\objects\touch_v2m-mps3.o"
 ".\objects\main.o"
 ".\objects\lv_gpu_arm2d.o"
+".\objects\arm_2d.o"
 ".\objects\arm_2d_alpha_blending.o"
 ".\objects\arm_2d_async.o"
 ".\objects\arm_2d_conversion.o"
 ".\objects\arm_2d_draw.o"
 ".\objects\arm_2d_helium.o"
 ".\objects\arm_2d_transform.o"
-".\objects\arm_2d.o"
 ".\objects\basicmathfunctions.o"
 ".\objects\basicmathfunctionsf16.o"
 ".\objects\bayesfunctions.o"
