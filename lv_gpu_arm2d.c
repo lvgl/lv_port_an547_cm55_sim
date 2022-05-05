@@ -923,18 +923,13 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                &&   (draw_dsc->recolor_opa == LV_OPA_TRANSP)) {
             do {
                 /* accelerate transform without re-color */
-//                lv_area_t blend_area2;
-//                if(!_lv_area_intersect(&blend_area2, 
-//                                       coords,
-//                                       draw_ctx->clip_area)) {
-//                    break;
-//                }
 
-                /* todo: add clip_area */
-                __PREPARE_TARGET_TILE__(*coords);
-            #if 0
+                /* __PREPARE_TARGET_TILE__(*coords); */
+            
                 static arm_2d_tile_t target_tile_origin;
-                static arm_2d_region_t target_region_origin;
+                static arm_2d_tile_t target_tile;
+                arm_2d_region_t clip_region;
+                static arm_2d_region_t target_region;
             
                 lv_color_t * dest_buf = draw_ctx->buf;
 
@@ -949,17 +944,32 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                     .phwBuffer = (uint16_t *)draw_ctx->buf,
                 };
 
-                target_region_origin = (arm_2d_region_t) {
+                clip_region = (arm_2d_region_t) {
                     .tLocation = {
-                        .iX = coords->x1 - draw_ctx->buf_area->x1,
-                        .iY = coords->y1 - draw_ctx->buf_area->y1,
+                        .iX = draw_ctx->clip_area->x1 - draw_ctx->buf_area->x1,
+                        .iY = draw_ctx->clip_area->y1 - draw_ctx->buf_area->y1,
+                    },
+                    .tSize = {
+                        .iWidth = lv_area_get_width(draw_ctx->clip_area),
+                        .iHeight = lv_area_get_height(draw_ctx->clip_area),
+                    },
+                };
+
+                arm_2d_tile_generate_child(&target_tile_origin,
+                                           &clip_region,
+                                           &target_tile,
+                                           false);
+
+                target_region = (arm_2d_region_t) {
+                    .tLocation = {
+                        .iX = coords->x1 - draw_ctx->clip_area->x1,
+                        .iY = coords->y1 - draw_ctx->clip_area->y1,
                     },
                     .tSize = {
                         .iWidth = lv_area_get_width(coords),
                         .iHeight = lv_area_get_height(coords),
                     },
                 };
-            #endif
 
                 static arm_2d_tile_t source_tile;
                 
@@ -984,12 +994,6 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                 static arm_2d_location_t source_center, target_center;
                 source_center.iX = draw_dsc->pivot.x;
                 source_center.iY = draw_dsc->pivot.y;
-//                target_center.iX = coords->x1 
-//                                 + (lv_area_get_width(coords) >> 1)
-//                                 - draw_ctx->buf_area->x1;
-//                target_center.iY = coords->y1 
-//                                 + (lv_area_get_height(coords) >> 1)
-//                                 - draw_ctx->buf_area->y1;
 
 
                 if (    (LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf)
@@ -1003,7 +1007,6 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                         draw_dsc->zoom / 256.0f,
                         (color_int)LV_COLOR_CHROMA_KEY.full,
                         blend_dsc.opa);
-                        //&target_center);
 
                         is_accelerated = true;
                 } 
@@ -1020,7 +1023,6 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                         ARM_2D_ANGLE((draw_dsc->angle / 10.0f)),
                         draw_dsc->zoom / 256.0f,
                         blend_dsc.opa);
-                        //&target_center);
 
                         is_accelerated = true;
                 }
@@ -1093,6 +1095,7 @@ static void lv_gpu_arm2d_wait_cb(lv_draw_ctx_t * draw_ctx)
 {
     lv_disp_t * disp = _lv_refr_get_disp_refreshing();
 
+    arm_2d_op_wait_async(NULL);
     if(disp->driver && disp->driver->wait_cb) {
         disp->driver->wait_cb(disp->driver);
     }
