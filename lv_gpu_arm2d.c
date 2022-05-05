@@ -911,7 +911,7 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
             }
         }
         else if (   !mask_any
-            #if defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)
+            #if defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__) && __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
                 && (draw_dsc->antialias == 1)
             #else
                 && (draw_dsc->antialias == 0)
@@ -954,7 +954,7 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                         .iHeight = lv_area_get_height(coords),
                     },
                 };
-           #endif
+            #endif
 
                 static arm_2d_tile_t source_tile;
                 
@@ -982,11 +982,10 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
 //                target_center.iX = coords->x1 
 //                                 + (lv_area_get_width(coords) >> 1)
 //                                 - draw_ctx->buf_area->x1;
-//                                 
 //                target_center.iY = coords->y1 
 //                                 + (lv_area_get_height(coords) >> 1)
 //                                 - draw_ctx->buf_area->y1;
-                
+
 
                 if (    (LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf)
                    ||   (LV_IMG_CF_TRUE_COLOR == cf)) {

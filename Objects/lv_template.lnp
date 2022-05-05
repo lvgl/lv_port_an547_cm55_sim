@@ -1,4 +1,4 @@
---cpu=Cortex-M55.no_mve --fpu=FPv5_D16 --lto
+--cpu=Cortex-M55 --fpu=FPv5_D16 --lto
 ".\objects\led_port.o"
 ".\objects\serial.o"
 ".\objects\platform.o"
