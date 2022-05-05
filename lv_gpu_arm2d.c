@@ -930,6 +930,7 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
 //                    break;
 //                }
 
+                /* todo: add clip_area */
                 __PREPARE_TARGET_TILE__(*coords);
             #if 0
                 static arm_2d_tile_t target_tile_origin;
