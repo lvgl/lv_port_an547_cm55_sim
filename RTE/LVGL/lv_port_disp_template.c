@@ -163,18 +163,6 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 {
     /*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/
 
-#if 0
-    int32_t x;
-    int32_t y;
-    for(y = area->y1; y <= area->y2; y++) {
-        for(x = area->x1; x <= area->x2; x++) {
-            /*Put a pixel to the display. For example:*/
-            /*put_px(x, y, *color_p)*/
-            color_p++;
-        }
-    }
-#else
-
 #if defined(__RTE_ACCELERATION_ARM_2D__)
 extern
 void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
@@ -195,14 +183,14 @@ void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
                                     &size);
 #endif
 #endif
-
+#if !defined(__USE_FVP__)
     if (is_flush_enabled)
+#endif
     GLCD_DrawBitmap(area->x1,               //!< x
                     area->y1,               //!< y
                     area->x2 - area->x1 + 1,    //!< width
                     area->y2 - area->y1 + 1,    //!< height
                     (const uint8_t *)color_p);
-#endif
 
     /*IMPORTANT!!!
      *Inform the graphics library that you are ready with the flushing*/
