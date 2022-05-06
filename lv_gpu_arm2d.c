@@ -981,6 +981,31 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                     is_accelerated = true;
                 )
             }
+            else if (!mask_any && (cf == LV_IMG_CF_TRUE_COLOR)) {
+                /* accelerate copy-with-source-masks-and-opacity */
+
+                __RECOLOUR_WRAPPER(
+                    __PREPARE_LL_ACCELERATION__();
+
+                    if (blend_dsc.opa >= LV_OPA_MAX) {
+                        __arm_2d_impl_copy(
+                            (color_int *)src_buf_tmp,
+                            src_stride,
+                            (color_int *)dest_buf,
+                            dest_stride,
+                            &copy_size);
+                    } else {
+                        __arm_2d_impl_alpha_blending(
+                            (color_int *)src_buf_tmp,
+                            src_stride,
+                            (color_int *)dest_buf,
+                            dest_stride,
+                            &copy_size,
+                            blend_dsc.opa);
+                    }
+                    is_accelerated = true;
+                )
+            }
         }
         else if (   !mask_any
             #if defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__) && __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
