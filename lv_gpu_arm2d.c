@@ -94,6 +94,8 @@
 #define arm_2d_tile_transform_with_opacity                                      \
     arm_2d_rgb565_tile_transform_with_opacity
 
+#define __ARM_2D_PIXEL_BLENDING_OPA     __ARM_2D_PIXEL_BLENDING_OPA_RGB565
+
 #define color_int                       uint16_t
 
 #elif LV_COLOR_DEPTH == 32
@@ -126,7 +128,9 @@
     arm_2d_cccn888_tile_transform_with_src_mask_and_opacity
 #define arm_2d_tile_transform_with_opacity                                      \
     arm_2d_cccn888_tile_transform_with_opacity
-    
+
+#define __ARM_2D_PIXEL_BLENDING_OPA     __ARM_2D_PIXEL_BLENDING_OPA_CCCN888
+
 #define color_int                       uint32_t
 
 #else
@@ -263,6 +267,42 @@
                 false);                                                         \
             mask_tile.tInfo.bDerivedResource = true;                            \
         }
+/* *INDENT-ON* */
+
+/* *INDENT-OFF* */
+#define __RECOLOUR_WRAPPER(...)                                                 \
+    do {                                                                        \
+        lv_color_t *rgb_tmp_buf = NULL;                                         \
+        if(draw_dsc->recolor_opa > LV_OPA_MIN) {                                \
+            rgb_tmp_buf                                                         \
+                = lv_mem_buf_get(src_w * src_h * sizeof(lv_color_t));           \
+            if (NULL == rgb_tmp_buf) {                                          \
+                LV_LOG_WARN(                                                    \
+                    "Failed to allocate memory for accelerating recolour, "     \
+                    "use normal route instead.");                               \
+                break;                                                          \
+            }                                                                   \
+            lv_memcpy(rgb_tmp_buf, src_buf, src_w * src_h * sizeof(lv_color_t));\
+            arm_2d_size_t copy_size = {                                         \
+                .iWidth = src_w,                                                \
+                .iHeight = src_h,                                               \
+            };                                                                  \
+            /* apply re-colour */                                               \
+            __arm_2d_impl_colour_filling_with_opacity(                          \
+                (color_int *)rgb_tmp_buf,                                       \
+                src_w,                                                          \
+                &copy_size,                                                     \
+                (color_int)draw_dsc->recolor.full,                              \
+                draw_dsc->recolor_opa);                                         \
+                                                                                \
+            /* replace src_buf for the following operation */                   \
+            src_buf = (const uint8_t *)rgb_tmp_buf;                             \
+        }                                                                       \
+        __VA_ARGS__                                                             \
+        if (NULL != rgb_tmp_buf) {                                              \
+            lv_mem_buf_release(rgb_tmp_buf);                                    \
+        }                                                                       \
+    } while(0);
 /* *INDENT-ON* */
 
 /**********************
@@ -789,7 +829,6 @@ static bool arm_2d_copy_normal(lv_color_t * dest_buf,
     return true;
 }
 
-
 LV_ATTRIBUTE_FAST_MEM
 static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                                       const lv_draw_img_dsc_t * draw_dsc,
@@ -882,43 +921,16 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
             if (LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf)  {
                 /* copy with colour keying */
 
-                lv_color_t chrome_key = LV_COLOR_CHROMA_KEY;
-                do {
-                    lv_color_t *rgb_tmp_buf = NULL;
-                    
+                __RECOLOUR_WRAPPER(
+
+                    lv_color_t chrome_key = LV_COLOR_CHROMA_KEY;
+                    /* calculate new chrome-key colour */
                     if(draw_dsc->recolor_opa > LV_OPA_MIN) {
-                        rgb_tmp_buf 
-                            = lv_mem_buf_get(src_w * src_h * sizeof(lv_color_t));
-                        if (NULL == rgb_tmp_buf) {
-                            LV_LOG_WARN("Failed to allocate memory for accelerating recolour, use normal route instead.");
-                            break;
-                        }
-                        lv_memcpy(rgb_tmp_buf, src_buf, src_w * src_h * sizeof(lv_color_t));
-                        
-                        arm_2d_size_t copy_size = {
-                            .iWidth = src_w,
-                            .iHeight = src_h,
-                        };
-                        
-                        /* apply re-colour */
-                        __arm_2d_impl_colour_filling_with_opacity(
-                            (color_int *)rgb_tmp_buf,
-                            src_w,
-                            &copy_size,
-                            (color_int)draw_dsc->recolor.full,
-                            draw_dsc->recolor_opa);
-                        
-                        /* replace src_buf for the following operation */
-                        src_buf = (const uint8_t *)rgb_tmp_buf;
-
-                        /* calculate new chrome-key colour */
-
-                        __ARM_2D_PIXEL_BLENDING_OPA_RGB565(
+                        __ARM_2D_PIXEL_BLENDING_OPA(
                             (color_int *)&(draw_dsc->recolor.full),
                             (color_int *)&(chrome_key.full),
                             draw_dsc->recolor_opa
                         );
-
                     }
 
                     __PREPARE_LL_ACCELERATION__();
@@ -942,35 +954,32 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                             blend_dsc.opa,
                             (color_int)chrome_key.full);
                     }
-
-                    if (NULL != rgb_tmp_buf) {
-                        lv_mem_buf_release(rgb_tmp_buf);
-                    }
-
                     is_accelerated = true;
-                } while(0);
+                )
+
             } 
             else if (   (LV_COLOR_DEPTH == 32)
                  &&     !mask_any
-                 &&     (draw_dsc->recolor_opa == LV_OPA_TRANSP)
                  &&     (cf == LV_IMG_CF_TRUE_COLOR_ALPHA)
                  &&     (blend_dsc.opa >= LV_OPA_MAX)) {
                 /* accelerate copy-with-source-masks-and-opacity */
 
-                __PREPARE_LL_ACCELERATION__();
+                __RECOLOUR_WRAPPER(
+                    __PREPARE_LL_ACCELERATION__();
 
-                __arm_2d_impl_src_chn_msk_copy(
-                    (color_int *)src_buf_tmp,
-                    src_stride,
-                    (uint32_t *)
-                        ((uintptr_t)src_buf_tmp + LV_IMG_PX_SIZE_ALPHA_BYTE - 1),
-                    src_stride,
-                    &copy_size,
-                    (color_int *)dest_buf,
-                    dest_stride,
-                    &copy_size);
+                    __arm_2d_impl_src_chn_msk_copy(
+                        (color_int *)src_buf_tmp,
+                        src_stride,
+                        (uint32_t *)
+                            ((uintptr_t)src_buf_tmp + LV_IMG_PX_SIZE_ALPHA_BYTE - 1),
+                        src_stride,
+                        &copy_size,
+                        (color_int *)dest_buf,
+                        dest_stride,
+                        &copy_size);
 
-                is_accelerated = true;
+                    is_accelerated = true;
+                )
             }
         }
         else if (   !mask_any
