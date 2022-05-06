@@ -1103,15 +1103,18 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
 
             /*Apply recolor*/
             if(draw_dsc->recolor_opa > LV_OPA_MIN) {
-                uint16_t premult_v[3];
-                lv_opa_t recolor_opa = draw_dsc->recolor_opa;
-                lv_color_t recolor = draw_dsc->recolor;
-                lv_color_premult(recolor, recolor_opa, premult_v);
-                recolor_opa = 255 - recolor_opa;
-                uint32_t i;
-                for(i = 0; i < buf_size; i++) {
-                    rgb_buf[i] = lv_color_mix_premult(premult_v, rgb_buf[i], recolor_opa);
-                }
+                arm_2d_size_t copy_size = {
+                    .iWidth = buf_w,
+                    .iHeight = buf_h,
+                };
+
+                /* apply re-colour */
+                __arm_2d_impl_colour_filling_with_opacity(
+                    (color_int *)rgb_buf,
+                    buf_w,
+                    &copy_size,
+                    (color_int)draw_dsc->recolor.full,
+                    draw_dsc->recolor_opa);
             }
 #if LV_DRAW_COMPLEX
             /*Apply the masrecoks if any*/
