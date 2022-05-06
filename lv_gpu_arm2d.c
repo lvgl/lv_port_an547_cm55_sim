@@ -988,8 +988,18 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
             #else
                 && (draw_dsc->antialias == 0)
             #endif
-               &&   (draw_dsc->recolor_opa == LV_OPA_TRANSP)) {
-            do {
+               &&   (draw_dsc->recolor_opa == LV_OPA_TRANSP)
+               &&  (  (  (LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf)
+                      || (LV_IMG_CF_TRUE_COLOR == cf))
+            #if defined(__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__)          \
+            &&  __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                   || (  (LV_IMG_CF_TRUE_COLOR_ALPHA == cf)
+                      && (LV_COLOR_DEPTH == 32))
+            #endif
+                   )
+               ) {
+               
+            __RECOLOUR_WRAPPER(
                 /* accelerate transform without re-color */
             
                 static arm_2d_tile_t target_tile_origin;
@@ -1093,8 +1103,7 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                         is_accelerated = true;
                 }
             #endif
-
-            } while(0);
+            )
         }
         
         if (!is_accelerated) while(blend_area.y1 <= y_last) {
