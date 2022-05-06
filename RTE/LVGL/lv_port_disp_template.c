@@ -82,7 +82,7 @@ void lv_port_disp_init(void)
     /* Single Buffer */
     static lv_disp_draw_buf_t draw_buf_dsc_1;
     
-    static lv_color_t buf_1[GLCD_WIDTH * GLCD_HEIGHT];
+    static lv_color_t buf_1[GLCD_WIDTH * 24];
     
     lv_disp_draw_buf_init(&draw_buf_dsc_1, buf_1, NULL, dimof(buf_1));          /*Initialize the display buffer*/
 
@@ -144,6 +144,18 @@ void test_flush(lv_color_t * color_p)
                     (const uint8_t *)color_p);
 }
 
+static volatile bool is_flush_enabled = true;
+
+void disp_enable(void)
+{
+    is_flush_enabled = true;
+}
+
+void disp_disable(void)
+{
+    is_flush_enabled = false;
+}
+
 /*Flush the content of the internal buffer the specific area on the display
  *You can use DMA or any hardware acceleration to do this operation in the background but
  *'lv_disp_flush_ready()' has to be called when finished.*/
@@ -184,7 +196,7 @@ void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
 #endif
 #endif
 
-    
+    if (is_flush_enabled)
     GLCD_DrawBitmap(area->x1,               //!< x
                     area->y1,               //!< y
                     area->x2 - area->x1 + 1,    //!< width
