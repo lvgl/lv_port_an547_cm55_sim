@@ -19,13 +19,23 @@
 #include "device_cfg.h"
 #include "Driver_USART.h"
 #include "serial.h"
+#include <assert.h>
+
+#include "RTE_Components.h"
+#if defined(RTE_Compiler_EventRecorder) && defined(USE_EVR_FOR_STDOUR)
+#   include <EventRecorder.h>
+#endif
 
 extern ARM_DRIVER_USART Driver_USART0;
 
 void serial_init(void)
 {
+#if defined(RTE_Compiler_EventRecorder) && defined(USE_EVR_FOR_STDOUR)
+    EventRecorderInitialize(0, 1);
+#else
     Driver_USART0.Initialize(NULL);
     Driver_USART0.Control(ARM_USART_MODE_ASYNCHRONOUS, DEFAULT_UART_BAUDRATE);
+#endif
 }
 
 void serial_print(char *str)
@@ -45,6 +55,21 @@ int _write(int fd, char *str, int len)
     return 0;
 }
 
+#if defined(RTE_Compiler_EventRecorder) && defined(USE_EVR_FOR_STDOUR)
+int stdout_putchar (int ch) {
+  static uint32_t index = 0U;
+  static uint8_t  buffer[8];
+ 
+  assert(index < sizeof(buffer));
+
+  buffer[index++] = (uint8_t)ch;
+  if ((index == sizeof(buffer)) || (ch == '\n')) {
+    EventRecordData(EventID(EventLevelOp, 0xFE, 0x00), buffer, index);
+    index = 0U;
+  }
+  return (ch);
+}
+#else
 int stdout_putchar(int ch)
 {
     if ('\n' == ch) {
@@ -58,7 +83,7 @@ int stdout_putchar(int ch)
     
     return -1;
 }
-
+#endif
 
 /* Redirects armclang printf to UART */
 int fputc(int ch, FILE *f)

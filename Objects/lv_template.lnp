@@ -47,6 +47,7 @@
 ".\objects\driver_sse300_ppc.o"
 ".\objects\driver_usart.o"
 ".\objects\retarget_io.o"
+".\objects\eventrecorder.o"
 ".\objects\device_definition.o"
 ".\objects\startup_fvp_sse300_mps3.o"
 ".\objects\system_sse300mps3.o"
