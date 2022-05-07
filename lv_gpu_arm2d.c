@@ -7,34 +7,34 @@
  *      INCLUDES
  *********************/
 #if defined(__clang__)
-#   pragma clang diagnostic ignored "-Wunknown-warning-option"
-#   pragma clang diagnostic ignored "-Wreserved-identifier"
-#   pragma clang diagnostic ignored "-Wincompatible-pointer-types-discards-qualifiers"
-#   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
-#   pragma clang diagnostic ignored "-Wcast-qual"
-#   pragma clang diagnostic ignored "-Wcast-align"
-#   pragma clang diagnostic ignored "-Wextra-semi-stmt"
-#   pragma clang diagnostic ignored "-Wsign-conversion"
-#   pragma clang diagnostic ignored "-Wunused-function"
-#   pragma clang diagnostic ignored "-Wimplicit-int-float-conversion"
-#   pragma clang diagnostic ignored "-Wdouble-promotion"
-#   pragma clang diagnostic ignored "-Wunused-parameter"
-#   pragma clang diagnostic ignored "-Wimplicit-float-conversion"
-#   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
-#   pragma clang diagnostic ignored "-Wtautological-pointer-compare"
-#   pragma clang diagnostic ignored "-Wsign-compare"
-#   pragma clang diagnostic ignored "-Wfloat-conversion"
-#   pragma clang diagnostic ignored "-Wmissing-prototypes"
-#   pragma clang diagnostic ignored "-Wpadded"
-#   pragma clang diagnostic ignored "-Wundef"
-#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
-#   pragma clang diagnostic ignored "-Wdisabled-macro-expansion"
-#   pragma clang diagnostic ignored "-Wunused-variable"
-#   pragma clang diagnostic ignored "-Wunused-but-set-variable"
-#   pragma clang diagnostic ignored "-Wint-conversion"
+    #pragma clang diagnostic ignored "-Wunknown-warning-option"
+    #pragma clang diagnostic ignored "-Wreserved-identifier"
+    #pragma clang diagnostic ignored "-Wincompatible-pointer-types-discards-qualifiers"
+    #pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+    #pragma clang diagnostic ignored "-Wcast-qual"
+    #pragma clang diagnostic ignored "-Wcast-align"
+    #pragma clang diagnostic ignored "-Wextra-semi-stmt"
+    #pragma clang diagnostic ignored "-Wsign-conversion"
+    #pragma clang diagnostic ignored "-Wunused-function"
+    #pragma clang diagnostic ignored "-Wimplicit-int-float-conversion"
+    #pragma clang diagnostic ignored "-Wdouble-promotion"
+    #pragma clang diagnostic ignored "-Wunused-parameter"
+    #pragma clang diagnostic ignored "-Wimplicit-float-conversion"
+    #pragma clang diagnostic ignored "-Wimplicit-int-conversion"
+    #pragma clang diagnostic ignored "-Wtautological-pointer-compare"
+    #pragma clang diagnostic ignored "-Wsign-compare"
+    #pragma clang diagnostic ignored "-Wfloat-conversion"
+    #pragma clang diagnostic ignored "-Wmissing-prototypes"
+    #pragma clang diagnostic ignored "-Wpadded"
+    #pragma clang diagnostic ignored "-Wundef"
+    #pragma clang diagnostic ignored "-Wdeclaration-after-statement"
+    #pragma clang diagnostic ignored "-Wdisabled-macro-expansion"
+    #pragma clang diagnostic ignored "-Wunused-variable"
+    #pragma clang diagnostic ignored "-Wunused-but-set-variable"
+    #pragma clang diagnostic ignored "-Wint-conversion"
 #endif
- 
- 
+
+
 #include "lv_gpu_arm2d.h"
 #include "lvgl.h"
 
@@ -44,11 +44,11 @@
 
 
 #if defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress 174,177,188,68,513,144,1296
+    #pragma diag_suppress 174,177,188,68,513,144,1296
 #elif defined(__IS_COMPILER_IAR__)
-#   pragma diag_suppress=Pa093
+    #pragma diag_suppress=Pa093
 #elif defined(__IS_COMPILER_GCC__)
-#   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
+    #pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
 #endif
 
 /*********************
@@ -58,7 +58,7 @@
     ||  !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__)                          \
 &&  LV_COLOR_DEPTH == 32                                                        \
 &&  !defined(__ARM_2D_LVGL_CFG_NO_WARNING__)
-    #warning Please set macro __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__ to 1 to get more acceleration opportunities. Or you can define macro __ARM_2D_LVGL_CFG_NO_WARNING__ to suppress this warning.
+#warning Please set macro __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__ to 1 to get more acceleration opportunities. Or you can define macro __ARM_2D_LVGL_CFG_NO_WARNING__ to suppress this warning.
 #endif
 
 #define MAX_BUF_SIZE (uint32_t) lv_disp_get_hor_res(_lv_refr_get_disp_refreshing())
@@ -431,7 +431,7 @@ static void lv_draw_arm2d_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend
         __PREPARE_TARGET_TILE__(blend_area);
         __PREPARE_SOURCE_TILE__(dsc, blend_area);
         __PREPARE_MASK_TILE__(dsc, blend_area, mask, false);
-        
+
         if(src_buf) {
             is_accelerated = lv_draw_arm2d_tile_copy(
                                  &target_tile,
@@ -917,32 +917,33 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
 
         bool is_accelerated = false;
 
-        if (!transform) {
-            if (LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf)  {
+        if(!transform) {
+            if(LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf)  {
                 /* copy with colour keying */
 
+                /* *INDENT-OFF* */
                 __RECOLOUR_WRAPPER(
 
                     lv_color_t chrome_key = LV_COLOR_CHROMA_KEY;
                     /* calculate new chrome-key colour */
                     if(draw_dsc->recolor_opa > LV_OPA_MIN) {
-                        __ARM_2D_PIXEL_BLENDING_OPA(
-                            (color_int *)&(draw_dsc->recolor.full),
-                            (color_int *)&(chrome_key.full),
-                            draw_dsc->recolor_opa
-                        );
+                    __ARM_2D_PIXEL_BLENDING_OPA(
+                        (color_int *) & (draw_dsc->recolor.full),
+                        (color_int *) & (chrome_key.full),
+                        draw_dsc->recolor_opa
+                    );
                     }
 
                     __PREPARE_LL_ACCELERATION__();
 
-                    if (blend_dsc.opa >= LV_OPA_MAX) {
-                        __arm_2d_impl_cl_key_copy(
-                            (color_int *)src_buf_tmp,
-                            src_stride,
-                            (color_int *)dest_buf,
-                            dest_stride,
-                            &copy_size,
-                            (color_int)chrome_key.full);
+                    if(blend_dsc.opa >= LV_OPA_MAX) {
+                    __arm_2d_impl_cl_key_copy(
+                        (color_int *)src_buf_tmp,
+                        src_stride,
+                        (color_int *)dest_buf,
+                        dest_stride,
+                        &copy_size,
+                        (color_int)chrome_key.full);
                     }
                     else {
                         __arm_2d_impl_alpha_blending_colour_keying(
@@ -956,32 +957,33 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                     }
                     is_accelerated = true;
                 )
-
-            } 
-            else if (   (LV_COLOR_DEPTH == 32)
-                 &&     !mask_any
-                 &&     (cf == LV_IMG_CF_TRUE_COLOR_ALPHA)) {
+                /* *INDENT-ON* */
+            }
+            else if((LV_COLOR_DEPTH == 32)
+                    &&     !mask_any
+                    && (cf == LV_IMG_CF_TRUE_COLOR_ALPHA)) {
                 /* accelerate copy-with-source-masks-and-opacity */
 
+                /* *INDENT-OFF* */
                 __RECOLOUR_WRAPPER(
                     __PREPARE_LL_ACCELERATION__();
 
-                    uint8_t *mask_temp_buf = NULL;
-                    if (blend_dsc.opa < LV_OPA_MAX) {
+                    uint8_t * mask_temp_buf = NULL;
+                    if(blend_dsc.opa < LV_OPA_MAX) {
                         mask_temp_buf = lv_mem_buf_get(copy_size.iHeight * copy_size.iWidth);
-                        if (NULL == mask_temp_buf) {
-                            LV_LOG_WARN( 
+                        if(NULL == mask_temp_buf) {
+                            LV_LOG_WARN(
                                 "Failed to allocate memory for alpha mask,"
                                 " use normal route instead.");
                             break;
                         }
                         lv_memset_00(mask_temp_buf, copy_size.iHeight * copy_size.iWidth);
-                        
+
                         __arm_2d_impl_gray8_colour_filling_channel_mask_opacity(
                             mask_temp_buf,
                             src_stride,
                             (uint32_t *)
-                                ((uintptr_t)src_buf_tmp + LV_IMG_PX_SIZE_ALPHA_BYTE - 1),
+                            ((uintptr_t)src_buf_tmp + LV_IMG_PX_SIZE_ALPHA_BYTE - 1),
                             src_stride,
                             &copy_size,
                             0xFF,
@@ -998,12 +1000,13 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                             &copy_size);
 
                         lv_mem_buf_release(mask_temp_buf);
-                    } else {
+                    }
+                    else {
                         __arm_2d_impl_src_chn_msk_copy(
                             (color_int *)src_buf_tmp,
                             src_stride,
                             (uint32_t *)
-                                ((uintptr_t)src_buf_tmp + LV_IMG_PX_SIZE_ALPHA_BYTE - 1),
+                            ((uintptr_t)src_buf_tmp + LV_IMG_PX_SIZE_ALPHA_BYTE - 1),
                             src_stride,
                             &copy_size,
                             (color_int *)dest_buf,
@@ -1013,21 +1016,24 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
 
                     is_accelerated = true;
                 )
+                /* *INDENT-ON* */
             }
-            else if (!mask_any && (cf == LV_IMG_CF_TRUE_COLOR)) {
+            else if(!mask_any && (cf == LV_IMG_CF_TRUE_COLOR)) {
                 /* accelerate copy-with-source-masks-and-opacity */
 
+                /* *INDENT-OFF* */
                 __RECOLOUR_WRAPPER(
                     __PREPARE_LL_ACCELERATION__();
 
-                    if (blend_dsc.opa >= LV_OPA_MAX) {
-                        __arm_2d_impl_copy(
-                            (color_int *)src_buf_tmp,
-                            src_stride,
-                            (color_int *)dest_buf,
-                            dest_stride,
-                            &copy_size);
-                    } else {
+                    if(blend_dsc.opa >= LV_OPA_MAX) {
+                    __arm_2d_impl_copy(
+                        (color_int *)src_buf_tmp,
+                        src_stride,
+                        (color_int *)dest_buf,
+                        dest_stride,
+                        &copy_size);
+                    }
+                    else {
                         __arm_2d_impl_alpha_blending(
                             (color_int *)src_buf_tmp,
                             src_stride,
@@ -1038,33 +1044,34 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                     }
                     is_accelerated = true;
                 )
+                /* *INDENT-ON* */
             }
         }
-        else if (   !mask_any
-            #if defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__) && __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+        else if(!mask_any
+#if defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__) && __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
                 && (draw_dsc->antialias == 1)
-            #else
+#else
                 && (draw_dsc->antialias == 0)
-            #endif
-               &&   (draw_dsc->recolor_opa == LV_OPA_TRANSP)
-               &&  (  (  (LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf)
-                      || (LV_IMG_CF_TRUE_COLOR == cf))
-            #if defined(__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__)          \
-            &&  __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-                   || (  (LV_IMG_CF_TRUE_COLOR_ALPHA == cf)
-                      && (LV_COLOR_DEPTH == 32))
-            #endif
+#endif
+                && (draw_dsc->recolor_opa == LV_OPA_TRANSP)
+                && (((LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf)
+                     || (LV_IMG_CF_TRUE_COLOR == cf))
+#if defined(__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__) &&  __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                    || ((LV_IMG_CF_TRUE_COLOR_ALPHA == cf)
+                        && (LV_COLOR_DEPTH == 32))
+#endif
                    )
                ) {
-               
+
+            /* *INDENT-OFF* */
             __RECOLOUR_WRAPPER(
                 /* accelerate transform without re-color */
-            
+
                 static arm_2d_tile_t target_tile_origin;
                 static arm_2d_tile_t target_tile;
                 arm_2d_region_t clip_region;
                 static arm_2d_region_t target_region;
-            
+
                 lv_color_t * dest_buf = draw_ctx->buf;
 
                 target_tile_origin = (arm_2d_tile_t) {
@@ -1106,13 +1113,13 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                 };
 
                 static arm_2d_tile_t source_tile;
-                
+
                 source_tile = (arm_2d_tile_t) {
                     .tRegion = {
-                        .tSize = { 
+                        .tSize = {
                             .iWidth = src_w,
                             .iHeight = src_h,
-                        }, 
+                        },
                     },
                     .tInfo.bIsRoot = true,
                     .pchBuffer = (uint8_t *)src_buf,
@@ -1130,8 +1137,8 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                 source_center.iY = draw_dsc->pivot.y;
 
 
-                if (    (LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf)
-                   ||   (LV_IMG_CF_TRUE_COLOR == cf)) {
+                if((LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf) || 
+                   (LV_IMG_CF_TRUE_COLOR == cf)) {
                     arm_2d_tile_transform_with_opacity(
                         &source_tile,
                         &target_tile,
@@ -1142,12 +1149,11 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                         (color_int)LV_COLOR_CHROMA_KEY.full,
                         blend_dsc.opa);
 
-                        is_accelerated = true;
-                } 
-            #if defined(__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__)          \
-            &&  __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-                else if ((LV_IMG_CF_TRUE_COLOR_ALPHA == cf)
-                     && (LV_COLOR_DEPTH == 32)) {
+                    is_accelerated = true;
+                }
+    #if defined(__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__) &&  __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                else if((LV_IMG_CF_TRUE_COLOR_ALPHA == cf) && 
+                        (LV_COLOR_DEPTH == 32)) {
                     arm_2d_tile_transform_with_src_mask_and_opacity(
                         &source_tile,
                         &mask_tile,
@@ -1158,13 +1164,15 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                         draw_dsc->zoom / 256.0f,
                         blend_dsc.opa);
 
-                        is_accelerated = true;
+                    is_accelerated = true;
                 }
-            #endif
+    #endif
             )
+            /* *INDENT-ON* */
         }
-        
-        if (!is_accelerated) while(blend_area.y1 <= y_last) {
+
+        /* *INDENT-OFF* */
+        if(!is_accelerated) while(blend_area.y1 <= y_last) {
             /*Apply transformations if any or separate the channels*/
             lv_area_t transform_area;
             lv_area_copy(&transform_area, &blend_area);
@@ -1193,7 +1201,7 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                     draw_dsc->recolor_opa);
             }
 #if LV_DRAW_COMPLEX
-            /*Apply the masrecoks if any*/
+            /*Apply the masks if any*/
             if(mask_any) {
                 lv_coord_t y;
                 lv_opa_t * mask_buf_tmp = mask_buf;
@@ -1221,6 +1229,7 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
             blend_area.y2 = blend_area.y1 + buf_h - 1;
             if(blend_area.y2 > y_last) blend_area.y2 = y_last;
         }
+        /* *INDENT-ON* */
 
         lv_mem_buf_release(mask_buf);
         lv_mem_buf_release(rgb_buf);
