@@ -94,10 +94,14 @@ int main(void)
     
 #if LV_USE_DEMO_BENCHMARK
 
+    __LL_LCD_PRINT(24, 0, "Running LVGL Benchmark...");
+    __LL_LCD_PRINT(25, 0, "Please stand by...");
+    __LL_LCD_PRINT(28, 0, "NOTE: You will NOT see anything until the end.");
+
     disp_disable();
-    //lv_demo_benchmark();
+    lv_demo_benchmark();
     
-    lv_demo_benchmark_run_scene(43);      // run scene no 31
+    //lv_demo_benchmark_run_scene(43);      // run scene no 31
 #endif
     
 #if LV_USE_DEMO_WIDGETS
