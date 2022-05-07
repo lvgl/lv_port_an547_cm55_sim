@@ -33,10 +33,13 @@
 
 #define __LL_LCD_PRINT_BANNER(__STR)                                            \
         do {                                                                    \
-            GLCD_DrawString(    (GLCD_HEIGHT) / 2 - 8,                          \
-                                (GLCD_WIDTH - sizeof(__STR) * 6) / 2,           \
+            GLCD_DrawString(    (GLCD_WIDTH - sizeof(__STR) * 6) / 2,           \
+                                (GLCD_HEIGHT) / 2 - 8,                          \
                                 __STR);                                         \
         } while(0)
+
+#define __LL_LCD_PRINT(__Y, __X, ...)                                           \
+            lcd_printf(  (__X) * 6, (__Y) * 8,  __VA_ARGS__)
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/

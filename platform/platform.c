@@ -94,7 +94,7 @@ int lcd_printf(int16_t x, int16_t y, const char *format, ...)
     va_end(ap);
     real_size = MIN(sizeof(s_chBuffer)-1, real_size);
     s_chBuffer[real_size] = '\0';
-    GLCD_DrawString(y, x, s_chBuffer);
+    GLCD_DrawString(x, y, s_chBuffer);
     return real_size;
 }
 
