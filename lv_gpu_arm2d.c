@@ -960,23 +960,56 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
             } 
             else if (   (LV_COLOR_DEPTH == 32)
                  &&     !mask_any
-                 &&     (cf == LV_IMG_CF_TRUE_COLOR_ALPHA)
-                 &&     (blend_dsc.opa >= LV_OPA_MAX)) {
+                 &&     (cf == LV_IMG_CF_TRUE_COLOR_ALPHA)) {
                 /* accelerate copy-with-source-masks-and-opacity */
 
                 __RECOLOUR_WRAPPER(
                     __PREPARE_LL_ACCELERATION__();
 
-                    __arm_2d_impl_src_chn_msk_copy(
-                        (color_int *)src_buf_tmp,
-                        src_stride,
-                        (uint32_t *)
-                            ((uintptr_t)src_buf_tmp + LV_IMG_PX_SIZE_ALPHA_BYTE - 1),
-                        src_stride,
-                        &copy_size,
-                        (color_int *)dest_buf,
-                        dest_stride,
-                        &copy_size);
+                    uint8_t *mask_temp_buf = NULL;
+                    if (blend_dsc.opa < LV_OPA_MAX) {
+                        mask_temp_buf = lv_mem_buf_get(copy_size.iHeight * copy_size.iWidth);
+                        if (NULL == mask_temp_buf) {
+                            LV_LOG_WARN( 
+                                "Failed to allocate memory for alpha mask,"
+                                " use normal route instead.");
+                            break;
+                        }
+                        lv_memset_00(mask_temp_buf, copy_size.iHeight * copy_size.iWidth);
+                        
+                        __arm_2d_impl_gray8_colour_filling_channel_mask_opacity(
+                            mask_temp_buf,
+                            src_stride,
+                            (uint32_t *)
+                                ((uintptr_t)src_buf_tmp + LV_IMG_PX_SIZE_ALPHA_BYTE - 1),
+                            src_stride,
+                            &copy_size,
+                            0xFF,
+                            blend_dsc.opa);
+
+                        __arm_2d_impl_src_msk_copy(
+                            (color_int *)src_buf_tmp,
+                            src_stride,
+                            mask_temp_buf,
+                            src_stride,
+                            &copy_size,
+                            (color_int *)dest_buf,
+                            dest_stride,
+                            &copy_size);
+
+                        lv_mem_buf_release(mask_temp_buf);
+                    } else {
+                        __arm_2d_impl_src_chn_msk_copy(
+                            (color_int *)src_buf_tmp,
+                            src_stride,
+                            (uint32_t *)
+                                ((uintptr_t)src_buf_tmp + LV_IMG_PX_SIZE_ALPHA_BYTE - 1),
+                            src_stride,
+                            &copy_size,
+                            (color_int *)dest_buf,
+                            dest_stride,
+                            &copy_size);
+                    }
 
                     is_accelerated = true;
                 )
