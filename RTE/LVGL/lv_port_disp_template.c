@@ -81,9 +81,12 @@ void lv_port_disp_init(void)
 
     /* Single Buffer */
     static lv_disp_draw_buf_t draw_buf_dsc_1;
-    
+
+#if LV_COLOR_DEPTH == 32
+    static lv_color_t buf_1[GLCD_WIDTH * GLCD_HEIGHT >> 1];
+#else
     static lv_color_t buf_1[GLCD_WIDTH * GLCD_HEIGHT];
-    
+#endif
     lv_disp_draw_buf_init(&draw_buf_dsc_1, buf_1, NULL, dimof(buf_1));          /*Initialize the display buffer*/
 
 
@@ -163,35 +166,39 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 {
     /*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/
 
-#if defined(__RTE_ACCELERATION_ARM_2D__)
-extern
-void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
-                                    int16_t iSourceStride,
-                                    uint16_t *__RESTRICT phwTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize);
-
-#if LV_COLOR_DEPTH == 32
-    arm_2d_size_t size = {
-        .iWidth = area->x2 - area->x1 + 1,
-        .iHeight = area->y2 - area->y1 + 1,
-    };
-    __arm_2d_impl_cccn888_to_rgb565((uint32_t *)color_p,
-                                    size.iWidth,
-                                    (uint16_t *)color_p,
-                                    size.iWidth,
-                                    &size);
-#endif
-#endif
 #if !defined(__USE_FVP__)
-    if (is_flush_enabled)
+    if (is_flush_enabled) {
 #endif
-    GLCD_DrawBitmap(area->x1,               //!< x
-                    area->y1,               //!< y
-                    area->x2 - area->x1 + 1,    //!< width
-                    area->y2 - area->y1 + 1,    //!< height
-                    (const uint8_t *)color_p);
 
+    #if defined(__RTE_ACCELERATION_ARM_2D__)
+        extern
+        void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
+                                            int16_t iSourceStride,
+                                            uint16_t *__RESTRICT phwTargetBase,
+                                            int16_t iTargetStride,
+                                            arm_2d_size_t *__RESTRICT ptCopySize);
+
+    #if LV_COLOR_DEPTH == 32
+        arm_2d_size_t size = {
+            .iWidth = area->x2 - area->x1 + 1,
+            .iHeight = area->y2 - area->y1 + 1,
+        };
+        __arm_2d_impl_cccn888_to_rgb565((uint32_t *)color_p,
+                                        size.iWidth,
+                                        (uint16_t *)color_p,
+                                        size.iWidth,
+                                        &size);
+    #endif
+    #endif
+
+        GLCD_DrawBitmap(area->x1,               //!< x
+                        area->y1,               //!< y
+                        area->x2 - area->x1 + 1,    //!< width
+                        area->y2 - area->y1 + 1,    //!< height
+                        (const uint8_t *)color_p);
+#if !defined(__USE_FVP__)
+    }
+#endif
     /*IMPORTANT!!!
      *Inform the graphics library that you are ready with the flushing*/
     lv_disp_flush_ready(disp_drv);
