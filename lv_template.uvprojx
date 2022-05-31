@@ -338,9 +338,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fdata-sections -Wno-undef</MiscControls>
-              <Define>__USE_FVP__, __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</Define>
+              <Define>__USE_FVP__</Define>
               <Undefine></Undefine>
-              <IncludePath>.\platform;.</IncludePath>
+              <IncludePath>.\platform;.;.\ui</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -463,6 +463,57 @@
               <FileName>img_benchmark_cogwheel_alpha256.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\img_benchmark_cogwheel_alpha256.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>2</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <uGnu>2</uGnu>
+                    <useXO>2</useXO>
+                    <v6Lang>0</v6Lang>
+                    <v6LangP>0</v6LangP>
+                    <vShortEn>2</vShortEn>
+                    <vShortWch>2</vShortWch>
+                    <v6Lto>2</v6Lto>
+                    <v6WtE>2</v6WtE>
+                    <v6Rtti>2</v6Rtti>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
             </File>
           </Files>
         </Group>
@@ -547,6 +598,41 @@
               <FileName>lv_gpu_arm2d.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\lv_gpu_arm2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ui_demo</GroupName>
+          <Files>
+            <File>
+              <FileName>ui.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ui\ui.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ui\ui.h</FilePath>
+            </File>
+            <File>
+              <FileName>ui_events.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ui\ui_events.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_font_Number.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ui\ui_font_Number.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_helpers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ui\ui_helpers.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_helpers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ui\ui_helpers.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -910,7 +996,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>USE_EVR_FOR_STDOUR,NDEBUG</Define>
               <Undefine></Undefine>
-              <IncludePath>.\platform;.</IncludePath>
+              <IncludePath>.\platform;.;.\ui</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1168,6 +1254,41 @@
               <FileName>lv_gpu_arm2d.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\lv_gpu_arm2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ui_demo</GroupName>
+          <Files>
+            <File>
+              <FileName>ui.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ui\ui.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ui\ui.h</FilePath>
+            </File>
+            <File>
+              <FileName>ui_events.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ui\ui_events.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_font_Number.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ui\ui_font_Number.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_helpers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ui\ui_helpers.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_helpers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ui\ui_helpers.h</FilePath>
             </File>
           </Files>
         </Group>
