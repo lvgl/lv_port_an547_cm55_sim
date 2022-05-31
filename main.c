@@ -109,19 +109,18 @@ int main(void)
     
     lv_demo_benchmark_set_finished_cb(&on_benchmark_finished);
     lv_demo_benchmark();
+    lv_demo_benchmark_set_max_speed(true);
     
     //lv_demo_benchmark_run_scene(43);      // run scene no 31
 #endif
-    
+
 #if LV_USE_DEMO_WIDGETS
     lv_demo_widgets();
 #endif
-    
+
     //test();
-    
-    
+
     while(1) {
-        
         lv_timer_handler_run_in_period(1);
     }
     
