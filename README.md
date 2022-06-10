@@ -32,6 +32,12 @@ A LVGL porting for Cortex-M55 running on an [Arm official FPGA prototyping devel
 
 
 
+## Acceleration Using Arm-2D
+
+[A benchmark report](./lvgl_benchmark.md) shows the advantage of using arm-2d to accelerate LVGL when Helium technology is available. 
+
+
+
 ## How To Use
 
 ### How to run the simulation
