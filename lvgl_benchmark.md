@@ -33,7 +33,7 @@ This is a benchmark report for comparing performance differences between LVGL ba
   - set `LV_DISP_DEF_REFR_PERIOD` to `2`
   - RTE Configuration
 
-  ![RTE](./documents/pictures\RTE) 
+  ![RTE](./documents/pictures/RTE) 
 
   
 
