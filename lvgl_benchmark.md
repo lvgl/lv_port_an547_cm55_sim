@@ -82,106 +82,106 @@ This is a benchmark report for comparing performance differences between LVGL ba
 
 **Table 2-1 LVGL Benchmark (baseline vs arm-2d acceleration)**
 
-| Scene                                 | LVGL-baseline | LVGL+Arm-2D | Ratio  |
-| ------------------------------------- | ------------- | ----------- | ------ |
-| Weighted FPS                          | 279           | 430         | 154.1% |
-| Opa. speed                            | 94%           | 65%         | 69.1%  |
-| Rectangle                             | 204           | 231         | 113.2% |
-| Rectangle + opa                       | 100           | 141         | 141.0% |
-| Rectangle rounded                     | 131           | 139         | 106.1% |
-| Rectangle rounded + opa               | 74            | 110         | 148.6% |
-| Circle                                | 69            | 74          | 107.2% |
-| Circle + opa                          | 44            | 73          | 165.9% |
-| Border                                | 181           | 207         | 114.4% |
-| Border + opa                          | 163           | 188         | 115.3% |
-| Border rounded                        | 121           | 133         | 109.9% |
-| Border rounded + opa                  | 109           | 127         | 116.5% |
-| Circle border                         | 59            | 61          | 103.4% |
-| Circle border + opa                   | 50            | 58          | 116.0% |
-| Border top                            | 142           | 145         | 102.1% |
-| Border top + opa                      | 135           | 143         | 105.9% |
-| Border left                           | 142           | 159         | 112.0% |
-| Border left + opa                     | 138           | 152         | 110.1% |
-| Border top + left                     | 124           | 131         | 105.6% |
-| Border top + left + opa               | 116           | 125         | 107.8% |
-| Border left + right                   | 113           | 121         | 107.1% |
-| Border left + right + opa             | 105           | 114         | 108.6% |
-| Border top + bottom                   | 120           | 121         | 100.8% |
-| Border top + bottom + opa             | 114           | 121         | 106.1% |
-| Shadow small                          | 38            | 44          | 115.8% |
-| Shadow small + opa                    | 35            | 43          | 122.9% |
-| Shadow small offset                   | 40            | 47          | 117.5% |
-| Shadow small offset + opa             | 33            | 43          | 130.3% |
-| Shadow large                          | 19            | 24          | 126.3% |
-| Shadow large + opa                    | 16            | 24          | 150.0% |
-| Shadow large offset                   | 20            | 25          | 125.0% |
-| Shadow large offset + opa             | 17            | 25          | 147.1% |
-| Image RGB                             | 814           | 3918        | 481.3% |
-| Image RGB + opa                       | 424           | 1079        | 254.5% |
-| Image ARGB                            | 393           | 415         | 105.6% |
-| Image ARGB + opa                      | 310           | 405         | 130.6% |
-| Image chorma keyed                    | 428           | 4225        | 987.1% |
-| Image chorma keyed + opa              | 312           | 1023        | 327.9% |
-| Image indexed                         | 231           | 235         | 101.7% |
-| Image indexed + opa                   | 199           | 228         | 114.6% |
-| Image alpha only                      | 218           | 216         | 99.1%  |
-| Image alpha only + opa                | 189           | 213         | 112.7% |
-| Image RGB recolor                     | 311           | 864         | 277.8% |
-| Image RGB recolor + opa               | 247           | 563         | 227.9% |
-| Image ARGB recolor                    | 251           | 369         | 147.0% |
-| Image ARGB recolor + opa              | 221           | 357         | 161.5% |
-| Image chorma keyed recolor            | 262           | 856         | 326.7% |
-| Image chorma keyed recolor +  opa     | 218           | 532         | 244.0% |
-| Image indexed recolor                 | 182           | 220         | 120.9% |
-| Image indexed recolor + opa           | 165           | 214         | 129.7% |
-| Image RGB rotate                      | 101           | 99          | 98.0%  |
-| Image RGB rotate + opa                | 75            | 98          | 130.7% |
-| Image RGB rotate anti aliased         | 43            | 106         | 246.5% |
-| Image RGB rotate anti aliased  + opa  | 37            | 100         | 270.3% |
-| Image ARGB rotate                     | 88            | 91          | 103.4% |
-| Image ARGB rotate + opa               | 77            | 90          | 116.9% |
-| Image ARGB rotate anti aliased        | 37            | 37          | 100.0% |
-| Image ARGB rotate anti aliased  + opa | 35            | 37          | 105.7% |
-| Image RGB zoom                        | 175           | 175         | 100.0% |
-| Image RGB zoom + opa                  | 134           | 176         | 131.3% |
-| Image RGB zoom anti aliased           | 75            | 172         | 229.3% |
-| Image RGB zoom anti aliased +  opa    | 66            | 163         | 247.0% |
-| Image ARGB zoom                       | 154           | 162         | 105.2% |
-| Image ARGB zoom + opa                 | 137           | 163         | 119.0% |
-| Image ARGB zoom anti aliased          | 65            | 66          | 101.5% |
-| Image ARGB zoom anti aliased +  opa   | 62            | 65          | 104.8% |
-| Text small                            | 15            | 16          | 106.7% |
-| Text small + opa                      | 15            | 17          | 113.3% |
-| Text medium                           | 15            | 16          | 106.7% |
-| Text medium + opa                     | 14            | 16          | 114.3% |
-| Text large                            | 15            | 16          | 106.7% |
-| Text large + opa                      | 14            | 16          | 114.3% |
-| Text small compressed                 | 0             | 0           | 0.0%   |
-| Text small compressed + opa           | 19            | 19          | 100.0% |
-| Text medium compressed                | 19            | 18          | 94.7%  |
-| Text medium compressed + opa          | 19            | 19          | 100.0% |
-| Text large compressed                 | 22            | 23          | 104.5% |
-| Text large compressed + opa           | 22            | 23          | 104.5% |
-| Line                                  | 59            | 64          | 108.5% |
-| Line + opa                            | 57            | 66          | 115.8% |
-| Arc think                             | 88            | 90          | 102.3% |
-| Arc think + opa                       | 86            | 88          | 102.3% |
-| Arc thick                             | 90            | 92          | 102.2% |
-| Arc thick + opa                       | 85            | 92          | 108.2% |
-| Substr. rectangle                     | 242           | 251         | 103.7% |
-| Substr. rectangle + opa               | 291           | 317         | 108.9% |
-| Substr. border                        | 291           | 319         | 109.6% |
-| Substr. border + opa                  | 286           | 311         | 108.7% |
-| Substr. shadow                        | 328           | 345         | 105.2% |
-| Substr. shadow + opa                  | 322           | 349         | 108.4% |
-| Substr. image                         | 5380          | 5282        | 98.2%  |
-| Substr. image + opa                   | 5962          | 5247        | 88.0%  |
-| Substr. line                          | 333           | 341         | 102.4% |
-| Substr. line + opa                    | 344           | 381         | 110.8% |
-| Substr. arc                           | 81            | 81          | 100.0% |
-| Substr. arc + opa                     | 80            | 80          | 100.0% |
-| Substr. text                          | 57            | 57          | 100.0% |
-| Substr. text + opa                    | 57            | 58          | 101.8% |
+| No.  | Scene                                | LVGL-baseline | LVGL+Arm-2D | Ratio  |
+| ---- | ------------------------------------ | ------------- | ----------- | ------ |
+|      | Weighted FPS                         | 279           | 430         | 154.1% |
+|      | Opa. speed                           | 94%           | 65%         | 69.1%  |
+| 0    | Rectangle                            | 204           | 231         | 113.2% |
+| 1    | Rectangle + opa                      | 100           | 141         | 141.0% |
+| 2    | Rectangle rounded                    | 131           | 139         | 106.1% |
+| 3    | Rectangle rounded + opa              | 74            | 110         | 148.6% |
+| 4    | Circle                               | 69            | 74          | 107.2% |
+| 5    | Circle + opa                         | 44            | 73          | 165.9% |
+| 6    | Border                               | 181           | 207         | 114.4% |
+| 7    | Border + opa                         | 163           | 188         | 115.3% |
+| 8    | Border rounded                       | 121           | 133         | 109.9% |
+| 9    | Border rounded + opa                 | 109           | 127         | 116.5% |
+| 10   | Circle border                        | 59            | 61          | 103.4% |
+| 11   | Circle border + opa                  | 50            | 58          | 116.0% |
+| 12   | Border top                           | 142           | 145         | 102.1% |
+| 13   | Border top + opa                     | 135           | 143         | 105.9% |
+| 14   | Border left                          | 142           | 159         | 112.0% |
+| 15   | Border left + opa                    | 138           | 152         | 110.1% |
+| 16   | Border top + left                    | 124           | 131         | 105.6% |
+| 17   | Border top + left + opa              | 116           | 125         | 107.8% |
+| 18   | Border left + right                  | 113           | 121         | 107.1% |
+| 19   | Border left + right + opa            | 105           | 114         | 108.6% |
+| 20   | Border top + bottom                  | 120           | 121         | 100.8% |
+| 21   | Border top + bottom + opa            | 114           | 121         | 106.1% |
+| 22   | Shadow small                         | 38            | 44          | 115.8% |
+| 23   | Shadow small + opa                   | 35            | 43          | 122.9% |
+| 24   | Shadow small offset                  | 40            | 47          | 117.5% |
+| 25   | Shadow small offset + opa            | 33            | 43          | 130.3% |
+| 26   | Shadow large                         | 19            | 24          | 126.3% |
+| 27   | Shadow large + opa                   | 16            | 24          | 150.0% |
+| 28   | Shadow large offset                  | 20            | 25          | 125.0% |
+| 29   | Shadow large offset + opa            | 17            | 25          | 147.1% |
+| 30   | Image RGB                            | 814           | 3918        | 481.3% |
+| 31   | Image RGB + opa                      | 424           | 1079        | 254.5% |
+| 32   | Image ARGB                           | 393           | 415         | 105.6% |
+| 33   | Image ARGB + opa                     | 310           | 405         | 130.6% |
+| 34   | Image chorma keyed                   | 428           | 4225        | 987.1% |
+| 35   | Image chorma keyed + opa             | 312           | 1023        | 327.9% |
+| 36   | Image indexed                        | 231           | 235         | 101.7% |
+| 37   | Image indexed + opa                  | 199           | 228         | 114.6% |
+| 38   | Image alpha only                     | 218           | 216         | 99.1%  |
+| 39   | Image alpha only + opa               | 189           | 213         | 112.7% |
+| 40   | Image RGB recolor                    | 311           | 864         | 277.8% |
+| 41   | Image RGB recolor + opa              | 247           | 563         | 227.9% |
+| 42   | Image ARGB recolor                   | 251           | 369         | 147.0% |
+| 43   | Image ARGB recolor + opa             | 221           | 357         | 161.5% |
+| 44   | Image chorma keyed recolor           | 262           | 856         | 326.7% |
+| 45   | Image chorma keyed recolor + opa     | 218           | 532         | 244.0% |
+| 46   | Image indexed recolor                | 182           | 220         | 120.9% |
+| 47   | Image indexed recolor + opa          | 165           | 214         | 129.7% |
+| 48   | Image RGB rotate                     | 101           | 99          | 98.0%  |
+| 49   | Image RGB rotate + opa               | 75            | 98          | 130.7% |
+| 50   | Image RGB rotate anti aliased        | 43            | 106         | 246.5% |
+| 51   | Image RGB rotate anti aliased + opa  | 37            | 100         | 270.3% |
+| 52   | Image ARGB rotate                    | 88            | 91          | 103.4% |
+| 53   | Image ARGB rotate + opa              | 77            | 90          | 116.9% |
+| 54   | Image ARGB rotate anti aliased       | 37            | 37          | 100.0% |
+| 55   | Image ARGB rotate anti aliased + opa | 35            | 37          | 105.7% |
+| 56   | Image RGB zoom                       | 175           | 175         | 100.0% |
+| 57   | Image RGB zoom + opa                 | 134           | 176         | 131.3% |
+| 58   | Image RGB zoom anti aliased          | 75            | 172         | 229.3% |
+| 59   | Image RGB zoom anti aliased + opa    | 66            | 163         | 247.0% |
+| 60   | Image ARGB zoom                      | 154           | 162         | 105.2% |
+| 61   | Image ARGB zoom + opa                | 137           | 163         | 119.0% |
+| 62   | Image ARGB zoom anti aliased         | 65            | 66          | 101.5% |
+| 63   | Image ARGB zoom anti aliased + opa   | 62            | 65          | 104.8% |
+| 64   | Text small                           | 15            | 16          | 106.7% |
+| 65   | Text small + opa                     | 15            | 17          | 113.3% |
+| 66   | Text medium                          | 15            | 16          | 106.7% |
+| 67   | Text medium + opa                    | 14            | 16          | 114.3% |
+| 68   | Text large                           | 15            | 16          | 106.7% |
+| 69   | Text large + opa                     | 14            | 16          | 114.3% |
+| 70   | Text small compressed                | 0             | 0           | 0.0%   |
+| 71   | Text small compressed + opa          | 19            | 19          | 100.0% |
+| 72   | Text medium compressed               | 19            | 18          | 94.7%  |
+| 73   | Text medium compressed + opa         | 19            | 19          | 100.0% |
+| 74   | Text large compressed                | 22            | 23          | 104.5% |
+| 75   | Text large compressed + opa          | 22            | 23          | 104.5% |
+| 76   | Line                                 | 59            | 64          | 108.5% |
+| 77   | Line + opa                           | 57            | 66          | 115.8% |
+| 78   | Arc think                            | 88            | 90          | 102.3% |
+| 79   | Arc think + opa                      | 86            | 88          | 102.3% |
+| 80   | Arc thick                            | 90            | 92          | 102.2% |
+| 81   | Arc thick + opa                      | 85            | 92          | 108.2% |
+| 82   | Substr. rectangle                    | 242           | 251         | 103.7% |
+| 83   | Substr. rectangle + opa              | 291           | 317         | 108.9% |
+| 84   | Substr. border                       | 291           | 319         | 109.6% |
+| 85   | Substr. border + opa                 | 286           | 311         | 108.7% |
+| 86   | Substr. shadow                       | 328           | 345         | 105.2% |
+| 87   | Substr. shadow + opa                 | 322           | 349         | 108.4% |
+| 88   | Substr. image                        | 5380          | 5282        | 98.2%  |
+| 89   | Substr. image + opa                  | 5962          | 5247        | 88.0%  |
+| 90   | Substr. line                         | 333           | 341         | 102.4% |
+| 91   | Substr. line + opa                   | 344           | 381         | 110.8% |
+| 92   | Substr. arc                          | 81            | 81          | 100.0% |
+| 93   | Substr. arc + opa                    | 80            | 80          | 100.0% |
+| 94   | Substr. text                         | 57            | 57          | 100.0% |
+| 95   | Substr. text + opa                   | 57            | 58          | 101.8% |
 
 
 
