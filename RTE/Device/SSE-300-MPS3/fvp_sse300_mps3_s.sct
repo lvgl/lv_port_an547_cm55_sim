@@ -22,7 +22,7 @@
 LR_CODE S_CODE_START {
     ER_CODE S_CODE_START {
         *.o (RESET +First)
-        .ANY (+RO-CODE)
+        .ANY (+RO)
     }
 
     /*
@@ -57,7 +57,7 @@ LR_CODE S_CODE_START {
 
 LD_DATA S_DATA_START {
     ER_DATA +0 {
-        .ANY (+RO-DATA)
+        
         .ANY (+ZI +RW)
     }
 
