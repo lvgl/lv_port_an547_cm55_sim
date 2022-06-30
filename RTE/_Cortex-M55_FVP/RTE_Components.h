@@ -24,7 +24,7 @@
 #define __RTE_ACCELERATION_ARM_2D__
 /* Arm::Acceleration:Arm-2D:Transform:1.0.0-preview */
 #define __RTE_ACCELERATION_ARM_2D_TRANSFORM__
-/* GorgonMeducer.Performance Counter::Utilities:perf_counter:Core:Library:1.9.4 */
+/* GorgonMeducer.Performance Counter::Utilities:perf_counter:Core:Library:1.9.6 */
 #define __PERF_COUNTER__
 /* Keil.ARM Compiler::Compiler:Event Recorder:DAP:1.5.1 */
 #define RTE_Compiler_EventRecorder

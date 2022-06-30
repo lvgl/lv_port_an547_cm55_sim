@@ -1499,8 +1499,8 @@
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
-      <component Cbundle="Performance Counter" Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Library" Cvendor="GorgonMeducer" Cversion="1.9.4" condition="CMSIS-CORE">
-        <package name="perf_counter" schemaVersion="1.4" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="1.9.5"/>
+      <component Cbundle="Performance Counter" Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Library" Cvendor="GorgonMeducer" Cversion="1.9.6" condition="CMSIS-CORE">
+        <package name="perf_counter" schemaVersion="1.4" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="1.9.6"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
