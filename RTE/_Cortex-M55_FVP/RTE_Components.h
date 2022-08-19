@@ -16,16 +16,17 @@
  */
 #define CMSIS_device_header "SSE300MPS3.h"
 
-/* ARM::Acceleration:Arm-2D:Alpha-Blending:1.0.0-preview */
+/* ARM::Acceleration:Arm-2D:Alpha-Blending:1.1.0-preview */
 #define __RTE_ACCELERATION_ARM_2D_ALPHA_BLENDING__
-/* ARM::Acceleration:Arm-2D:Core:1.0.0-preview */
+/* ARM::Acceleration:Arm-2D:Core:1.1.0-preview */
 #define __RTE_ACCELERATION_ARM_2D__
-/* ARM::Acceleration:Arm-2D:Transform:1.0.0-preview */
+/* ARM::Acceleration:Arm-2D:Transform:1.1.0-preview */
 #define __RTE_ACCELERATION_ARM_2D_TRANSFORM__
 /* ARM::CMSIS Driver:USART:1.0.0 */
 #define RTE_Drivers_USART
-/* GorgonMeducer.Performance Counter::Utilities:perf_counter:Core:Library:1.9.6 */
+/* GorgonMeducer.Performance Counter::Utilities:perf_counter:Core:Library:1.9.8 */
 #define __PERF_COUNTER__
+#define __PERF_COUNTER_CFG_USE_SYSTICK_WRAPPER__
 /* Keil.ARM Compiler::Compiler:Event Recorder:DAP:1.5.1 */
 #define RTE_Compiler_EventRecorder
           #define RTE_Compiler_EventRecorder_DAP
