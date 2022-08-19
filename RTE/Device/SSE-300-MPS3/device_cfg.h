@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2020-2022 Arm Limited. All rights reserved.
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@
 
 /* I2S */
 #define MPS3_I2S_S
-#define MPS3_I2S_DEV                     MPS3_I2S_DEV_S
+#define MPS3_I2S_DEV                MPS3_I2S_DEV_S
 
 /* ARM UART Controller PL011 */
 #define UART0_CMSDK_S
@@ -100,10 +100,6 @@
 #define GPIO2_CMSDK_DEV GPIO2_CMSDK_DEV_S
 #define GPIO3_CMSDK_S
 #define GPIO3_CMSDK_DEV GPIO3_CMSDK_DEV_S
-
-/* ARM MPS3 IO FPGAIO driver structures */
-#define ARM_MPS3_IO_FPGAIO_S
-#define ARM_MPS3_IO_FPGAIO_DEV ARM_MPS3_IO_FPGAIO_DEV_S
 
 /* System Watchdogs */
 #define SYSWDOG_ARMV8_M_S

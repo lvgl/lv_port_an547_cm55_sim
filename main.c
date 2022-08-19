@@ -37,8 +37,6 @@
 
 int main(void)
 {
-    
-    
     printf("Hello LVGL!!\r\n");
     
     __cycleof__("Draw strings on LCD") {

@@ -127,15 +127,6 @@ static uint32_t   Scroll;
 /************************ Local auxiliary functions ***************************/
 
 /**
-  \fn          void delay_ms (int ms)
-  \brief       Delay execution for a specified number of milliseconds
-  \param[in]   ms     number of while loop iterations
-*/
-static void delay_ms (uint32_t ms) {
-    delay_us(ms * 1000ul);
-}
-
-/**
   \fn          void wr_cmd (uint8_t cmd)
   \brief       Write a command to the LCD controller
   \param[in]   cmd  Command to write
