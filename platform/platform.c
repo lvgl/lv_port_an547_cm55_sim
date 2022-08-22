@@ -56,6 +56,10 @@
 /*============================ PROTOTYPES ====================================*/
 /*============================ IMPLEMENTATION ================================*/
 
+void SysTick_Handler(void)
+{
+
+}
 
 __WEAK 
 bool device_specific_init(void)

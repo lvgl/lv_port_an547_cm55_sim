@@ -44,31 +44,6 @@
 /*============================ PROTOTYPES ====================================*/
 /*============================ IMPLEMENTATION ================================*/
 
-static 
-volatile bool s_bTimerEvent = false;
-
-void SysTick_Handler(void)
-{
-    //! every 5ms 
-    s_bTimerEvent = true;
-    
-    
-    /*! \note please do not put following code here
-     *!
-     *!  lv_tick_inc(5);
-     *!  
-     *!     Use a custom tick source that tells the elapsed time in milliseconds.
-     *!     It removes the need to manually update the tick with `lv_tick_inc()`)
-     *!     #define LV_TICK_CUSTOM 1
-     *!     #if LV_TICK_CUSTOM
-     *!         extern uint32_t SystemCoreClock;
-     *!         #define LV_TICK_CUSTOM_INCLUDE "perf_counter.h"  
-     *!         #define LV_TICK_CUSTOM_SYS_TIME_EXPR                            \
-     *!                        (get_system_ticks() / (SystemCoreClock / 1000ul))
-     *!     #endif
-     */
-}
-
 static void test(void)
 {
     lv_obj_t * btn = lv_btn_create(lv_scr_act());                   /*Add a button to the current screen*/
@@ -106,8 +81,10 @@ int main(void)
     __LL_LCD_PRINT(25, 0, "Please stand by...");
     __LL_LCD_PRINT(28, 0, "NOTE: You will NOT see anything until the end.");
 
+#if !defined(__USE_FVP__)
     disp_disable_update();
-    
+#endif
+
     lv_demo_benchmark_set_finished_cb(&on_benchmark_finished);
     lv_demo_benchmark();
     //lv_demo_benchmark_set_max_speed(true);
@@ -117,10 +94,10 @@ int main(void)
 #elif LV_USE_DEMO_WIDGETS
     lv_demo_widgets();
 #else
-    ui_init();
+    //ui_init();
+    test();
 #endif
 
-    //test();
 
     while(1) {
         lv_timer_handler();
