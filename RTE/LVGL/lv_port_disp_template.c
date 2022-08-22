@@ -13,9 +13,9 @@
 #include "Board_GLCD.h"
 #include "GLCD_Config.h"
 #include "perf_counter.h"
-#include "lv_gpu_arm2d.h"
 
 #if defined(__RTE_ACCELERATION_ARM_2D__)
+#include "lv_gpu_arm2d.h"
 #include "arm_2d.h"
 #endif
 #include <stdbool.h>
