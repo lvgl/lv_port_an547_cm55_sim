@@ -33,9 +33,6 @@
 /* Keil.ARM Compiler::Compiler:I/O:STDOUT:User:1.2.0 */
 #define RTE_Compiler_IO_STDOUT          /* Compiler I/O: STDOUT */
           #define RTE_Compiler_IO_STDOUT_User     /* Compiler I/O: STDOUT User */
-/* LVGL.LVGL::LVGL:lvgl:Demo:Widgets:9.0.0-dev */
-/*! \brief enable demo:widgets support */
-#define LV_USE_DEMO_WIDGETS         1
 /* LVGL.LVGL::LVGL:lvgl:Essential:9.0.0-dev */
 /*! \brief Enable LVGL */
 #define RTE_GRAPHICS_LVGL
@@ -45,6 +42,14 @@
 /* LVGL.LVGL::LVGL:lvgl:GPU Arm-2D:1.1.0 */
 /*! \brief enable Arm-2D support*/
 #define LV_USE_GPU_ARM2D 1
+/* LVGL.LVGL::LVGL:lvgl:PikaScript Binding:0.2.0 */
+/*! \brief enable PikaScrit Binding */
+#define LV_USE_PIKASCRIPT_BINDING          1
+/* PikaTech.PikaScript::PikaScript:PikaScript:Core:1.10.6 */
+#define RTE_Script_PikaScript
+/* PikaTech.PikaScript::PikaScript:PikaScript:pika_lvgl:0.2.0 */
+/*! \brief enable PikaScrit Binding */
+#define PIKA_USE_LVGL_BINDING          1
 
 
 #endif /* RTE_COMPONENTS_H */

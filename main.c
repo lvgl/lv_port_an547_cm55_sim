@@ -32,6 +32,10 @@
 #include "lv_port_disp_template.h"
 #include "lv_port_indev_template.h"
 
+#if defined(RTE_Script_PikaScript)
+#   include "pikascript.h"
+#endif
+
 #if defined(__clang__)
 #   pragma clang diagnostic ignored "-Wcompound-token-split-by-macro"
 #endif
@@ -74,7 +78,9 @@ int main(void)
     lv_init();
     lv_port_disp_init();
     lv_port_indev_init();
-    
+
+
+
 #if LV_USE_DEMO_BENCHMARK
 
     __LL_LCD_PRINT(24, 0, "Running LVGL Benchmark...");
@@ -93,8 +99,9 @@ int main(void)
 
 #elif LV_USE_DEMO_WIDGETS
     lv_demo_widgets();
+#elif defined (RTE_Script_PikaScript)
+    pikaScriptInit();
 #else
-    //ui_init();
     test();
 #endif
 

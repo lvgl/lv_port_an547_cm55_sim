@@ -59,3 +59,11 @@ Objects/lv_template.axf
 Objects/lv_template.htm
 lv_template.uvguix.gabriel
 *.tmp
+
+RTE/PikaScript/.*
+RTE/LVGL/.*
+RTE/PikaScript/*.c
+RTE/PikaScript/*.h
+RTE/PikaScript/pikascript-core
+RTE/PikaScript/pikascript-lib
+RTE/PikaScript/pikascript-api
