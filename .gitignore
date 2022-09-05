@@ -54,10 +54,8 @@ EventRecorderStub.scvd
 *.dbgconf
 *.dep
 *.iex
-Objects/lv_template.build_log.htm
-Objects/lv_template.axf
-Objects/lv_template.htm
-lv_template.uvguix.gabriel
+Objects
+lv_template.uvguix.*
 *.tmp
 
 RTE/PikaScript/.*
@@ -67,3 +65,8 @@ RTE/PikaScript/*.h
 RTE/PikaScript/pikascript-core
 RTE/PikaScript/pikascript-lib
 RTE/PikaScript/pikascript-api
+*@*
+RTE/PikaScript/clean.bat
+RTE/PikaScript/__instruction_table.cfg
+RTE/_Cortex-M55_FVP/Pre_Include_Global.h
+RTE/PikaScript/pikaBeforBuild-keil.bat
