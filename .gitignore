@@ -70,3 +70,7 @@ RTE/PikaScript/clean.bat
 RTE/PikaScript/__instruction_table.cfg
 RTE/_Cortex-M55_FVP/Pre_Include_Global.h
 RTE/PikaScript/pikaBeforBuild-keil.bat
+RTE/PikaScript/CMakeLists.txt
+RTE_Components.h
+Pre_Include_Global.h
+*.0???
