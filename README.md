@@ -11,7 +11,7 @@ A LVGL porting for Cortex-M55 running on an [Arm official FPGA prototyping devel
 
 ## Features
 
-- LVGL 8.2.0  (CMSIS-Pack)
+- LVGL 9.0.0-dev  (CMSIS-Pack)
 - [**New**] Arm-2D (Helium) acceleration is added !!!
   - see `lv_gpu_arm2d.c` and `lv_gpu_arm2d.h`
   - Attach acceleration in `lv_port_disp_template.c`
