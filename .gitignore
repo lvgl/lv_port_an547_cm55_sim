@@ -74,3 +74,4 @@ RTE/PikaScript/CMakeLists.txt
 RTE_Components.h
 Pre_Include_Global.h
 *.0???
+Objects/*
