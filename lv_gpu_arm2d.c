@@ -1169,8 +1169,7 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
 
             uint8_t * mask_after_rgb = src_buf + sizeof(lv_color_t) * src_w * src_h;
             /* *INDENT-OFF* */
-            //__RECOLOUR_WRAPPER(
-              __RECOLOUR_BEGIN();
+            __RECOLOUR_WRAPPER(
                 /* accelerate transform without re-color */
 
                 static arm_2d_tile_t target_tile_origin;
@@ -1294,8 +1293,7 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                     is_accelerated = true;
                 }
     #endif
-            //)
-            __RECOLOUR_END();
+            )
             /* *INDENT-ON* */
         }
 

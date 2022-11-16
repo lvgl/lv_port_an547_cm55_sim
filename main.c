@@ -85,7 +85,7 @@ int main(void)
     lv_demo_benchmark(LV_DEMO_BENCHMARK_MODE_RENDER_ONLY);
     //lv_demo_benchmark_set_max_speed(true);
     
-    //lv_demo_benchmark_run_scene(43);      // run scene no 31
+    //lv_demo_benchmark_run_scene(LV_DEMO_BENCHMARK_MODE_RENDER_AND_DRIVER, 26*2-1);      // run scene no 31
 
 #elif LV_USE_DEMO_WIDGETS
     lv_demo_widgets();
