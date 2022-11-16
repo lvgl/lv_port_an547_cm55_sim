@@ -75,6 +75,14 @@ extern "C" {
 // <i> This option is used to remove calibration in angle computations to gain a better performance, small error might be noticible for angles like 90, 180, 270 etc.
 //#define __ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT__ 
 // </c>
+
+
+// <q> Optimize the scaler version of transform operations for pointer-like resources
+// <i> This feature is enabled by default. There is no guarantee that the performance will increase or decrease. It is all depends your applications. In most of the case, enabling it helps.
+// <i> This feature has no meaning when the anti-alias transform is disabled or the helium acceleration is available.
+#ifndef __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
+#   define __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__     1
+#endif
 // </h>
 
 
@@ -152,6 +160,15 @@ extern "C" {
 #ifndef __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__
 #   define __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__        0
 #endif
+
+
+// <q> Exit benchmark when finished
+// <i> Exit the arm_2d_run_benchmark() after running specified iterations
+// <i> This feature is disabled by default.
+#ifndef __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+#   define __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__        0
+#endif
+
 //</h>
 // </h>
 
