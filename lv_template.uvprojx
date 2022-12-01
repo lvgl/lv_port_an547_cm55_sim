@@ -1500,7 +1500,7 @@
         </targetInfos>
       </component>
       <component Cbundle="Performance Counter" Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Library" Cvendor="GorgonMeducer" Cversion="1.9.9a" condition="CMSIS-CORE">
-        <package name="perf_counter" schemaVersion="1.4" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="1.9.9a"/>
+        <package name="perf_counter" schemaVersion="1.4" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="1.9.10"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
