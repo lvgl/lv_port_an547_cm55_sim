@@ -40,6 +40,7 @@
 #include "lvgl.h"
 
 #if LV_USE_GPU_ARM2D
+#define __ARM_2D_IMPL__
 #include "arm_2d.h"
 #include "__arm_2d_impl.h"
 
@@ -90,10 +91,12 @@
 #define __arm_2d_impl_cl_key_copy       __arm_2d_impl_rgb16_cl_key_copy
 #define __arm_2d_impl_alpha_blending_colour_keying                              \
     __arm_2d_impl_rgb565_alpha_blending_colour_keying
-#define arm_2d_tile_transform_with_src_mask_and_opacity                         \
-    arm_2d_rgb565_tile_transform_with_src_mask_and_opacity
-#define arm_2d_tile_transform_with_opacity                                      \
-    arm_2d_rgb565_tile_transform_with_opacity
+#define arm_2d_tile_transform_with_src_mask_and_opacity_prepare                 \
+    arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare
+#define arm_2d_tile_transform_with_opacity_prepare                              \
+    arm_2dp_rgb565_tile_transform_with_opacity_prepare
+#define arm_2d_tile_transform_prepare                                           \
+    arm_2dp_rgb565_tile_transform_prepare
 
 #define __ARM_2D_PIXEL_BLENDING_OPA     __ARM_2D_PIXEL_BLENDING_OPA_RGB565
 
@@ -125,10 +128,12 @@
 #define __arm_2d_impl_cl_key_copy       __arm_2d_impl_rgb32_cl_key_copy
 #define __arm_2d_impl_alpha_blending_colour_keying                              \
     __arm_2d_impl_cccn888_alpha_blending_colour_keying
-#define arm_2d_tile_transform_with_src_mask_and_opacity                         \
-    arm_2d_cccn888_tile_transform_with_src_mask_and_opacity
-#define arm_2d_tile_transform_with_opacity                                      \
-    arm_2d_cccn888_tile_transform_with_opacity
+#define arm_2d_tile_transform_with_src_mask_and_opacity_prepare                 \
+    arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare
+#define arm_2d_tile_transform_with_opacity_prepare                              \
+    arm_2dp_cccn888_tile_transform_with_opacity_prepare
+#define arm_2d_tile_transform_prepare                                           \
+    arm_2dp_cccn888_tile_transform_prepare
 
 #define __ARM_2D_PIXEL_BLENDING_OPA     __ARM_2D_PIXEL_BLENDING_OPA_CCCN888
 
@@ -345,6 +350,41 @@
         }                                                                       \
     } while(0);                                                                 \
     src_buf = src_buf_org;
+
+#define __ARM_2D_PREPARE_TRANS_AND_TARGET_REGION(__TRANS_PREPARE, ...)          \
+        do {                                                                    \
+            __TRANS_PREPARE(                                                    \
+                    NULL,                                                       \
+                    __VA_ARGS__);                                               \
+                                                                                \
+            target_region = (arm_2d_region_t) {                                 \
+                .tLocation = {                                                  \
+                    .iX = coords->x1 - draw_ctx->clip_area->x1,                 \
+                    .iY = coords->y1 - draw_ctx->clip_area->y1,                 \
+                },                                                              \
+                .tSize = {                                                      \
+                    .iWidth = lv_area_get_width(coords),                        \
+                    .iHeight = lv_area_get_height(coords),                      \
+                },                                                              \
+            };                                                                  \
+                                                                                \
+            arm_2d_size_t tTransSize                                            \
+                = ARM_2D_CTRL.DefaultOP                                         \
+                    .tTransform.Source.ptTile->tRegion.tSize;                   \
+                                                                                \
+            if (target_region.tSize.iWidth < tTransSize.iWidth) {               \
+                int16_t iDelta = tTransSize.iWidth - target_region.tSize.iWidth;\
+                target_region.tLocation.iX -= iDelta / 2;                       \
+                target_region.tSize.iWidth = tTransSize.iWidth;                 \
+            }                                                                   \
+                                                                                \
+            if (target_region.tSize.iHeight < tTransSize.iHeight) {             \
+                int16_t iDelta                                                  \
+                    = tTransSize.iHeight - target_region.tSize.iHeight;         \
+                target_region.tLocation.iY -= iDelta / 2;                       \
+                target_region.tSize.iHeight = tTransSize.iHeight;               \
+            }                                                                   \
+        } while(0)
 
 /* *INDENT-ON* */
 
@@ -868,8 +908,8 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
     blend_dsc.opa = draw_dsc->opa;
     blend_dsc.blend_mode = draw_dsc->blend_mode;
     blend_dsc.blend_area = &blend_area;
-    
-    
+
+
     /*The simplest case just copy the pixels into the draw_buf*/
     if(!mask_any && !transform && cf == LV_IMG_CF_TRUE_COLOR && draw_dsc->recolor_opa == LV_OPA_TRANSP) {
         blend_dsc.src_buf = (const lv_color_t *)src_buf;
@@ -891,7 +931,8 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
         lv_draw_sw_blend(draw_ctx, &blend_dsc);
     }
 #if LV_COLOR_DEPTH == 16
-    else if(!mask_any && !transform && cf == LV_IMG_CF_RGB565A8 && draw_dsc->recolor_opa == LV_OPA_TRANSP && blend_dsc.opa >= LV_OPA_MAX) {
+    else if(!mask_any && !transform && cf == LV_IMG_CF_RGB565A8 && draw_dsc->recolor_opa == LV_OPA_TRANSP &&
+            blend_dsc.opa >= LV_OPA_MAX) {
         lv_coord_t src_w = lv_area_get_width(coords);
         lv_coord_t src_h = lv_area_get_height(coords);
         blend_dsc.src_buf = (const lv_color_t *)src_buf;
@@ -1064,7 +1105,7 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                 )
                 /* *INDENT-ON* */
             }
-            else if(   !mask_any
+            else if(!mask_any
                     && (LV_IMG_CF_RGB565A8 == cf)) {
                 /* accelerate copy-with-source-masks-and-opacity */
 
@@ -1159,9 +1200,9 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                 && (draw_dsc->recolor_opa == LV_OPA_TRANSP)
                 && (((LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf)
                      || (LV_IMG_CF_TRUE_COLOR == cf))
-                     || (LV_IMG_CF_RGB565A8 == cf)
+                    || (LV_IMG_CF_RGB565A8 == cf)
 #if defined(__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__) &&  __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-                     || ((LV_IMG_CF_TRUE_COLOR_ALPHA == cf)
+                    || ((LV_IMG_CF_TRUE_COLOR_ALPHA == cf)
                         && (LV_COLOR_DEPTH == 32))
 #endif
                    )
@@ -1206,17 +1247,6 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                                            &target_tile,
                                            false);
 
-                target_region = (arm_2d_region_t) {
-                    .tLocation = {
-                        .iX = coords->x1 - draw_ctx->clip_area->x1,
-                        .iY = coords->y1 - draw_ctx->clip_area->y1,
-                    },
-                    .tSize = {
-                        .iWidth = lv_area_get_width(coords),
-                        .iHeight = lv_area_get_height(coords),
-                    },
-                };
-
                 static arm_2d_tile_t source_tile;
 
                 source_tile = (arm_2d_tile_t) {
@@ -1234,19 +1264,23 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                 source_center.iX = draw_dsc->pivot.x;
                 source_center.iY = draw_dsc->pivot.y;
 
-
                 if((LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED == cf) ||
                    (LV_IMG_CF_TRUE_COLOR == cf)) {
-                    arm_2d_tile_transform_with_opacity(
+
+                    __ARM_2D_PREPARE_TRANS_AND_TARGET_REGION(
+                        arm_2d_tile_transform_with_opacity_prepare,
                         &source_tile,
-                        &target_tile,
-                        &target_region,
                         source_center,
                         ARM_2D_ANGLE((draw_dsc->angle / 10.0f)),
                         draw_dsc->zoom / 256.0f,
                         (color_int)LV_COLOR_CHROMA_KEY.full,
                         blend_dsc.opa);
 
+                    arm_2d_tile_transform(
+                        &target_tile,
+                        &target_region,
+                        NULL
+                    );
                     is_accelerated = true;
                 }
                 else if (LV_IMG_CF_RGB565A8 == cf) {
@@ -1257,15 +1291,21 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                     mask_tile.tInfo.tColourInfo.chScheme = ARM_2D_COLOUR_GRAY8;
                     mask_tile.pchBuffer = mask_after_rgb;
 
-                    arm_2d_tile_transform_with_src_mask_and_opacity(
+                    __ARM_2D_PREPARE_TRANS_AND_TARGET_REGION(
+                        arm_2d_tile_transform_with_src_mask_and_opacity_prepare,
                         &source_tile,
                         &mask_tile,
-                        &target_tile,
-                        &target_region,
                         source_center,
                         ARM_2D_ANGLE((draw_dsc->angle / 10.0f)),
                         draw_dsc->zoom / 256.0f,
-                        blend_dsc.opa);
+                        blend_dsc.opa
+                        );
+
+                    arm_2d_tile_transform(
+                        &target_tile,
+                        &target_region,
+                        NULL
+                    );
 
                     is_accelerated = true;
                 }
@@ -1280,15 +1320,21 @@ static void lv_draw_arm2d_img_decoded(struct _lv_draw_ctx_t * draw_ctx,
                     mask_tile.tInfo.tColourInfo.chScheme = ARM_2D_CHANNEL_8in32;
                     mask_tile.pchBuffer += 3;
 
-                    arm_2d_tile_transform_with_src_mask_and_opacity(
+                    __ARM_2D_PREPARE_TRANS_AND_TARGET_REGION(
+                        arm_2d_tile_transform_with_src_mask_and_opacity_prepare,
                         &source_tile,
                         &mask_tile,
-                        &target_tile,
-                        &target_region,
                         source_center,
                         ARM_2D_ANGLE((draw_dsc->angle / 10.0f)),
                         draw_dsc->zoom / 256.0f,
-                        blend_dsc.opa);
+                        blend_dsc.opa
+                        );
+
+                    arm_2d_tile_transform(
+                        &target_tile,
+                        &target_region,
+                        NULL
+                    );
 
                     is_accelerated = true;
                 }
