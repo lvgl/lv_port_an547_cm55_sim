@@ -99,7 +99,7 @@ int main(void)
     lv_demo_benchmark();
     //lv_demo_benchmark_run_scene(31);
 #   elif    LVGL_VERSION_MAJOR == 9
-    lv_demo_benchmark(LV_DEMO_BENCHMARK_MODE_REAL);
+    lv_demo_benchmark(LV_DEMO_BENCHMARK_MODE_RENDER_ONLY);
     
     //lv_demo_benchmark_run_scene(LV_DEMO_BENCHMARK_MODE_RENDER_AND_DRIVER, 26*2-1);      // run scene no 31
 #   endif
