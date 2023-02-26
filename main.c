@@ -81,11 +81,6 @@ int main(void)
     lv_port_disp_init();
     lv_port_indev_init();
 
-
-#define LVGL_VERSION_MAJOR 8
-#define LVGL_VERSION_MINOR 3
-#define LVGL_VERSION_PATCH 5
-
 #if LV_USE_DEMO_BENCHMARK
 
     __LL_LCD_PRINT(24, 0, "Running LVGL Benchmark...");
