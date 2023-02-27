@@ -205,22 +205,6 @@ static void touchpad_read(lv_indev_t * indev_drv, lv_indev_data_t * data)
     data->point.y = last_y;
 }
 
-/*Return true is the touchpad is pressed*/
-static bool touchpad_is_pressed(void)
-{
-    /*Your code comes here*/
-
-    return false;
-}
-
-/*Get the x and y coordinates if the touchpad is pressed*/
-static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
-{
-    /*Your code comes here*/
-
-    (*x) = 0;
-    (*y) = 0;
-}
 
 /*------------------
  * Mouse
