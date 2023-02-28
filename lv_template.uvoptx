@@ -119,6 +119,11 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>ULPL2CM3</Key>
+          <Name>-UAny -O206 -S8 -C0 -P00000000 -N00("ARM CoreSight SW-DP") -D00(4C013477) -L00(0) -TO65554 -TC10000000 -TT10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD1000000 -FC1000 -FN0</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>DLGTARM</Key>
           <Name>(6010=-1,-1,-1,-1,0)(6018=-1,-1,-1,-1,0)(6019=-1,-1,-1,-1,0)(6008=870,346,1164,531,0)(6009=-1,-1,-1,-1,0)(6014=879,319,1137,1050,0)(6015=-1,-1,-1,-1,0)(6003=-1,-1,-1,-1,0)(6000=-1,-1,-1,-1,0)(6020=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
@@ -130,7 +135,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>(105=-1,-1,-1,-1,0)(106=-1,-1,-1,-1,0)(107=-1,-1,-1,-1,0)</Name>
+          <Name></Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -342,7 +347,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(6010=-1,-1,-1,-1,0)(6018=-1,-1,-1,-1,0)(6019=-1,-1,-1,-1,0)(6008=-1,-1,-1,-1,0)(6009=-1,-1,-1,-1,0)(6014=1459,274,1717,1005,0)(6015=-1,-1,-1,-1,0)(6003=-1,-1,-1,-1,0)(6000=-1,-1,-1,-1,0)(6020=-1,-1,-1,-1,0)</Name>
+          <Name>(6010=-1,-1,-1,-1,0)(6018=-1,-1,-1,-1,0)(6019=-1,-1,-1,-1,0)(6008=-1,-1,-1,-1,0)(6009=-1,-1,-1,-1,0)(6014=1459,274,1717,1005,1)(6015=-1,-1,-1,-1,0)(6003=-1,-1,-1,-1,0)(6000=-1,-1,-1,-1,0)(6020=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -375,7 +380,31 @@
           <Name>UL2V8M(-S0 -C0 -P0 -FD01000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>1147</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>268544118</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>C:/Users/gabriel/AppData/Local/Arm/Packs/LVGL/lvgl/9.0.0-dev/src/core/lv_refr.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\\lv_refr.c\1147</Expression>
+        </Bp>
+      </Breakpoint>
+      <WatchWindow1>
+        <Ww>
+          <count>0</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>scenes[scene_act]</ItemText>
+        </Ww>
+      </WatchWindow1>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
@@ -647,7 +676,7 @@
 
   <Group>
     <GroupName>lv_gpu_arm2d</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -719,7 +748,7 @@
 
   <Group>
     <GroupName>::LVGL</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>
