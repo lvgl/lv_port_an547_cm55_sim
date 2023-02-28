@@ -815,12 +815,11 @@ static void lv_draw_arm2d_img_decoded(  struct _lv_draw_ctx_t * draw_ctx,
 
                 /* *INDENT-OFF* */
                 __RECOLOUR_WRAPPER(
-
-                    lv_color_t chrome_key = LV_COLOR_CHROMA_KEY;
+                    color_int chrome_key_int = lv_color_to_int(LV_COLOR_CHROMA_KEY);
                     /* calculate new chrome-key colour */
                     if(draw_dsc->recolor_opa > LV_OPA_MIN) {
                     color_int recolour_int = lv_color_to_int(draw_dsc->recolor);
-                    color_int chrome_key_int = lv_color_to_int(chrome_key);
+                    
                     __ARM_2D_PIXEL_BLENDING_OPA(
                         (color_int *) & recolour_int,
                         (color_int *) & chrome_key_int,
@@ -837,7 +836,7 @@ static void lv_draw_arm2d_img_decoded(  struct _lv_draw_ctx_t * draw_ctx,
                         (color_int *)dest_buf,
                         dest_stride,
                         &copy_size,
-                        (color_int)lv_color_to_int(chrome_key));
+                        chrome_key_int);
                     }
                     else {
                         __arm_2d_impl_alpha_blending_colour_keying(
@@ -847,7 +846,7 @@ static void lv_draw_arm2d_img_decoded(  struct _lv_draw_ctx_t * draw_ctx,
                             dest_stride,
                             &copy_size,
                             blend_dsc.opa,
-                            (color_int)lv_color_to_int(chrome_key));
+                            chrome_key_int);
                     }
                     is_accelerated = true;
                 )
