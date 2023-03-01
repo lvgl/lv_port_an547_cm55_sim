@@ -499,12 +499,14 @@ static void lv_draw_arm2d_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend
         if(draw_ctx->color_format == LV_COLOR_FORMAT_NATIVE) {
             dest_buf += dest_stride * (blend_area.y1 - draw_ctx->buf_area->y1) + (blend_area.x1 - draw_ctx->buf_area->x1);
         }
-        else {
-            /*With LV_COLOR_DEPTH 16 it means ARGB8565 (3 bytes format)*/
+        else if (LV_COLOR_DEPTH == 24 || LV_COLOR_DEPTH == 32) {
+            /*With LV_COLOR_DEPTH 16 it means ARGB8565 (3 bytes format), it is not support here*/
             uint8_t * dest_buf8 = (uint8_t *) dest_buf;
             dest_buf8 += dest_stride * (blend_area.y1 - draw_ctx->buf_area->y1) * LV_COLOR_FORMAT_NATIVE_ALPHA_SIZE;
             dest_buf8 += (blend_area.x1 - draw_ctx->buf_area->x1) * LV_COLOR_FORMAT_NATIVE_ALPHA_SIZE;
             dest_buf = (lv_color_t *)dest_buf8;
+        } else {
+            break;
         }
 
         /* source buffer */
