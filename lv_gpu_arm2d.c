@@ -72,7 +72,7 @@
 #define arm_2d_fill_colour_with_mask_and_opacity                                \
     arm_2d_rgb565_fill_colour_with_mask_and_opacity
 #define arm_2d_tile_copy                arm_2d_rgb16_tile_copy
-#define arm_2d_alpha_blending           arm_2d_rgb565_alpha_blending
+#define arm_2d_tile_copy_opacity           arm_2d_rgb565_tile_copy_opacity
 #define arm_2d_tile_copy_with_src_mask  arm_2d_rgb565_tile_copy_with_src_mask
 #define arm_2d_color_t                  arm_2d_color_rgb565_t
 
@@ -85,12 +85,12 @@
 #define __arm_2d_impl_colour_filling_mask_opacity                               \
     __arm_2d_impl_rgb565_colour_filling_mask_opacity
 #define __arm_2d_impl_copy              __arm_2d_impl_rgb16_copy
-#define __arm_2d_impl_alpha_blending    __arm_2d_impl_rgb565_alpha_blending
+#define __arm_2d_impl_tile_copy_opacity    __arm_2d_impl_rgb565_tile_copy_opacity
 #define __arm_2d_impl_src_msk_copy      __arm_2d_impl_rgb565_src_msk_copy
 #define __arm_2d_impl_src_chn_msk_copy  __arm_2d_impl_rgb565_src_chn_msk_copy
 #define __arm_2d_impl_cl_key_copy       __arm_2d_impl_rgb16_cl_key_copy
-#define __arm_2d_impl_alpha_blending_colour_keying                              \
-    __arm_2d_impl_rgb565_alpha_blending_colour_keying
+#define __arm_2d_impl_tile_copy_colour_keying_opacity                           \
+    __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity
 #define arm_2d_tile_transform_with_src_mask_and_opacity_prepare                 \
     arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare
 #define arm_2d_tile_transform_with_opacity_prepare                              \
@@ -109,7 +109,7 @@
 #define arm_2d_fill_colour_with_mask_and_opacity                                \
     arm_2d_cccn888_fill_colour_with_mask_and_opacity
 #define arm_2d_tile_copy                arm_2d_rgb32_tile_copy
-#define arm_2d_alpha_blending           arm_2d_cccn888_alpha_blending
+#define arm_2d_tile_copy_opacity           arm_2d_cccn888_tile_copy_opacity
 #define arm_2d_tile_copy_with_src_mask  arm_2d_cccn888_tile_copy_with_src_mask
 #define arm_2d_color_t                  arm_2d_color_cccn888_t
 
@@ -122,12 +122,12 @@
 #define __arm_2d_impl_colour_filling_mask_opacity                               \
     __arm_2d_impl_cccn888_colour_filling_mask_opacity
 #define __arm_2d_impl_copy              __arm_2d_impl_rgb32_copy
-#define __arm_2d_impl_alpha_blending    __arm_2d_impl_cccn888_alpha_blending
+#define __arm_2d_impl_tile_copy_opacity    __arm_2d_impl_cccn888_tile_copy_opacity
 #define __arm_2d_impl_src_msk_copy      __arm_2d_impl_cccn888_src_msk_copy
 #define __arm_2d_impl_src_chn_msk_copy  __arm_2d_impl_cccn888_src_chn_msk_copy
 #define __arm_2d_impl_cl_key_copy       __arm_2d_impl_rgb32_cl_key_copy
-#define __arm_2d_impl_alpha_blending_colour_keying                              \
-    __arm_2d_impl_cccn888_alpha_blending_colour_keying
+#define __arm_2d_impl_tile_copy_colour_keying_opacity                           \
+    __arm_2d_impl_cccn888_tile_copy_colour_keying_opacity
 #define arm_2d_tile_transform_with_src_mask_and_opacity_prepare                 \
     arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare
 #define arm_2d_tile_transform_with_opacity_prepare                              \
@@ -649,7 +649,7 @@ static bool arm_2d_copy_normal(lv_color_t * dest_buf,
                                &copy_size);
         }
         else {
-            __arm_2d_impl_alpha_blending((color_int *)src_buf,
+            __arm_2d_impl_tile_copy_opacity((color_int *)src_buf,
                                          src_stride,
                                          (color_int *)dest_buf,
                                          dest_stride,
@@ -672,7 +672,7 @@ static bool arm_2d_copy_normal(lv_color_t * dest_buf,
         }
         /*Handle opa and mask values too*/
         else {
-            __arm_2d_impl_gray8_alpha_blending((uint8_t *)mask,
+            __arm_2d_impl_gray8_tile_copy_opacity((uint8_t *)mask,
                                                mask_stride,
                                                (uint8_t *)mask,
                                                mask_stride,
@@ -841,7 +841,7 @@ static void lv_draw_arm2d_img_decoded(  struct _lv_draw_ctx_t * draw_ctx,
                         chrome_key_int);
                     }
                     else {
-                        __arm_2d_impl_alpha_blending_colour_keying(
+                        __arm_2d_impl_tile_copy_colour_keying_opacity(
                             (color_int *)src_buf_tmp,
                             src_stride,
                             (color_int *)dest_buf,
@@ -986,7 +986,7 @@ static void lv_draw_arm2d_img_decoded(  struct _lv_draw_ctx_t * draw_ctx,
                         &copy_size);
                     }
                     else {
-                        __arm_2d_impl_alpha_blending(
+                        __arm_2d_impl_tile_copy_opacity(
                             (color_int *)src_buf_tmp,
                             src_stride,
                             (color_int *)dest_buf,
