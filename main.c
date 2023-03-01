@@ -78,7 +78,7 @@ int main(void)
     __LL_LCD_PRINT(25, 0, "Please stand by...");
     __LL_LCD_PRINT(28, 0, "NOTE: You will NOT see anything until the end.");
 
-    lv_demo_benchmark(LV_DEMO_BENCHMARK_MODE_RENDER_AND_DRIVER);
+    lv_demo_benchmark(LV_DEMO_BENCHMARK_MODE_RENDER_ONLY);
     
     //lv_demo_benchmark_run_scene(LV_DEMO_BENCHMARK_MODE_RENDER_AND_DRIVER, 26*2-1);      // run scene no 31
 
