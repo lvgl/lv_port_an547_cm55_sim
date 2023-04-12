@@ -62,8 +62,7 @@ LD_DATA S_DATA_START {
     }
 
     RW_IRAM_UNINIT +0 UNINIT {
-        *(.uninitialized_data*)
-        *(.bss.noinit)
+        .ANY (.bss.noinit)
     }
 
     #if HEAP_SIZE > 0
