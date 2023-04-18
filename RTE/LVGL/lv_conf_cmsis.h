@@ -279,8 +279,6 @@
  *Only used if software rotation is enabled in the display driver.*/
 #define LV_DISP_ROT_MAX_BUF (10*1024)
 
-#define LV_USE_USER_DATA 1
-
 /*Garbage Collector settings
  *Used if lvgl is bound to higher level language and the memory is managed by that language*/
 #define LV_ENABLE_GC 0
@@ -700,25 +698,6 @@
     /*Requires: lv_list*/
     #define LV_FILE_EXPLORER_QUICK_ACCESS        1
 #endif
-
-/*==================
- * DEVICES
- *==================*/
-
-/*Use SDL to open window on PC and handle mouse and keyboard*/
-#define LV_USE_SDL              0
-#if LV_USE_SDL
-    #define LV_SDL_INCLUDE_PATH    <SDL2/SDL.h>
-#endif
-
-/*Driver for /dev/fb*/
-#define LV_USE_LINUX_FBDEV      0
-#if LV_USE_LINUX_FBDEV
-    #define LV_LINUX_FBDEV_BSD  0
-#endif
-
-/*Interface for TFT_eSPI*/
-#define LV_USE_TFT_ESPI         0
 
 /*==================
 * EXAMPLES
