@@ -79,7 +79,7 @@ void SystemInit (void)
 #endif
 
     /* Enable Loop and branch info cache */
-    SCB->CCR |= SCB_CCR_LOB_Msk;
+    SCB->CCR |= SCB_CCR_LOB_Msk | SCB_CCR_BP_Msk;
     __DSB();
     __ISB();
 
