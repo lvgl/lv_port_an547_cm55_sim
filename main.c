@@ -66,6 +66,7 @@ static void test(void)
 static void on_benchmark_finished(void)
 {
     disp_enable_update();
+    lv_demo_benchmark_close();
 }
 #endif
 
