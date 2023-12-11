@@ -15,7 +15,7 @@
 #include "perf_counter.h"
 
 #if defined(__RTE_ACCELERATION_ARM_2D__)
-#include "lv_gpu_arm2d.h"
+//#include "lv_gpu_arm2d.h"
 #include "arm_2d.h"
 #endif
 #include <stdbool.h>
@@ -33,7 +33,7 @@
  **********************/
 static void disp_init(void);
 
-static void disp_flush(lv_disp_t * disp, const lv_area_t * area, lv_color_t * color_p);
+static void disp_flush(lv_display_t * disp, const lv_area_t * area, uint8_t * px_map);
 
 /**********************
  *  STATIC VARIABLES
@@ -57,19 +57,17 @@ void lv_port_disp_init(void)
     /*------------------------------------
      * Create a display and set a flush_cb
      * -----------------------------------*/
-    lv_disp_t * disp = lv_disp_create(GLCD_WIDTH, GLCD_HEIGHT);
-    lv_disp_set_flush_cb(disp, disp_flush);
-
-#if LV_COLOR_DEPTH == 32
-    static lv_color_t buf_1[GLCD_WIDTH * GLCD_HEIGHT >> 1];
-#else
-    static lv_color_t buf_1[GLCD_WIDTH * GLCD_HEIGHT];
-#endif
+    lv_display_t * disp = lv_display_create(GLCD_WIDTH, GLCD_HEIGHT);
+    lv_display_set_flush_cb(disp, disp_flush);
 
     /* Example 1
      * One buffer for partial rendering*/
-    lv_disp_set_draw_buffers(disp, buf_1, NULL, sizeof(buf_1), LV_DISP_RENDER_MODE_PARTIAL);
-
+#if LV_COLOR_DEPTH == 32
+    static lv_color_t buf_1[GLCD_WIDTH * GLCD_HEIGHT >> 1];
+#else
+    static lv_color_t buf_1[GLCD_WIDTH * (GLCD_HEIGHT / 10) ];
+#endif
+    lv_display_set_draw_buffers(disp, buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
 }
 
 /**********************
@@ -98,15 +96,15 @@ void disp_disable_update(void)
     disp_flush_enabled = false;
 }
 
-/*Flush the content of the internal buffer the specific area on the display
+/*Flush the content of the internal buffer the specific area on the display.
+ *`px_map` contains the rendered image as raw pixel map and it should be copied to `area` on the display.
  *You can use DMA or any hardware acceleration to do this operation in the background but
- *'lv_disp_flush_ready()' has to be called when finished.*/
-static void disp_flush(lv_disp_t * disp_drv, const lv_area_t * area, lv_color_t * color_p)
+ *'lv_display_flush_ready()' has to be called when it's finished.*/
+static void disp_flush(lv_display_t * disp_drv, const lv_area_t * area, uint8_t * px_map)
 {
 #if !defined(__USE_FVP__)
     if (disp_flush_enabled) {
 #endif
-
     #if defined(__RTE_ACCELERATION_ARM_2D__)
         extern
         void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
@@ -132,14 +130,14 @@ static void disp_flush(lv_disp_t * disp_drv, const lv_area_t * area, lv_color_t 
                         area->y1,               //!< y
                         area->x2 - area->x1 + 1,    //!< width
                         area->y2 - area->y1 + 1,    //!< height
-                        (const uint8_t *)color_p);
+                        (const uint8_t *)px_map);
 #if !defined(__USE_FVP__)
     }
 #endif
 
     /*IMPORTANT!!!
      *Inform the graphics library that you are ready with the flushing*/
-    lv_disp_flush_ready(disp_drv);
+    lv_display_flush_ready(disp_drv);
 }
 
 #else /*Enable this file at the top*/
