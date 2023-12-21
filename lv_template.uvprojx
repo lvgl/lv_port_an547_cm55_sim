@@ -594,6 +594,11 @@
               <FileType>5</FileType>
               <FilePath>.\lv_gpu_arm2d.h</FilePath>
             </File>
+            <File>
+              <FileName>lv_blend_helium.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\helium\lv_blend_helium.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1207,6 +1212,11 @@
               <FileType>5</FileType>
               <FilePath>.\lv_gpu_arm2d.h</FilePath>
             </File>
+            <File>
+              <FileName>lv_blend_helium.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\helium\lv_blend_helium.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1371,15 +1381,29 @@
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
-      <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Demos" Csub="Widgets" Cvendor="LVGL" Cversion="9.0.0" condition="LVGL-Essential">
-        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev"/>
+      <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Demos" Csub="Assets" Cvendor="LVGL" Cversion="9.0.0" condition="LVGL-Essential">
+        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev1"/>
+        <targetInfos>
+          <targetInfo name="Cortex-M55_FVP"/>
+          <targetInfo name="Cortex-M55_MPS3"/>
+        </targetInfos>
+      </component>
+      <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Demos" Csub="Benchmark" Cvendor="LVGL" Cversion="9.0.0" condition="LVGL-Essential-Assets">
+        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev1"/>
+        <targetInfos>
+          <targetInfo name="Cortex-M55_FVP"/>
+          <targetInfo name="Cortex-M55_MPS3"/>
+        </targetInfos>
+      </component>
+      <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Demos" Csub="Widgets" Cvendor="LVGL" Cversion="9.0.0" condition="LVGL-Essential-Assets">
+        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
       <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Essential" Cvendor="LVGL" Cversion="9.0.0">
-        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev"/>
+        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1556,10 +1580,10 @@
         <package name="lvgl" schemaVersion="1.4" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="1.1.1-alpha"/>
         <targetInfos/>
       </file>
-      <file attr="config" category="preIncludeGlobal" name="lv_conf_cmsis.h" version="2.0.2">
+      <file attr="config" category="preIncludeGlobal" name="lv_conf_cmsis.h" version="2.0.3">
         <instance index="0">RTE\LVGL\lv_conf_cmsis.h</instance>
         <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Essential" Cvendor="LVGL" Cversion="9.0.0"/>
-        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev"/>
+        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1568,7 +1592,7 @@
       <file attr="config" category="sourceC" name="examples\porting\lv_port_disp_template.c" version="2.1.0">
         <instance index="0">RTE\LVGL\lv_port_disp_template.c</instance>
         <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Porting" Cvendor="LVGL" Cversion="9.0.0" condition="LVGL-Essential"/>
-        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev"/>
+        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1577,7 +1601,7 @@
       <file attr="config" category="header" name="examples\porting\lv_port_disp_template.h" version="2.1.0">
         <instance index="0">RTE\LVGL\lv_port_disp_template.h</instance>
         <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Porting" Cvendor="LVGL" Cversion="9.0.0" condition="LVGL-Essential"/>
-        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev"/>
+        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1586,7 +1610,7 @@
       <file attr="config" category="sourceC" name="examples\porting\lv_port_fs_template.c" version="2.1.0">
         <instance index="0">RTE\LVGL\lv_port_fs_template.c</instance>
         <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Porting" Cvendor="LVGL" Cversion="9.0.0" condition="LVGL-Essential"/>
-        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev"/>
+        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1595,7 +1619,7 @@
       <file attr="config" category="header" name="examples\porting\lv_port_fs_template.h" version="2.1.0">
         <instance index="0">RTE\LVGL\lv_port_fs_template.h</instance>
         <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Porting" Cvendor="LVGL" Cversion="9.0.0" condition="LVGL-Essential"/>
-        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev"/>
+        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1604,7 +1628,7 @@
       <file attr="config" category="sourceC" name="examples\porting\lv_port_indev_template.c" version="2.1.0">
         <instance index="0">RTE\LVGL\lv_port_indev_template.c</instance>
         <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Porting" Cvendor="LVGL" Cversion="9.0.0" condition="LVGL-Essential"/>
-        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev"/>
+        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1613,7 +1637,7 @@
       <file attr="config" category="header" name="examples\porting\lv_port_indev_template.h" version="2.1.0">
         <instance index="0">RTE\LVGL\lv_port_indev_template.h</instance>
         <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Porting" Cvendor="LVGL" Cversion="9.0.0" condition="LVGL-Essential"/>
-        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev"/>
+        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
