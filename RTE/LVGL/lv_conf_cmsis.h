@@ -76,7 +76,7 @@
  *========================*/
 
 /*Align the stride of all layers and images to this bytes*/
-#define LV_DRAW_BUF_STRIDE_ALIGN                4
+#define LV_DRAW_BUF_STRIDE_ALIGN                1
 
 /*Align the start address of draw_buf addresses to this bytes*/
 #define LV_DRAW_BUF_ALIGN                       4
@@ -116,7 +116,8 @@
     #if !defined(LV_USE_DRAW_SW_ASM) && defined(RTE_Acceleration_Arm_2D)
         /*turn-on helium acceleration when Arm-2D and the Helium-powered device are detected */
         #if defined(__ARM_FEATURE_MVE) && __ARM_FEATURE_MVE
-            #define  LV_USE_DRAW_SW_ASM     LV_DRAW_SW_ASM_HELIUM
+            #define LV_USE_DRAW_SW_ASM  LV_DRAW_SW_ASM_HELIUM
+            #define LV_USE_DRAW_ARM2D   1
         #endif
     #endif
 
