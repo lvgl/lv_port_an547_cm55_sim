@@ -36,7 +36,7 @@
 
 #if LV_USE_STDLIB_MALLOC == LV_STDLIB_BUILTIN
     /*Size of the memory available for `lv_malloc()` in bytes (>= 2kB)*/
-    #define LV_MEM_SIZE (128 * 1024U)          /*[bytes]*/
+    #define LV_MEM_SIZE (256 * 1024U)          /*[bytes]*/
 
     /*Size of the memory expand for `lv_malloc()` in bytes*/
     #define LV_MEM_POOL_EXPAND_SIZE 0
@@ -63,7 +63,7 @@
 
 /*customize tick-get */
 #if defined(__PERF_COUNTER__) && __PERF_COUNTER__
-#define LV_GLOBAL_INIT(__GLOBAL_PTR)                                        \
+    #define LV_GLOBAL_INIT(__GLOBAL_PTR)                                    \
             do {                                                            \
                 lv_global_init((lv_global_t *)(__GLOBAL_PTR));              \
                 extern uint32_t perfc_tick_get(void);                       \
@@ -113,7 +113,16 @@
         #define LV_DRAW_SW_CIRCLE_CACHE_SIZE 4
     #endif
 
-    #define  LV_USE_DRAW_SW_ASM     LV_DRAW_SW_ASM_HELIUM
+    #if !defined(LV_USE_DRAW_SW_ASM) && defined(RTE_Acceleration_Arm_2D)
+        /*turn-on helium acceleration when Arm-2D and the Helium-powered device are detected */
+        #if defined(__ARM_FEATURE_MVE) && __ARM_FEATURE_MVE
+            #define  LV_USE_DRAW_SW_ASM     LV_DRAW_SW_ASM_HELIUM
+        #endif
+    #endif
+
+    #ifndef LV_USE_DRAW_SW_ASM
+        #define  LV_USE_DRAW_SW_ASM     LV_DRAW_SW_ASM_NONE
+    #endif
 
     #if LV_USE_DRAW_SW_ASM == LV_DRAW_SW_ASM_CUSTOM
         #define  LV_DRAW_SW_ASM_CUSTOM_INCLUDE ""
@@ -212,7 +221,7 @@
 
 /*1: Show CPU usage and FPS count
  * Requires `LV_USE_SYSMON = 1`*/
-#define LV_USE_PERF_MONITOR 1
+#define LV_USE_PERF_MONITOR 0
 #if LV_USE_PERF_MONITOR
     #define LV_USE_PERF_MONITOR_POS LV_ALIGN_BOTTOM_RIGHT
 
@@ -324,7 +333,7 @@
 #define LV_FONT_MONTSERRAT_18 0
 #define LV_FONT_MONTSERRAT_20 0
 #define LV_FONT_MONTSERRAT_22 0
-#define LV_FONT_MONTSERRAT_24 1
+#define LV_FONT_MONTSERRAT_24 0
 #define LV_FONT_MONTSERRAT_26 0
 #define LV_FONT_MONTSERRAT_28 0
 #define LV_FONT_MONTSERRAT_30 0

@@ -118,9 +118,9 @@ static void disp_flush(lv_display_t * disp_drv, const lv_area_t * area, uint8_t 
             .iWidth = area->x2 - area->x1 + 1,
             .iHeight = area->y2 - area->y1 + 1,
         };
-        __arm_2d_impl_cccn888_to_rgb565((uint32_t *)color_p,
+        __arm_2d_impl_cccn888_to_rgb565((uint32_t *)px_map,
                                         size.iWidth,
-                                        (uint16_t *)color_p,
+                                        (uint16_t *)px_map,
                                         size.iWidth,
                                         &size);
     #endif
