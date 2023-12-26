@@ -802,7 +802,7 @@
             <hadXRAM>1</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>3</RvdsVP>
-            <RvdsMve>0</RvdsMve>
+            <RvdsMve>2</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
             <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
@@ -956,7 +956,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-Omax</MiscControls>
-              <Define>USE_EVR_FOR_STDOUR,LV_USE_DEV_VERSION,LV_USE_GPU_ARM2D</Define>
+              <Define>USE_EVR_FOR_STDOUR,LV_USE_DEV_VERSION</Define>
               <Undefine></Undefine>
               <IncludePath>.\platform;.;.\ui</IncludePath>
             </VariousControls>
@@ -1383,13 +1383,6 @@
       </component>
       <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Demos" Csub="Assets" Cvendor="LVGL" Cversion="9.0.0" condition="LVGL-Essential">
         <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev1"/>
-        <targetInfos>
-          <targetInfo name="Cortex-M55_FVP"/>
-          <targetInfo name="Cortex-M55_MPS3"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="LVGL9" Cclass="LVGL" Cgroup="Demos" Csub="Benchmark" Cvendor="LVGL" Cversion="9.0.0" condition="LVGL-Essential-Assets">
-        <package name="lvgl" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/lvgl/lvgl/master/env_support/cmsis-pack/" vendor="LVGL" version="9.0.0-dev2"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
