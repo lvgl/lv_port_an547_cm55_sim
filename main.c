@@ -76,8 +76,6 @@ int main(void)
     
     lv_init();
     
-    //lv_global.tick_state.tick_get_cb = perfc_tick_get;
-    
     lv_port_disp_init();
     lv_port_indev_init();
 
@@ -87,7 +85,7 @@ int main(void)
     __LL_LCD_PRINT(25, 0, "Please stand by...");
     __LL_LCD_PRINT(28, 0, "NOTE: You will NOT see anything until the end.");
 
-    disp_disable_update();
+    //disp_disable_update();
     lv_demo_benchmark();
     
     //lv_demo_benchmark_run_scene(LV_DEMO_BENCHMARK_MODE_RENDER_AND_DRIVER, 26*2-1);      // run scene no 31
