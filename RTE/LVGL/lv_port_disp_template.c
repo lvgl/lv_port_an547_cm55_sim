@@ -65,7 +65,7 @@ void lv_port_disp_init(void)
 #if LV_COLOR_DEPTH == 32
     static lv_color_t buf_1[GLCD_WIDTH * GLCD_HEIGHT >> 1];
 #else
-    static lv_color_t buf_1[GLCD_WIDTH * (GLCD_HEIGHT / 10) ];
+    static lv_color_t buf_1[GLCD_WIDTH * (GLCD_HEIGHT / 4) ];
 #endif
     lv_display_set_draw_buffers(disp, buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
 }
