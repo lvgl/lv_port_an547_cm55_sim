@@ -69,10 +69,6 @@ int main(void)
         __LL_LCD_PRINT_BANNER("Hello LVGL!!");
     }
 
-    jmp_buf buff;
-    
-    setjmp(buff);
-
     lv_init();
     
     lv_port_disp_init();
