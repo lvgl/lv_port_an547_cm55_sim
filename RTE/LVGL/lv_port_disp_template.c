@@ -10,6 +10,7 @@
  *      INCLUDES
  *********************/
 #include "lvgl.h"
+
 #include "Board_GLCD.h"
 #include "GLCD_Config.h"
 #include "perf_counter.h"
@@ -63,7 +64,7 @@ void lv_port_disp_init(void)
     /* Example 1
      * One buffer for partial rendering*/
 #if LV_COLOR_DEPTH == 32
-    static lv_color_t buf_1[GLCD_WIDTH * GLCD_HEIGHT >> 1];
+    static lv_color_t buf_1[GLCD_WIDTH * GLCD_HEIGHT >> 3];
 #else
     static lv_color_t buf_1[GLCD_WIDTH * (GLCD_HEIGHT / 4) ];
 #endif
@@ -105,6 +106,28 @@ static void disp_flush(lv_display_t * disp_drv, const lv_area_t * area, uint8_t 
 #if !defined(__USE_FVP__)
     if (disp_flush_enabled) {
 #endif
+        do {
+            lv_color_format_t color_format = lv_display_get_color_format(disp_drv);
+            int32_t width = area->x2 - area->x1 + 1;
+            int32_t height = area->y2 - area->y1 + 1;
+            int32_t stride = lv_draw_buf_width_to_stride( width, color_format);
+            width *= lv_color_format_get_bpp(color_format) >> 3;
+            
+            if (width == stride) {
+                break;
+            }
+            
+            uint8_t *src_ptr = px_map;
+            uint8_t *des_ptr = px_map;
+             
+            for (int y = 0; y < height; y++) {
+                lv_memcpy(des_ptr, src_ptr, width);
+                
+                src_ptr += stride;
+                des_ptr += width;
+            }
+        } while(0);
+
     #if defined(__RTE_ACCELERATION_ARM_2D__)
         extern
         void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
