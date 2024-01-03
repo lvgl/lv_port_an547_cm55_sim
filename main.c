@@ -88,17 +88,12 @@ int main(void)
     __LL_LCD_PRINT(25, 0, "Please stand by...");
     __LL_LCD_PRINT(28, 0, "NOTE: You will NOT see anything until the end.");
 
-#   if      LVGL_VERSION_MAJOR == 8
-    disp_disable_update();
+    //disp_disable_update();
     lv_demo_benchmark_set_finished_cb(on_benchmark_finished);
     lv_demo_benchmark_set_max_speed(true);
     lv_demo_benchmark();
     //lv_demo_benchmark_run_scene(31);
-#   elif    LVGL_VERSION_MAJOR == 9
-    lv_demo_benchmark(LV_DEMO_BENCHMARK_MODE_RENDER_ONLY);
-    
-    //lv_demo_benchmark_run_scene(LV_DEMO_BENCHMARK_MODE_RENDER_AND_DRIVER, 26*2-1);      // run scene no 31
-#   endif
+
 
 #elif LV_USE_DEMO_WIDGETS
     lv_demo_widgets();
