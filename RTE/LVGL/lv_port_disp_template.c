@@ -60,8 +60,6 @@ void lv_port_disp_init(void)
      * -----------------------------------*/
     lv_display_t * disp = lv_display_create(GLCD_WIDTH, GLCD_HEIGHT);
     lv_display_set_flush_cb(disp, disp_flush);
-
-    //LV_DRAW_BUF_DEFINE(buf_1, GLCD_WIDTH, GLCD_HEIGHT / 4, LV_COLOR_FORMAT_NATIVE);
     
     /* Example 1
      * One buffer for partial rendering*/
@@ -71,8 +69,6 @@ void lv_port_disp_init(void)
     static lv_color_t buf_1[GLCD_WIDTH * (GLCD_HEIGHT / 4) ];
 #endif
     lv_display_set_buffers(disp, buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
-    //lv_display_set_draw_buffers(disp, &buf_1, NULL);
-    //lv_display_set_render_mode(disp, LV_DISPLAY_RENDER_MODE_PARTIAL);
 }
 
 /**********************
