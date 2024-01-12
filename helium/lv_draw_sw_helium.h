@@ -28,7 +28,6 @@ extern "C" {
 #define __ARM_2D_IMPL__
 #include "arm_2d.h"
 #include "__arm_2d_impl.h"
-#include "arm_2d_helper.h"
 
 #if defined(__IS_COMPILER_ARM_COMPILER_5__)
 #pragma diag_suppress 174,177,188,68,513,144,1296
@@ -42,12 +41,12 @@ extern "C" {
  *      DEFINES
  *********************/
 #ifndef LV_DRAW_SW_RGB565_SWAP
-#define LV_DRAW_SW_RGB565_SWAP(__buf_ptr, __buf_size_px)                        \
-    _lv_draw_sw_rgb565_swap_helium((__buf_ptr), (__buf_size_px))
+    #define LV_DRAW_SW_RGB565_SWAP(__buf_ptr, __buf_size_px)                    \
+        _lv_draw_sw_rgb565_swap_helium((__buf_ptr), (__buf_size_px))
 #endif
 
 #ifndef LV_DRAW_SW_IMAGE
-#define LV_DRAW_SW_IMAGE(__transformed,                                         \
+    #define LV_DRAW_SW_IMAGE(__transformed,                                     \
                          __cf,                                                  \
                          __src_buf,                                             \
                          __img_coords,                                          \
@@ -55,14 +54,14 @@ extern "C" {
                          __blend_area,                                          \
                          __draw_unit,                                           \
                          __draw_dsc)                                            \
-    _lv_draw_sw_image_helium(   (__transformed),                                \
-                                (__cf),                                         \
-                                (uint8_t *)(__src_buf),                         \
-                                (__img_coords),                                 \
-                                (__src_stride),                                 \
-                                (__blend_area),                                 \
-                                (__draw_unit),                                  \
-                                (__draw_dsc))
+        _lv_draw_sw_image_helium(   (__transformed),                            \
+                                    (__cf),                                     \
+                                    (uint8_t *)(__src_buf),                     \
+                                    (__img_coords),                             \
+                                    (__src_stride),                             \
+                                    (__blend_area),                             \
+                                    (__draw_unit),                              \
+                                    (__draw_dsc))
 #endif
 
 /**********************
@@ -77,38 +76,6 @@ extern void arm_2d_helper_swap_rgb16(uint16_t * phwBuffer, uint32_t wCount);
 /**********************
  *      MACROS
  **********************/
-
-#define __ARM_2D_PREPARE_TRANS_AND_TARGET_REGION(__TRANS_PREPARE, ...)          \
-        do {                                                                    \
-            __TRANS_PREPARE(                                                    \
-                    NULL,                                                       \
-                    __VA_ARGS__);                                               \
-                                                                                \
-            target_region = (arm_2d_region_t) {                                 \
-                .tLocation = {                                                  \
-                    .iX = (int16_t)(coords->x1 - draw_unit->clip_area->x1),     \
-                    .iY = (int16_t)(coords->y1 - draw_unit->clip_area->y1),     \
-                },                                                              \
-                .tSize = src_size,                                              \
-            };                                                                  \
-                                                                                \
-            arm_2d_size_t tTransSize                                            \
-                = ARM_2D_CTRL.DefaultOP                                         \
-                    .tTransform.Source.ptTile->tRegion.tSize;                   \
-                                                                                \
-            if (target_region.tSize.iWidth < tTransSize.iWidth) {               \
-                int16_t iDelta = tTransSize.iWidth - target_region.tSize.iWidth;\
-                target_region.tLocation.iX -= iDelta / 2;                       \
-                target_region.tSize.iWidth = tTransSize.iWidth;                 \
-            }                                                                   \
-                                                                                \
-            if (target_region.tSize.iHeight < tTransSize.iHeight) {             \
-                int16_t iDelta                                                  \
-                    = tTransSize.iHeight - target_region.tSize.iHeight;         \
-                target_region.tLocation.iY -= iDelta / 2;                       \
-                target_region.tSize.iHeight = tTransSize.iHeight;               \
-            }                                                                   \
-        } while(0)
 
 static inline lv_result_t _lv_draw_sw_rgb565_swap_helium(void * buf, uint32_t buf_size_px)
 {
@@ -130,7 +97,7 @@ static inline lv_result_t _lv_draw_sw_image_helium(
     lv_layer_t * layer = draw_unit->target_layer;
     lv_color_format_t des_cf = layer->color_format;
     static bool arm_2d_initialized = false;
-    
+
     if (!arm_2d_initialized) {
         arm_2d_initialized = true;
         arm_2d_init();
@@ -150,7 +117,7 @@ static inline lv_result_t _lv_draw_sw_image_helium(
         }
 
         /* ------------- prepare parameters for arm-2d APIs - BEGIN --------- */
-        
+
         lv_area_t blend_area;
         if(!_lv_area_intersect(&blend_area, des_area, draw_unit->clip_area)) {
             break;
@@ -164,34 +131,34 @@ static inline lv_result_t _lv_draw_sw_image_helium(
             .iHeight = (int16_t)src_h,
         };
 
-        arm_2d_size_t des_size;
+//        arm_2d_size_t des_size;
 
-        do{
-            int32_t des_w = lv_area_get_width(&blend_area);
-            int32_t des_h = lv_area_get_height(&blend_area);
+//        do{
+//            int32_t des_w = lv_area_get_width(&blend_area);
+//            int32_t des_h = lv_area_get_height(&blend_area);
 
-            LV_ASSERT(des_w <= INT16_MAX);
-            LV_ASSERT(des_h <= INT16_MAX);
+//            LV_ASSERT(des_w <= INT16_MAX);
+//            LV_ASSERT(des_h <= INT16_MAX);
 
-            des_size.iWidth = (int16_t)des_w;
-            des_size.iHeight = (int16_t)des_h;
-        } while(0);
-        
-        arm_2d_size_t copy_size = {
-            .iWidth = MIN(des_size.iWidth, src_size.iWidth),
-            .iHeight = MIN(des_size.iHeight, src_size.iHeight),
-        };
-        
-        int32_t des_stride = lv_draw_buf_width_to_stride(
-                                lv_area_get_width(&layer->buf_area), 
-                                des_cf);
-        uint8_t *des_buf_moved = (uint8_t *)lv_draw_layer_go_to_xy(
-                                            layer, 
-                                            blend_area.x1 - layer->buf_area.x1,
-                                            blend_area.y1 - layer->buf_area.y1);
+//            des_size.iWidth = (int16_t)des_w;
+//            des_size.iHeight = (int16_t)des_h;
+//        } while(0);
+//        
+//        arm_2d_size_t copy_size = {
+//            .iWidth = MIN(des_size.iWidth, src_size.iWidth),
+//            .iHeight = MIN(des_size.iHeight, src_size.iHeight),
+//        };
+//        
+//        int32_t des_stride = lv_draw_buf_width_to_stride(
+//                                lv_area_get_width(&layer->buf_area), 
+//                                des_cf);
+//        uint8_t *des_buf_moved = (uint8_t *)lv_draw_layer_go_to_xy(
+//                                            layer, 
+//                                            blend_area.x1 - layer->buf_area.x1,
+//                                            blend_area.y1 - layer->buf_area.y1);
         uint8_t *des_buf = (uint8_t *)layer->buf;
         uint8_t opa = draw_dsc->opa;
-        
+
         /* ------------- prepare parameters for arm-2d APIs - END ----------- */
 
         if(is_transform) {
@@ -199,12 +166,23 @@ static inline lv_result_t _lv_draw_sw_image_helium(
             if(draw_dsc->scale_x != draw_dsc->scale_y) {
                 break;
             }
+            if (draw_dsc->recolor_opa > LV_OPA_MIN) {
+                break;
+            }
 
             static arm_2d_tile_t target_tile_origin;
             static arm_2d_tile_t target_tile;
             arm_2d_region_t clip_region;
             static arm_2d_region_t target_region;
-            
+
+            target_region = (arm_2d_region_t) {
+                .tLocation = {
+                    .iX = (int16_t)(coords->x1 - draw_unit->clip_area->x1),
+                    .iY = (int16_t)(coords->y1 - draw_unit->clip_area->y1),
+                },
+                .tSize = src_size,
+            };
+
             target_tile_origin = (arm_2d_tile_t) {
                 .tRegion = {
                     .tSize = {
@@ -252,14 +230,39 @@ static inline lv_result_t _lv_draw_sw_image_helium(
             static arm_2d_location_t source_center, target_center;
             source_center.iX = draw_dsc->pivot.x;
             source_center.iY = draw_dsc->pivot.y;
-
+            target_center = target_region.tLocation;
 
             if(LV_COLOR_FORMAT_A8 == src_cf) {
 
+                source_tile.tInfo.bHasEnforcedColour = true;
+                source_tile.tInfo.tColourInfo.chScheme = ARM_2D_COLOUR_GRAY8;
+
                 if(LV_COLOR_FORMAT_RGB565 == des_cf) {
-                
+
+                    arm_2d_rgb565_fill_colour_with_mask_opacity_and_transform(
+                        &source_tile,
+                        &target_tile,
+                        NULL,
+                        source_center,
+                        ARM_2D_ANGLE((draw_dsc->rotation / 10.0f)),
+                        draw_dsc->scale_x / 256.0f,
+                        lv_color_to_u16(draw_dsc->recolor),
+                        opa,
+                        &target_center
+                        );
+
                 } else if(LV_COLOR_FORMAT_XRGB8888 == des_cf) {
-                
+                    arm_2d_cccn888_fill_colour_with_mask_opacity_and_transform(
+                        &source_tile,
+                        &target_tile,
+                        NULL,
+                        source_center,
+                        ARM_2D_ANGLE((draw_dsc->rotation / 10.0f)),
+                        draw_dsc->scale_x / 256.0f,
+                        lv_color_to_int(draw_dsc->recolor),
+                        opa,
+                        &target_center
+                        );
                 } else {
                     break;
                 }
@@ -280,96 +283,128 @@ static inline lv_result_t _lv_draw_sw_image_helium(
                 mask_tile.pchBuffer = mask_buf;
 
                 if(opa >= LV_OPA_MAX) {
-                    __ARM_2D_PREPARE_TRANS_AND_TARGET_REGION(
-                        arm_2dp_rgb565_tile_transform_with_src_mask_prepare,
+                    arm_2d_rgb565_tile_transform_with_src_mask(
                         &source_tile,
                         &mask_tile,
-                        source_center,
-                        ARM_2D_ANGLE((draw_dsc->rotation / 10.0f)),
-                        draw_dsc->scale_x / 256.0f
-                        );
-                }
-                else {
-                    __ARM_2D_PREPARE_TRANS_AND_TARGET_REGION(
-                        arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare,
-                        &source_tile,
-                        &mask_tile,
+                        &target_tile,
+                        NULL,
                         source_center,
                         ARM_2D_ANGLE((draw_dsc->rotation / 10.0f)),
                         draw_dsc->scale_x / 256.0f,
-                        opa
+                        &target_center
                         );
                 }
-
-                arm_2d_tile_transform(
-                    &target_tile,
-                    &target_region,
-                    NULL
-                    );
+                else {
+                    arm_2d_rgb565_tile_transform_with_src_mask_and_opacity(
+                        &source_tile,
+                        &mask_tile,
+                        &target_tile,
+                        NULL,
+                        source_center,
+                        ARM_2D_ANGLE((draw_dsc->rotation / 10.0f)),
+                        draw_dsc->scale_x / 256.0f,
+                        opa,
+                        &target_center
+                        );
+                }
 
             } else if(LV_COLOR_FORMAT_RGB565 == src_cf) {
                 LV_ASSERT(LV_COLOR_FORMAT_RGB565 == des_cf);
 
-            #if 1
                 if(opa >= LV_OPA_MAX) {
-                    __ARM_2D_PREPARE_TRANS_AND_TARGET_REGION(
-                        arm_2dp_rgb565_tile_transform_only_prepare,
+                    arm_2d_rgb565_tile_transform_only(
                         &source_tile,
-                        source_center,
-                        ARM_2D_ANGLE((draw_dsc->rotation / 10.0f)),
-                        draw_dsc->scale_x / 256.0f
-                        );
-                    arm_2d_tile_transform(
                         &target_tile,
-                        &target_region,
-                        NULL
-                        );
-                }
-                else {
-                    __ARM_2D_PREPARE_TRANS_AND_TARGET_REGION(
-                        arm_2dp_rgb565_tile_transform_only_with_opacity_prepare,
-                        &source_tile,
+                        NULL,
                         source_center,
                         ARM_2D_ANGLE((draw_dsc->rotation / 10.0f)),
                         draw_dsc->scale_x / 256.0f,
-                        opa
-                        );
-                    arm_2d_tile_transform(
-                        &target_tile,
-                        &target_region,
-                        NULL
+                        &target_center
                         );
                 }
-            #else
-//                __arm_2d_impl_rgb16_copy(
-//                    (uint16_t *)src_buf,
-//                    src_w,
-//                    (uint16_t *)des_buf_moved,
-//                    (int16_t)lv_area_get_width(&layer->buf_area),
-//                    &copy_size
-//                );
+                else {
+                    arm_2d_rgb565_tile_transform_only_with_opacity(
+                        &source_tile,
+                        &target_tile,
+                        NULL,
+                        source_center,
+                        ARM_2D_ANGLE((draw_dsc->rotation / 10.0f)),
+                        draw_dsc->scale_x / 256.0f,
+                        opa,
+                        &target_center
+                        );
+                }
 
-                arm_2d_rgb16_tile_copy_only(
-                    &source_tile,
-                    &target_tile,
-                    NULL
-                );
-
-            #endif
-            
             } else if(LV_COLOR_FORMAT_ARGB8888 == src_cf) {
                 LV_ASSERT(LV_COLOR_FORMAT_XRGB8888 == des_cf);
 
+                static arm_2d_tile_t mask_tile;
+                mask_tile = source_tile;
+
+                mask_tile.tInfo.bHasEnforcedColour = true;
+                mask_tile.tInfo.tColourInfo.chScheme = ARM_2D_CHANNEL_8in32;
+                mask_tile.pchBuffer = src_buf + 3;
+
+                if(opa >= LV_OPA_MAX) {
+                    arm_2d_cccn888_tile_transform_with_src_mask(
+                        &source_tile,
+                        &mask_tile,
+                        &target_tile,
+                        NULL,
+                        source_center,
+                        ARM_2D_ANGLE((draw_dsc->rotation / 10.0f)),
+                        draw_dsc->scale_x / 256.0f,
+                        &target_center
+                        );
+                }
+                else {
+                    arm_2d_cccn888_tile_transform_with_src_mask_and_opacity(
+                        &source_tile,
+                        &mask_tile,
+                        &target_tile,
+                        NULL,
+                        source_center,
+                        ARM_2D_ANGLE((draw_dsc->rotation / 10.0f)),
+                        draw_dsc->scale_x / 256.0f,
+                        opa,
+                        &target_center
+                        );
+                }
+
             } else if(LV_COLOR_FORMAT_XRGB8888 == src_cf) {
                 LV_ASSERT(LV_COLOR_FORMAT_XRGB8888 == des_cf);
+
+                if(opa >= LV_OPA_MAX) {
+                    arm_2d_cccn888_tile_transform_only(
+                        &source_tile,
+                        &target_tile,
+                        NULL,
+                        source_center,
+                        ARM_2D_ANGLE((draw_dsc->rotation / 10.0f)),
+                        draw_dsc->scale_x / 256.0f,
+                        &target_center
+                        );
+                }
+                else {
+                    arm_2d_cccn888_tile_transform_only_with_opacity(
+                        &source_tile,
+                        &target_tile,
+                        NULL,
+                        source_center,
+                        ARM_2D_ANGLE((draw_dsc->rotation / 10.0f)),
+                        draw_dsc->scale_x / 256.0f,
+                        opa,
+                        &target_center
+                        );
+                }
 
             } else {
                 break;
             }
 
         } else if(draw_dsc->recolor_opa > LV_OPA_MIN) {
-            /* recolor-only */
-            __NOP();
+            /* recolor-only: todo */
+            break;
         }
 
         result = LV_RESULT_OK;
@@ -377,8 +412,6 @@ static inline lv_result_t _lv_draw_sw_image_helium(
 
     return result;
 }
-
-
 
 #endif /* LV_USE_DRAW_ARM2D */
 
