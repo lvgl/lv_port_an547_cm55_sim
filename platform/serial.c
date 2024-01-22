@@ -22,15 +22,17 @@
 #include <assert.h>
 
 #include "RTE_Components.h"
-#if defined(RTE_Compiler_EventRecorder) && defined(USE_EVR_FOR_STDOUR)
+#if defined(RTE_Compiler_EventRecorder) || defined(RTE_CMSIS_View_EventRecorder)
 #   include <EventRecorder.h>
 #endif
 
 extern ARM_DRIVER_USART Driver_USART0;
 
+extern int stdout_putchar(int ch);
+
 void serial_init(void)
 {
-#if defined(RTE_Compiler_EventRecorder) && defined(USE_EVR_FOR_STDOUR)
+#if defined(RTE_Compiler_EventRecorder) || defined(RTE_CMSIS_View_EventRecorder)
     EventRecorderInitialize(0, 1);
 #else
     Driver_USART0.Initialize(NULL);
@@ -55,7 +57,7 @@ int _write(int fd, char *str, int len)
     return 0;
 }
 
-#if defined(RTE_Compiler_EventRecorder) && defined(USE_EVR_FOR_STDOUR)
+#if defined(RTE_Compiler_EventRecorder)
 int stdout_putchar (int ch) {
   static uint32_t index = 0U;
   static uint8_t  buffer[8];
@@ -69,7 +71,7 @@ int stdout_putchar (int ch) {
   }
   return (ch);
 }
-#else
+#elif !defined(RTE_CMSIS_View_EventRecorder)
 int stdout_putchar(int ch)
 {
     if ('\n' == ch) {

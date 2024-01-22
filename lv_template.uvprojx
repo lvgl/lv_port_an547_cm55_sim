@@ -338,7 +338,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fdata-sections -Wno-undef</MiscControls>
-              <Define>USE_EVR_FOR_STDOUR,LV_USE_DEV_VERSION,LV_USE_GPU_ARM2D</Define>
+              <Define>USE_EVR_FOR_STDOUR,LV_USE_DEV_VERSION</Define>
               <Undefine></Undefine>
               <IncludePath>.\platform;.;.\ui</IncludePath>
             </VariousControls>
@@ -616,7 +616,10 @@
           <GroupName>::CMSIS Driver</GroupName>
         </Group>
         <Group>
-          <GroupName>::Compiler</GroupName>
+          <GroupName>::CMSIS-Compiler</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::CMSIS-View</GroupName>
         </Group>
         <Group>
           <GroupName>::Device</GroupName>
@@ -1239,7 +1242,10 @@
           <GroupName>::CMSIS Driver</GroupName>
         </Group>
         <Group>
-          <GroupName>::Compiler</GroupName>
+          <GroupName>::CMSIS-Compiler</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::CMSIS-View</GroupName>
         </Group>
         <Group>
           <GroupName>::Device</GroupName>
@@ -1265,6 +1271,13 @@
       </api>
       <api Capiversion="2.4.0" Cclass="CMSIS Driver" Cgroup="USART" exclusive="0">
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.7.0"/>
+        <targetInfos>
+          <targetInfo name="Cortex-M55_FVP"/>
+          <targetInfo name="Cortex-M55_MPS3"/>
+        </targetInfos>
+      </api>
+      <api Capiversion="1.0.0" Cclass="CMSIS-Compiler" Cgroup="STDOUT" condition="CortexDevice" exclusive="1">
+        <package name="CMSIS-Compiler" schemaVersion="1.7.27" url="https://www.keil.com/pack/" vendor="ARM" version="2.0.0"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1307,8 +1320,29 @@
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0" condition="ARMv6_7_8-M Device">
-        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
+      <component Cclass="CMSIS-Compiler" Cgroup="CORE" Cvendor="ARM" Cversion="1.0.0" condition="ARMCC CortexDevice">
+        <package name="CMSIS-Compiler" schemaVersion="1.7.27" url="https://www.keil.com/pack/" vendor="ARM" version="2.0.0"/>
+        <targetInfos>
+          <targetInfo name="Cortex-M55_FVP"/>
+          <targetInfo name="Cortex-M55_MPS3"/>
+        </targetInfos>
+      </component>
+      <component Capiversion="1.0.0" Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="Event Recorder" Cvendor="ARM" Cversion="1.0.0" condition="CORE EVR">
+        <package name="CMSIS-Compiler" schemaVersion="1.7.27" url="https://www.keil.com/pack/" vendor="ARM" version="2.0.0"/>
+        <targetInfos>
+          <targetInfo name="Cortex-M55_FVP"/>
+          <targetInfo name="Cortex-M55_MPS3"/>
+        </targetInfos>
+      </component>
+      <component Cclass="CMSIS-View" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="ARM" Cversion="1.5.3" condition="EventRecorder">
+        <package name="CMSIS-View" schemaVersion="1.7.25" url="https://www.keil.com/pack/" vendor="ARM" version="1.1.0"/>
+        <targetInfos>
+          <targetInfo name="Cortex-M55_FVP"/>
+          <targetInfo name="Cortex-M55_MPS3"/>
+        </targetInfos>
+      </component>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="6.0.0" condition="ARMv6_7_8-M Device">
+        <package name="CMSIS" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="6.0.0"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1370,22 +1404,8 @@
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </component>
-      <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.2.5" condition="CMSIS-CORE">
+      <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.3.0" condition="CMSIS-CORE">
         <package name="perf_counter" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="9.9.9"/>
-        <targetInfos>
-          <targetInfo name="Cortex-M55_FVP"/>
-          <targetInfo name="Cortex-M55_MPS3"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device">
-        <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
-        <targetInfos>
-          <targetInfo name="Cortex-M55_FVP"/>
-          <targetInfo name="Cortex-M55_MPS3"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="User" Cvendor="Keil" Cversion="1.2.0" condition="ARMCC Cortex-M">
-        <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
@@ -1473,14 +1493,20 @@
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Config\EventRecorderConf.h" version="1.1.0">
-        <instance index="0">RTE\Compiler\EventRecorderConf.h</instance>
-        <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device"/>
-        <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
+      <file attr="config" category="header" name="EventRecorder\Config\EventRecorderConf.h" version="1.1.0">
+        <instance index="0">RTE\CMSIS-View\EventRecorderConf.h</instance>
+        <component Cclass="CMSIS-View" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="ARM" Cversion="1.5.3" condition="EventRecorder"/>
+        <package name="CMSIS-View" schemaVersion="1.7.25" url="https://www.keil.com/pack/" vendor="ARM" version="1.1.0"/>
         <targetInfos>
           <targetInfo name="Cortex-M55_FVP"/>
           <targetInfo name="Cortex-M55_MPS3"/>
         </targetInfos>
+      </file>
+      <file attr="config" category="header" name="Config\EventRecorderConf.h" version="1.1.0">
+        <instance index="0" removed="1">RTE\Compiler\EventRecorderConf.h</instance>
+        <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device"/>
+        <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
+        <targetInfos/>
       </file>
       <file attr="config" category="header" name="CMSIS_Driver\Config\RTE_Device.h" version="1.1.0">
         <instance index="0">RTE\Device\SSE-300-MPS3\RTE_Device.h</instance>

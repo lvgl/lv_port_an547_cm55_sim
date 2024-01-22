@@ -125,7 +125,7 @@
         /*turn-on helium acceleration when Arm-2D and the Helium-powered device are detected */
         #if defined(__ARM_FEATURE_MVE) && __ARM_FEATURE_MVE
             #define LV_USE_DRAW_SW_ASM  LV_DRAW_SW_ASM_HELIUM
-            #define LV_USE_DRAW_ARM2D   1
+            #define LV_USE_DRAW_ARM2D_SYNC  1
         #endif
     #endif
 
@@ -710,16 +710,6 @@
 
     /*Profiler end point function with custom tag*/
     #define LV_PROFILER_END_TAG   LV_PROFILER_BUILTIN_END_TAG
-#endif
-
-
-/*1: Support using images as font in label or span widgets */
-#if LV_USE_IMGFONT
-    /*Imgfont image file path maximum length*/
-    #define LV_IMGFONT_PATH_MAX_LEN 64
-
-    /*1: Use img cache to buffer header information*/
-    #define LV_IMGFONT_USE_IMAGE_CACHE_HEADER 0
 #endif
 
 /*1: Enable an observer pattern implementation*/
