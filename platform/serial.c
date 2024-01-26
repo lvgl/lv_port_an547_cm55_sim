@@ -36,6 +36,7 @@ void serial_init(void)
     EventRecorderInitialize(0, 1);
 #else
     Driver_USART0.Initialize(NULL);
+    Driver_USART0.PowerControl(ARM_POWER_FULL);
     Driver_USART0.Control(ARM_USART_MODE_ASYNCHRONOUS, DEFAULT_UART_BAUDRATE);
 #endif
 }
@@ -71,7 +72,7 @@ int stdout_putchar (int ch) {
   }
   return (ch);
 }
-#elif !defined(RTE_CMSIS_View_EventRecorder)
+#elif !defined(RTE_CMSIS_View_EventRecorder) && defined(RTE_CMSIS_Compiler_STDOUT_Custom)
 int stdout_putchar(int ch)
 {
     if ('\n' == ch) {

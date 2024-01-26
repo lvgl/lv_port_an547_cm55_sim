@@ -16,14 +16,16 @@
  */
 #define CMSIS_device_header "SSE300MPS3.h"
 
-/* ARM::CMSIS Driver:USART:1.0.0 */
+/* ARM::CMSIS Driver:USART@1.0.0 */
 #define RTE_Drivers_USART
-/* GorgonMeducer.Performance Counter::Utilities:perf_counter:Core:Library:1.9.8 */
-#define __PERF_COUNTER__
-#define __PERF_COUNTER_CFG_USE_SYSTICK_WRAPPER__
-/* Keil.ARM Compiler::Compiler:I/O:STDOUT:User:1.2.0 */
-#define RTE_Compiler_IO_STDOUT          /* Compiler I/O: STDOUT */
-          #define RTE_Compiler_IO_STDOUT_User     /* Compiler I/O: STDOUT User */
+/* ARM::CMSIS-Compiler:STDOUT:Event Recorder@1.0.0 */
+#define RTE_CMSIS_Compiler_STDOUT                /* CMSIS-Compiler STDOUT */
+        #define RTE_CMSIS_Compiler_STDOUT_Event_Recorder /* CMSIS-Compiler STDOUT: Event Recorder */
+/* ARM::CMSIS-View:Event Recorder&DAP@1.5.3 */
+#define RTE_CMSIS_View_EventRecorder
+        #define RTE_CMSIS_View_EventRecorder_DAP
+/* GorgonMeducer::Utilities:perf_counter:Core&Source@2.3.0 */
+#define __PERF_COUNTER__ 1
 
 
 #endif /* RTE_COMPONENTS_H */
