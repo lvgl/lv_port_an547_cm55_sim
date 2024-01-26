@@ -29,8 +29,8 @@
 #include <stddef.h>
 #include "perf_counter.h"
 #include "cmsis_compiler.h"
-//#include "RTE_Components.h"             /* Component selection */
-//#include CMSIS_device_header
+#include "RTE_Components.h"             /* Component selection */
+#include CMSIS_device_header
 
 #include "GLCD_Config.h"
 #include "Board_GLCD.h"

@@ -58,4 +58,8 @@ EventRecorderStub.scvd
 Objects/lv_template.build_log.htm
 Objects/lv_template.axf
 Objects/lv_template.htm
-lv_template.uvguix.gabriel
+*.uvguix.*
+*@*
+RTE_Components.h
+Pre_Include_Global.h
+
