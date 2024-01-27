@@ -140,7 +140,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFMv8M</Key>
-          <Name>-I -S"System Generator:FVP_MPS3_Corstone_SSE_300" -L"cpu0" -O4102 -C0 -MC"..\..\Program Files\ARM\FVP_Corstone_SSE-300\models\Win64_VC2019\FVP_Corstone_SSE-300_Ethos-U55.exe" -MF -PF -MA</Name>
+          <Name>-I -S"System Generator:FVP_MPS3_Corstone_SSE_300" -L"cpu0" -O69638 -C0 -MC"..\..\Program Files\ARM\FVP_Corstone_SSE-300\models\Win64_VC2019\FVP_Corstone_SSE-300_Ethos-U55.exe" -MF -PF -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -393,6 +393,14 @@
           <ItemText>scenes[scene_act]</ItemText>
         </Ww>
       </WatchWindow1>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>1</SubType>
+          <ItemText>0x20001ADC</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <MemoryWindow2>
         <Mm>
           <WinNumber>2</WinNumber>
@@ -476,7 +484,7 @@
 
   <Group>
     <GroupName>platform</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -624,7 +632,7 @@
 
   <Group>
     <GroupName>application</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -656,7 +664,7 @@
 
   <Group>
     <GroupName>lv_gpu_arm2d</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -691,8 +699,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\helium\lv_blend_helium.h</PathWithFileName>
-      <FilenameWithoutPath>lv_blend_helium.h</FilenameWithoutPath>
+      <PathWithFileName>.\arm2d\lv_draw_sw_arm2d.h</PathWithFileName>
+      <FilenameWithoutPath>lv_draw_sw_arm2d.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -703,7 +711,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\helium\lv_draw_sw_helium.h</PathWithFileName>
+      <PathWithFileName>.\arm2d\lv_draw_sw_helium.h</PathWithFileName>
       <FilenameWithoutPath>lv_draw_sw_helium.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -712,7 +720,7 @@
 
   <Group>
     <GroupName>::Acceleration</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>
