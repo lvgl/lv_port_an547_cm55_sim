@@ -28,6 +28,7 @@
 #include <stdarg.h>
 
 #include "SSE300MPS3.h"
+#include "arm_2d.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push

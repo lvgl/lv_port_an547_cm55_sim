@@ -210,6 +210,30 @@ typedef union arm_2d_log_chn_t {
 } arm_2d_log_chn_t;
 
 
+#if __IS_COMPILER_ARM_COMPILER__
+
+__WEAK
+size_t strnlen(const char *pchString, size_t tMaxSize)
+{
+    if (NULL == pchString || 0 == tMaxSize) {
+        return 0;
+    }
+    size_t tActualSize = 0;
+    do {
+        if (0 == *pchString++) {
+            break;
+        }
+
+        tActualSize++;
+    } while(--tMaxSize);
+
+    return tActualSize;
+}
+
+#endif
+
+
+#if __ARM_2D_CFG_ENABLE_LOG__
 __WEAK
 void __arm_2d_log_printf(int32_t nIndentLevel, 
                          uint32_t wChannelMask,
@@ -236,7 +260,7 @@ void __arm_2d_log_printf(int32_t nIndentLevel,
         s_wLineNumber++;
 
         /* start a new line */
-        __ARM_2D_PORT_PRINTF__("\r\n[%010d]\t", s_wLineNumber);
+        __ARM_2D_PORT_PRINTF__("[%010" PRIu32 "]\t", s_wLineNumber);
 
         for (int32_t n = 0; n < nIndentLevel; n++) {
             __ARM_2D_PORT_PRINTF__("\t");
@@ -275,9 +299,25 @@ void __arm_2d_log_printf(int32_t nIndentLevel,
         } else {
             __ARM_2D_PORT_PRINTF__("[Insufficient memory for logging]%s", pchFormatString);
         }
+
+        __ARM_2D_PORT_PRINTF__("\r\n");
     }
 
 }
+#else
+__WEAK
+void __arm_2d_log_printf(int32_t nIndentLevel, 
+                         uint32_t wChannelMask,
+                         const char *pchPrefix,
+                         const char *pchFormatString,
+                         ...)
+{
+    ARM_2D_UNUSED(nIndentLevel);
+    ARM_2D_UNUSED(wChannelMask);
+    ARM_2D_UNUSED(pchPrefix);
+    ARM_2D_UNUSED(pchFormatString);
+}
+#endif
 
 
 __WEAK

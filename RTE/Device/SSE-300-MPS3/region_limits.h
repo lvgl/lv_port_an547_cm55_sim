@@ -30,9 +30,15 @@
 #define S_ROM_ALIAS               (0x10000000) /* ITCM_BASE_S */
 #define TOTAL_S_ROM_SIZE          (0x00080000) /* 512 kB */
 
+#define S_ROM2_ALIAS              (0x11000000) /* ITCM_BASE_S */
+#define TOTAL_S_ROM2_SIZE         (0x00100000) /* 1 MB */
+
 /* Secure Data */
-#define S_RAM_ALIAS               (0x30000000) /* DTCM_BASE_S */
-#define TOTAL_S_RAM_SIZE          (0x00080000) /* 512 kB */
+#define S_RAM_ALIAS               (0x31000000) /* DTCM_BASE_S */
+#define TOTAL_S_RAM_SIZE          (0x00200000) /* 2 MB */
+
+#define S_RAM2_ALIAS              (0x30000000) /* DTCM_BASE_S */
+#define TOTAL_S_RAM2_SIZE         (0x00080000) /* 512 kB */
 
 /* Secure DDR4 */
 #define S_DDR4_ALIAS              (0x70000000) /* DDR4_BLK1_BASE_S */

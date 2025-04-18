@@ -8,7 +8,7 @@
 #
 # *************************************************************************************************
 #
-# * Copyright (C) 2023 ARM Limited or its affiliates. All rights reserved.
+# * Copyright (C) 2025 ARM Limited or its affiliates. All rights reserved.
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # *
@@ -33,12 +33,13 @@ import freetype
 import numpy as np
 import math
 import binascii
+import tempfile
 
 c_head_string="""
 
-#include "arm_2d_helper.h"
+/* generated with ttf2c.py (v2.4.0) */
 
-#include "arm_extra_lcd_printf.h"
+#include "arm_2d_helper.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -52,10 +53,15 @@ c_head_string="""
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wincompatible-pointer-types-discards-qualifiers"
+#   pragma clang diagnostic ignored "-Wpadded"
+#   pragma clang diagnostic ignored "-Wunused-parameter"
+#   pragma clang diagnostic ignored "-Wunused-variable"
+#   pragma clang diagnostic ignored "-Wsign-conversion"
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
+#   pragma GCC diagnostic ignored "-Wunused-variable"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress=1296
+#   pragma diag_suppress=1296,1,64,177
 #endif
 
 typedef struct {
@@ -66,15 +72,15 @@ typedef struct {
     int16_t       iBearingY;
     uint8_t       chCodeLength;
     uint8_t       chUTF8[4];
-} __ttf_char_descriptor_t;
+} const __ttf_char_descriptor_t;
 """
 
 
 c_body_string="""
 
 
-ARM_SECTION(\"arm2d.tile.c_tileUTF8UserFontA{5}Mask\")
-static arm_2d_tile_t c_tileUTF8UserFontA{5}Mask = {{
+ARM_SECTION(\"arm2d.tile.c_tileUTF8{0}A{5}Mask\")
+static const arm_2d_tile_t c_tileUTF8{0}A{5}Mask = {{
     .tRegion = {{
         .tSize = {{
             .iWidth = {1},
@@ -88,55 +94,10 @@ static arm_2d_tile_t c_tileUTF8UserFontA{5}Mask = {{
             .chScheme = ARM_2D_COLOUR_{5}BIT,
         }},
     }},
-    .pchBuffer = (uint8_t *)c_bmpUTF8UserA{5}Font,
+    .pchBuffer = (uint8_t *)c_bmpUTF8{0}A{5}Font,
 }};
 
 #define __UTF8_FONT_SIZE_{5}__
-
-static
-IMPL_FONT_DRAW_CHAR(__utf8_font_a{5}_draw_char)
-{{
-#if defined(__UTF8_FONT_SIZE_8__)
-    static arm_2d_op_fill_cl_msk_opa_trans_t s_tOP;
-    const bool bIsNewFrame = true;
-    static const arm_2d_location_t c_tCentre = {{7,8}};
-
-    if (0.0f == fScale || ABS(fScale - 1.0f) < 0.01f) {{
-        return arm_2d_fill_colour_with_mask_and_opacity(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){{tForeColour}},
-                                            chOpacity);
-    }}
-
-    return arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &s_tOP,
-                                            ptileChar,
-                                            ptTile,
-                                            ptRegion,
-                                            c_tCentre,
-                                            0.0f,
-                                            fScale,
-                                            tForeColour,
-                                            chOpacity);
-#elif defined(__UTF8_FONT_SIZE_1__)
-    return arm_2d_draw_pattern(    ptileChar,
-                            ptTile,
-                            ptRegion,
-                            ARM_2D_DRW_PATN_MODE_COPY,
-                            tForeColour,
-                            GLCD_COLOR_BLACK);
-#else
-    return arm_2d_fill_colour_with_a{5}_mask_and_opacity(
-                                        ptTile,
-                                        ptRegion,
-                                        ptileChar,
-                                        (__arm_2d_color_t){{tForeColour}},
-                                        chOpacity);
-#endif
-
-}}
 
 
 
@@ -148,18 +109,18 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a{5}_font_get_char_descriptor)
     assert(NULL != pchCharCode);
 
     arm_2d_user_font_t *ptThis = (arm_2d_user_font_t *)ptFont;
+    ARM_2D_UNUSED(ptThis);
 
     memset(ptDescriptor, 0, sizeof(arm_2d_char_descriptor_t));
 
     ptDescriptor->tileChar.ptParent = (arm_2d_tile_t *)&ptFont->tileFont;
     ptDescriptor->tileChar.tInfo.bDerivedResource = true;
 
-
     /* use the white space as the default char */
     __ttf_char_descriptor_t *ptUTF8Char =
-        (__ttf_char_descriptor_t *)&c_tUTF8LookUpTableA{5}[dimof(c_tUTF8LookUpTableA{5})-1];
+        (__ttf_char_descriptor_t *)&c_tUTF8{0}LookUpTableA{5}[dimof(c_tUTF8{0}LookUpTableA{5})-1];
 
-    arm_foreach(__ttf_char_descriptor_t, c_tUTF8LookUpTableA{5}, ptChar) {{
+    arm_foreach(__ttf_char_descriptor_t, c_tUTF8{0}LookUpTableA{5}, ptChar) {{
         if (0 == strncmp(   (char *)pchCharCode,
                             (char *)ptChar->chUTF8,
                             ptChar->chCodeLength)) {{
@@ -180,7 +141,8 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a{5}_font_get_char_descriptor)
     return ptDescriptor;
 }}
 
-
+ARM_SECTION(\"arm2d.asset.FONT.ARM_2D_FONT_{0}_A{5}\")
+const
 struct {{
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
@@ -189,7 +151,7 @@ struct {{
     .use_as__arm_2d_user_font_t = {{
         .use_as__arm_2d_font_t = {{
             .tileFont = impl_child_tile(
-                c_tileUTF8UserFontA{5}Mask,
+                c_tileUTF8{0}A{5}Mask,
                 0,          /* x offset */
                 0,          /* y offset */
                 {1},        /* width */
@@ -201,7 +163,109 @@ struct {{
             }},
             .nCount =  {3},                             //!< Character count
             .fnGetCharDescriptor = &__utf8_a{5}_font_get_char_descriptor,
-            .fnDrawChar = &__utf8_font_a{5}_draw_char,
+            .fnDrawChar = &__arm_2d_lcd_text_default_a{5}_font_draw_char,
+        }},
+        .hwCount = 1,
+        .hwDefaultCharIndex = 1, /* tBlank */
+    }},
+
+    .tUTF8Table = {{
+        .hwCount = {3},
+        .hwOffset = 0,
+    }},
+}};
+
+#undef __UTF8_FONT_SIZE_{5}__
+"""
+
+
+c_body_string_ascii="""
+
+
+ARM_SECTION(\"arm2d.tile.c_tileUTF8{0}A{5}Mask\")
+static const arm_2d_tile_t c_tileUTF8{0}A{5}Mask = {{
+    .tRegion = {{
+        .tSize = {{
+            .iWidth = {1},
+            .iHeight = {4},
+        }},
+    }},
+    .tInfo = {{
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {{
+            .chScheme = ARM_2D_COLOUR_{5}BIT,
+        }},
+    }},
+    .pchBuffer = (uint8_t *)c_bmpUTF8{0}A{5}Font,
+}};
+
+#define __UTF8_FONT_SIZE_{5}__
+
+
+
+static
+IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a{5}_font_get_char_descriptor)
+{{
+    assert(NULL != ptFont);
+    assert(NULL != ptDescriptor);
+    assert(NULL != pchCharCode);
+
+    arm_2d_user_font_t *ptThis = (arm_2d_user_font_t *)ptFont;
+    ARM_2D_UNUSED(ptThis);
+
+    memset(ptDescriptor, 0, sizeof(arm_2d_char_descriptor_t));
+
+    ptDescriptor->tileChar.ptParent = (arm_2d_tile_t *)&ptFont->tileFont;
+    ptDescriptor->tileChar.tInfo.bDerivedResource = true;
+
+    /* use the white space as the default char */
+    __ttf_char_descriptor_t *ptUTF8Char = NULL;
+        
+    if (pchCharCode[0] > 0x20 && pchCharCode[0] <= 0x7e) {{
+        ptUTF8Char = (__ttf_char_descriptor_t *)
+            &c_tUTF8{0}LookUpTableA{5}[ 
+                pchCharCode[0] - c_tUTF8{0}LookUpTableA{5}[0].chUTF8[0]];
+    }} else {{
+        /* use the white space as the default char */
+        ptUTF8Char = (__ttf_char_descriptor_t *)
+            &c_tUTF8{0}LookUpTableA{5}[dimof(c_tUTF8{0}LookUpTableA{5})-1];
+    }}
+
+    ptDescriptor->chCodeLength = ptUTF8Char->chCodeLength;
+    ptDescriptor->tileChar.tRegion.tSize = ptUTF8Char->tCharSize;
+    ptDescriptor->tileChar.tRegion.tLocation.iY = (int16_t)ptUTF8Char->hwIndex;
+
+    ptDescriptor->iAdvance = ptUTF8Char->iAdvance;
+    ptDescriptor->iBearingX= ptUTF8Char->iBearingX;
+    ptDescriptor->iBearingY= ptUTF8Char->iBearingY;
+
+    return ptDescriptor;
+}}
+
+ARM_SECTION(\"arm2d.asset.FONT.ARM_2D_FONT_{0}_A{5}\")
+const
+struct {{
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+}} ARM_2D_FONT_{0}_A{5} = {{
+
+    .use_as__arm_2d_user_font_t = {{
+        .use_as__arm_2d_font_t = {{
+            .tileFont = impl_child_tile(
+                c_tileUTF8{0}A{5}Mask,
+                0,          /* x offset */
+                0,          /* y offset */
+                {1},        /* width */
+                {4}         /* height */
+            ),
+            .tCharSize = {{
+                .iWidth = {1},
+                .iHeight = {2},
+            }},
+            .nCount =  {3},                             //!< Character count
+            .fnGetCharDescriptor = &__utf8_a{5}_font_get_char_descriptor,
+            .fnDrawChar = &__arm_2d_lcd_text_default_a{5}_font_draw_char,
         }},
         .hwCount = 1,
         .hwDefaultCharIndex = 1, /* tBlank */
@@ -226,8 +290,8 @@ c_tail_string="""
 #endif
 """
 
-def generate_glyphs_data(input_file, text, pixel_size, font_bit_size):
-    face = freetype.Face(input_file)
+def generate_glyphs_data(input_file, text, pixel_size, font_bit_size, font_index):
+    face = freetype.Face(input_file, index=font_index)
     face.set_pixel_sizes(0, pixel_size)
 
     glyphs_data = []
@@ -249,7 +313,9 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size):
 
         width_max = max(bitmap.width, width_max)
         height_max = max(bitmap.rows, height_max)
-
+    
+    width_max += 2
+    height_max += 2
 
     for char in sorted(set(text)):
         face.load_char(char)
@@ -266,12 +332,44 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size):
         bearing_y = face.glyph.bitmap_top
         width = bitmap.width
         height = bitmap.rows
+        pitch = bitmap.pitch
 
-        bitmap_array = np.array(bitmap.buffer, dtype=np.uint8).reshape((height, width))
+        if bitmap.pixel_mode == freetype.FT_PIXEL_MODE_MONO:
+            buffer = np.frombuffer(bytes(bitmap.buffer), dtype=np.uint8)
+            bits_per_row = pitch * 8
+            bitmap_array = np.unpackbits(buffer).reshape((height, bits_per_row))[:, :width]
+            bitmap_array = bitmap_array.astype(np.uint8) * 255
+
+        elif bitmap.pixel_mode == freetype.FT_PIXEL_MODE_GRAY2:
+            buffer = np.frombuffer(bytes(bitmap.buffer), dtype=np.uint8)
+            bits_per_row = pitch * 4
+            bitmap_array = np.unpackbits(buffer).reshape((height, bits_per_row))[:, :width * 2]
+            bitmap_array = (bitmap_array.reshape((height, width * 2)) * 85).astype(np.uint8)
+
+        elif bitmap.pixel_mode == freetype.FT_PIXEL_MODE_GRAY4:
+            buffer = np.frombuffer(bytes(bitmap.buffer), dtype=np.uint8)
+            bits_per_row = pitch * 2
+            bitmap_array = np.unpackbits(buffer).reshape((height, bits_per_row))[:, :width * 4]
+            bitmap_array = (bitmap_array.reshape((height, width * 2)) * 17).astype(np.uint8)
+
+        elif bitmap.pixel_mode == freetype.FT_PIXEL_MODE_GRAY:
+            bitmap_array = np.array(bitmap.buffer, dtype=np.uint8).reshape((height, width))
+
+        else:
+            raise ValueError(f"Unsupported pixel mode: {bitmap.pixel_mode}")
+            continue
 
         if width < width_max:
-           padding = ((0, 0), (0, width_max - width))
-           bitmap_array = np.pad(bitmap_array, padding, 'constant')
+            if (width_max - width) > 1:
+                padding = ((0, 0), (1, width_max - width - 1))
+            else: 
+                padding = ((0, 0), (0, width_max - width))
+            bitmap_array = np.pad(bitmap_array, padding, 'constant')
+        
+        padding = ((1, 1), (0, 0))
+        bitmap_array = np.pad(bitmap_array, padding, 'constant')
+
+        height += 2
 
         char_index_advance = len(bitmap_array.flatten());
 
@@ -341,7 +439,7 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size):
 
         char_mask_array = bitmap_array.flatten()
 
-        glyphs_data.append((char, char_mask_array, width, height, current_index, advance_width, bearing_x, bearing_y, utf8_encoding))
+        glyphs_data.append((char, char_mask_array, width + 2, height, current_index, advance_width, bearing_x, bearing_y, utf8_encoding))
 
         current_index += char_index_advance
 
@@ -351,12 +449,13 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size):
 def utf8_to_c_array(utf8_bytes):
     return '{' + ', '.join([f'0x{byte:02x}' for byte in utf8_bytes]) + '}'
 
-def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height, font_bit_size):
+def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height, font_bit_size, ascii_mode):
 
     with open(output_file, "a") as f:
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst static uint8_t c_bmpUTF8UserA{0}Font[] = {{\n"
-                .format(font_bit_size), file=f)
+        print("ARM_SECTION(\"arm2d.asset.FONT.c_bmpUTF8{0}A{1}Font\")\nconst uint8_t c_bmpUTF8{0}A{1}Font[] = {{\n"
+                .format(name, font_bit_size), 
+                file=f)
 
         for char, data, width, height, index, advance_width, bearing_x, bearing_y, utf8_encoding in glyphs_data:
             utf8_c_array = utf8_to_c_array(utf8_encoding)
@@ -374,34 +473,47 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
         f.write("0x00, " * (char_max_width * char_max_height))
         f.write("\n};\n\n")
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst static __ttf_char_descriptor_t c_tUTF8LookUpTableA{0}[] = {{\n"
-                .format(font_bit_size), file=f)
+        print("ARM_SECTION(\"arm2d.asset.FONT.c_tUTF8{0}LookUpTableA{1}\")\n const __ttf_char_descriptor_t c_tUTF8{0}LookUpTableA{1}[{2}] = {{\n"
+                .format(name, font_bit_size, len(glyphs_data) + 1), file=f)
 
         last_index = 0;
         last_advance = 0;
+        last_height = 0;
         for char, data, width, height, index, advance_width, bearing_x, bearing_y, utf8_encoding in glyphs_data:
             utf8_c_array = utf8_to_c_array(utf8_encoding)
             last_index = index
             last_advance = advance_width
+            last_height = height;
             f.write(f"    {{ {round(index / char_max_width)}, {{ {width}, {height}, }}, {advance_width}, {bearing_x}, {bearing_y}, {len(utf8_encoding)}, {utf8_c_array} }},\n")
 
+        last_index += char_max_width * last_height
+        f.write(f"    {{ {round(last_index / char_max_width)}, {{ {char_max_width}, {char_max_height}, }}, {round(char_max_width / 2)}, {0}, {char_max_height}, 1, {{0x20}} }},\n")
+
         last_index += char_max_width * char_max_height
-        f.write(f"    {{ {round(last_index / char_max_width)}, {{ {char_max_width}, {char_max_height}, }}, {last_advance}, {0}, {char_max_height}, 1, {{0x20}} }},\n")
 
         f.write("};\n")
 
-        print(c_body_string.format( name,
-                                    char_max_width,
-                                    char_max_height,
-                                    len(glyphs_data),
-                                    char_max_height*len(glyphs_data),
-                                    font_bit_size), file=f)
+        if ascii_mode == True:
+            print(c_body_string_ascii.format( name,
+                                        char_max_width,
+                                        char_max_height,
+                                        len(glyphs_data),
+                                        round(last_index / char_max_width)+1,
+                                        font_bit_size), file=f)
+        else:
+            print(c_body_string.format( name,
+                                        char_max_width,
+                                        char_max_height,
+                                        len(glyphs_data),
+                                        round(last_index / char_max_width)+1,
+                                        font_bit_size), file=f)
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.1.0)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v2.4.0)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
-    parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
+    parser.add_argument("--index",          type=int,   help="The Font Index in a TTC file",    required=False,     default=0)
+    parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=False)
     parser.add_argument("-n", "--name",     type=str,   help="The customized UTF8 font name",   required=False,     default="UTF8")
     parser.add_argument("-o", "--output",   type=str,   help="Path to the output C file",       required=True)
     parser.add_argument("-p", "--pixelsize",type=int,   help="Font size in pixels",             required=False,     default=32)
@@ -417,45 +529,51 @@ def main():
         print(f'Invalid alpha size={args.fontbitsize}')
         sys.exit(1)
 
+    ascii_mode = False
+
+    if args.text == None or args.text == "" :
+        ascii_mode = True
+        fd, args.text = tempfile.mkstemp()
+        with os.fdopen(fd, 'w') as temptextfile:
+            print("!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", file=temptextfile, end='')
 
     with open(args.output, "w") as outputfile:
         print(c_head_string, file=outputfile)
-
 
     if args.fontbitsize in [1, 2, 4, 8]:
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
-            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, args.fontbitsize)
-            write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, args.fontbitsize)
+            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, args.fontbitsize, args.index)
+            write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, args.fontbitsize, ascii_mode)
 
     else:
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
-            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 1)
-            write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 1)
+            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 1, args.index)
+            write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 1, ascii_mode)
 
 
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
-            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 2)
-            write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 2)
+            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 2, args.index)
+            write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 2, ascii_mode)
 
 
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
-            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 4)
-            write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 4)
+            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 4, args.index)
+            write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 4, ascii_mode)
 
 
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
-            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 8)
-            write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 8)
+            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 8, args.index)
+            write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 8, ascii_mode)
 
     with open(args.output, "a") as outputfile:
         print(c_tail_string, file=outputfile)
