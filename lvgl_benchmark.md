@@ -45,25 +45,25 @@ This is a benchmark report for comparing performance differences between LVGL ba
 
 **Table 2-1 LVGL Benchmark (baseline vs arm-2d acceleration)**
 
-| Name                      | Scaler (ms) | Helium (ms) | improve |
-| ------------------------- | ----------- | ----------- | ------- |
-| Empty screen              | 33          | 27          | 22.22%  |
-| Moving wallpaper          | 60          | 44          | 36.36%  |
-| Single rectangle          | 3           | 3           | 0.00%   |
-| Multiple rectangles       | 29          | 24          | 20.83%  |
-| Multiple RGB images       | 10          | 7           | 42.86%  |
-| Multiple ARGB images      | 27          | 13          | 107.69% |
-| Rotated ARGB images       | 172         | 143         | 20.28%  |
-| Multiple labels           | 39          | 35          | 11.43%  |
-| Screen sized text         | 273         | 243         | 12.35%  |
-| Multiple arcs             | 6           | 6           | 0.00%   |
-| Containers                | 48          | 36          | 33.33%  |
-| Containers with overlay   | 77          | 56          | 37.50%  |
-| Containers with opa       | 73          | 53          | 37.74%  |
-| Containers with opa_layer | 130         | 70          | 85.71%  |
-| Containers with scrolling | 104         | 82          | 26.83%  |
-| Widgets demo              | 105         | 91          | 15.38%  |
-| All scenes avg.           | 74          | 58          | 27.59%  |
+| Name                      | Scaler | Helium | improve     |
+| ------------------------- | ------ | ------ | ----------- |
+| Empty screen              | 33     | 27     | 22.22%      |
+| Moving wallpaper          | 60     | 44     | 36.36%      |
+| Single rectangle          | 3      | 3      | 0.00%       |
+| Multiple rectangles       | 29     | 26     | 11.54%      |
+| Multiple RGB images       | 10     | 7      | **42.86%**  |
+| Multiple ARGB images      | 27     | 12     | **125.00%** |
+| Rotated ARGB images       | 172    | 94     | **82.98%**  |
+| Multiple labels           | 39     | 35     | 11.43%      |
+| Screen sized text         | 273    | 243    | 12.35%      |
+| Multiple arcs             | 6      | 6      | 0.00%       |
+| Containers                | 48     | 36     | 33.33%      |
+| Containers with overlay   | 77     | 56     | 37.50%      |
+| Containers with opa       | 73     | 53     | 37.74%      |
+| Containers with opa_layer | 130    | 71     | **83.10%**  |
+| Containers with scrolling | 104    | 82     | 26.83%      |
+| Widgets demo              | 105    | 91     | 15.38%      |
+| All scenes avg.           | 74     | 55     | **34.55%**  |
 
 
 
