@@ -65,12 +65,14 @@ This is a benchmark report for comparing performance differences between LVGL ba
 | Widgets demo              | 105    | 91     | 15.38%      |
 | All scenes avg.           | 74     | 55     | **34.55%**  |
 
+**NOTE:** 
+
+1. The unit of the table is milliseconds (ms), which means the lower, the better. 
+
 
 
 **Figure 2-1 Performance Ratio (Arm-2D acceleration over baseline)**
 
- ![](./documents/pictures/figure2-1)
+ ![](./documents/pictures/figure2-1.png)
 
-**NOTE:** 
-
-1. The unit of the histogram is millisecond (ms), which is lower the better. 
+1. 
