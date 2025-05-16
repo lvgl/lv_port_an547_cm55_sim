@@ -75,7 +75,7 @@
       <OPTFL>
         <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>0</IsCurrentTarget>
+        <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>7</CpuCode>
       <DebugOpt>
@@ -140,7 +140,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFMv8M</Key>
-          <Name>-I -S"System Generator:FVP_MPS3_Corstone_SSE_300" -L"cpu0" -O69638 -C0 -MC"..\..\Program Files\ARM\FVP_Corstone_SSE-300\models\Win64_VC2019\FVP_Corstone_SSE-300_Ethos-U55.exe" -MF -PF -MA</Name>
+          <Name>-I -S"System Generator:FVP_MPS3_Corstone_SSE_300" -L"cpu0" -O69638 -C0 -MC".\avh-fvp\bin\models\FVP_Corstone_SSE-300.exe" -MF -PF -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -219,7 +219,7 @@
         <aLa>0</aLa>
         <aPa1>0</aPa1>
         <AscS4>0</AscS4>
-        <aSer4>0</aSer4>
+        <aSer4>1</aSer4>
         <StkLoc>0</StkLoc>
         <TrcWin>0</TrcWin>
         <newCpu>0</newCpu>
@@ -302,7 +302,7 @@
       <OPTFL>
         <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>1</IsCurrentTarget>
+        <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
       <CpuCode>7</CpuCode>
       <DebugOpt>
@@ -453,7 +453,7 @@
         <aLa>0</aLa>
         <aPa1>0</aPa1>
         <AscS4>0</AscS4>
-        <aSer4>1</aSer4>
+        <aSer4>0</aSer4>
         <StkLoc>1</StkLoc>
         <TrcWin>0</TrcWin>
         <newCpu>0</newCpu>
@@ -720,7 +720,7 @@
 
   <Group>
     <GroupName>::Acceleration</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>

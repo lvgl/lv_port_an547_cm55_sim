@@ -87,7 +87,7 @@
  *====================*/
 
 /** Default display refresh, input device read and animation step period. */
-#define LV_DEF_REFR_PERIOD  2      /**< [ms] */
+#define LV_DEF_REFR_PERIOD  33      /**< [ms] */
 
 /** Default Dots Per Inch. Used to initialize default sizes such as widgets sized, style paddings.
  * (Not so important, you can adjust it to modify default sizes and spaces.) */
@@ -153,6 +153,15 @@
  * NOTE: If FreeType or ThorVG is enabled, it is recommended to set it to 32KB or more.
  */
 #define LV_DRAW_THREAD_STACK_SIZE    (8 * 1024)         /**< [bytes]*/
+
+/** Thread priority of the drawing task.
+ *  Higher values mean higher priority.
+ *  Can use values from lv_thread_prio_t enum in lv_os.h: LV_THREAD_PRIO_LOWEST,
+ *  LV_THREAD_PRIO_LOW, LV_THREAD_PRIO_MID, LV_THREAD_PRIO_HIGH, LV_THREAD_PRIO_HIGHEST
+ *  Make sure the priority value aligns with the OS-specific priority levels.
+ *  On systems with limited priority levels (e.g., FreeRTOS), a higher value can improve
+ *  rendering performance but might cause other tasks to starve. */
+#define LV_DRAW_THREAD_PRIO LV_THREAD_PRIO_HIGH
 
 #define LV_USE_DRAW_SW 1
 #if LV_USE_DRAW_SW == 1
@@ -308,7 +317,7 @@
     /** Enable border to simulate shadow.
      *  NOTE: which usually improves performance,
      *  but does not guarantee the same rendering quality as the software. */
-    #define LV_VG_LITE_USE_BOX_SHADOW 0
+    #define LV_VG_LITE_USE_BOX_SHADOW 1
 
     /** VG-Lite gradient maximum cache number.
      *  @note  The memory usage of a single gradient image is 4K bytes. */
@@ -559,7 +568,7 @@
  * https://fonts.google.com/specimen/Montserrat */
 #define LV_FONT_MONTSERRAT_8  0
 #define LV_FONT_MONTSERRAT_10 0
-#define LV_FONT_MONTSERRAT_12 0
+#define LV_FONT_MONTSERRAT_12 1
 #define LV_FONT_MONTSERRAT_14 1
 #define LV_FONT_MONTSERRAT_16 1
 #define LV_FONT_MONTSERRAT_18 0
@@ -580,10 +589,12 @@
 #define LV_FONT_MONTSERRAT_48 0
 
 /* Demonstrate special features */
-#define LV_FONT_MONTSERRAT_28_COMPRESSED 0  /**< bpp = 3 */
-#define LV_FONT_DEJAVU_16_PERSIAN_HEBREW 0  /**< Hebrew, Arabic, Persian letters and all their forms */
-#define LV_FONT_SIMSUN_14_CJK            0  /**< 1000 most common CJK radicals */
-#define LV_FONT_SIMSUN_16_CJK            0  /**< 1000 most common CJK radicals */
+#define LV_FONT_MONTSERRAT_28_COMPRESSED    0  /**< bpp = 3 */
+#define LV_FONT_DEJAVU_16_PERSIAN_HEBREW    0  /**< Hebrew, Arabic, Persian letters and all their forms */
+#define LV_FONT_SIMSUN_14_CJK               0  /**< 1000 most common CJK radicals */
+#define LV_FONT_SIMSUN_16_CJK               0  /**< 1000 most common CJK radicals */
+#define LV_FONT_SOURCE_HAN_SANS_SC_14_CJK   0  /**< 1338 most common CJK radicals */
+#define LV_FONT_SOURCE_HAN_SANS_SC_16_CJK   0  /**< 1338 most common CJK radicals */
 
 /** Pixel perfect monospaced fonts */
 #define LV_FONT_UNSCII_8  0
@@ -762,6 +773,8 @@
 #define LV_USE_TILEVIEW   1
 
 #define LV_USE_WIN        1
+
+#define LV_USE_3DTEXTURE  0
 
 /*==================
  * THEMES
@@ -956,7 +969,7 @@
     /** 1: Show used memory and memory fragmentation.
      *     - Requires `LV_USE_STDLIB_MALLOC = LV_STDLIB_BUILTIN`
      *     - Requires `LV_USE_SYSMON = 1`*/
-    #define LV_USE_MEM_MONITOR 0
+    #define LV_USE_MEM_MONITOR 1
     #if LV_USE_MEM_MONITOR
         #define LV_USE_MEM_MONITOR_POS LV_ALIGN_BOTTOM_LEFT
     #endif
@@ -970,6 +983,7 @@
     #if LV_USE_PROFILER_BUILTIN
         /** Default profiler trace buffer size */
         #define LV_PROFILER_BUILTIN_BUF_SIZE (16 * 1024)     /**< [bytes] */
+        #define LV_PROFILER_BUILTIN_DEFAULT_ENABLE 1
     #endif
 
     /** Header to include for profiler */
