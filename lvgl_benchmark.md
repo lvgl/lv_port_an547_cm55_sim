@@ -28,7 +28,7 @@ This is a benchmark report for comparing performance differences between LVGL ba
 
   - set `LV_COLOR_DEPTH` to `16`
   - set `LV_MEM_SIZE` to `(128U * 1024U)`
-  - set `LV_DISP_DEF_REFR_PERIOD` to `2`
+  - set `LV_DEF_REFR_PERIOD` to `2`
   
   
   
